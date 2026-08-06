@@ -28,6 +28,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   
   const pages = await payload.find({
     collection: 'pages',
+    depth: 2,
     where: {
       slug: {
         equals: parsedSlug,

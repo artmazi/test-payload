@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -13,6 +14,35 @@ export const Pages: CollectionConfig = {
       }
       return true
     },
+  },
+  hooks: {
+    afterChange: [
+      ({ doc, previousDoc, req: { payload } }) => {
+        if (doc._status === 'published' || previousDoc?._status === 'published') {
+          const newPath = doc.slug === 'home' ? '/' : `/${doc.slug}`
+          payload.logger.info(`Revalidating cache for path: ${newPath}`)
+          revalidatePath(newPath)
+
+          // If the slug changed, revalidate the old path too
+          if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
+            const oldPath = previousDoc.slug === 'home' ? '/' : `/${previousDoc.slug}`
+            payload.logger.info(`Revalidating cache for old path: ${oldPath}`)
+            revalidatePath(oldPath)
+          }
+        }
+        return doc
+      },
+    ],
+    afterDelete: [
+      ({ doc, req: { payload } }) => {
+        if (doc._status === 'published') {
+          const path = doc.slug === 'home' ? '/' : `/${doc.slug}`
+          payload.logger.info(`Revalidating cache for deleted path: ${path}`)
+          revalidatePath(path)
+        }
+        return doc
+      },
+    ],
   },
   fields: [
     {

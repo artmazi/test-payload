@@ -7,8 +7,17 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: path.resolve(dirname),
+  // turbopack: {
+  //   root: path.resolve(dirname),
+  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+        port: '',
+      },
+    ],
   },
 }
 

@@ -20,12 +20,12 @@ const HomeInfo = ({ data }: { data: any }) => {
 			className="bg-fixed bg-right bg-no-repeat bg-cover">
 			<div className="container flex flex-col w-full max-w-[1200px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-4 text-white">
 				<p className="text-h3 font-semibold">{data.title}</p>
-				<div className="flex lg:flex-wrap flex-nowrap flex-col lg:flex-row">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
 					{(data.items || []).map((i: any, _i: number) => (
 						<div
-							className="flex lg:flex-0-5 py-2 lg:odd:pr-4 lg:even:pl-4 flex-1 px-0"
+							className="flex items-start"
 							key={_i}>
-							{ (checkOrange?.url || checkOrange) ? <Image src={checkOrange?.url || checkOrange} alt="Check" className="h-[24px] pr-2 w-auto"  width={24} height={24} /> : null }
+							{ (checkOrange?.url || checkOrange) ? <Image src={checkOrange?.url || checkOrange} alt="Check" className="h-[24px] pr-2 w-auto flex-shrink-0"  width={24} height={24} /> : null }
 							<div
 								className="[&>a]:cursor-pointer [&>a]:underline [&>a]:text-red-500"
 								dangerouslySetInnerHTML={{ __html: md2html(i.text || i) }}

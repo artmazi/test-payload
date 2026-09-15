@@ -29,7 +29,7 @@ const Header = ({ data }: any) => {
 			<div className="flex w-full mx-auto py-4 lg:px-16 xl:px-16 px-4 flex-row items-center justify-between">
 				
 				{/* Logo */}
-				<div className="cursor-pointer z-[1001]" onClick={() => navigate.push('/')}>
+				<div className="cursor-pointer z-[1001]" onClick={() => router.push('/')}>
 					<img alt="logo" src={Logo} className="max-h-[70px] logo" />
 				</div>
 

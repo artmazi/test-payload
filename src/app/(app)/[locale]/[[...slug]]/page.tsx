@@ -11,9 +11,19 @@ export async function generateStaticParams() {
       limit: 100,
     })
 
-    return pages.docs.map((page) => ({
-      slug: page.slug === 'home' ? [] : [page.slug],
-    }))
+    const locales = ['en', 'de', 'fr', 'it']
+    const params: any[] = []
+
+    pages.docs.forEach((page) => {
+      locales.forEach((locale) => {
+        params.push({
+          locale,
+          slug: page.slug === 'home' ? [] : [page.slug],
+        })
+      })
+    })
+
+    return params
   } catch (error) {
     // If database connection fails during build time (e.g. on CI), return empty array
     // Pages will still be generated on-demand if dynamicParams = true (default)
@@ -21,14 +31,15 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
-  const { slug } = await params;
+export default async function Page({ params }: { params: Promise<{ slug?: string[], locale: string }> }) {
+  const { slug, locale } = await params;
   const parsedSlug = slug ? slug.join('/') : 'home'
   const payload = await getPayload({ config })
 
   const pages = await payload.find({
     collection: 'pages',
     depth: 2,
+    locale: locale as any,
     where: {
       slug: {
         equals: parsedSlug,

@@ -4,7 +4,7 @@ export const HomeProductVS2Block: Block = {
   slug: 'homeProductVS2',
   fields: [
     {
-      name: 'hidden',
+      name: 'hideBlock',
       type: 'checkbox',
       label: 'Hide this block on the website',
       defaultValue: false,

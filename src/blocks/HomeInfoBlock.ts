@@ -8,7 +8,7 @@ export const HomeInfoBlock: Block = {
   },
   fields: [
     {
-      name: 'hidden',
+      name: 'hideBlock',
       type: 'checkbox',
       label: 'Hide this block on the website',
       defaultValue: false,
@@ -20,15 +20,6 @@ export const HomeInfoBlock: Block = {
       name: 'items',
       type: 'array',
       fields: [
-    {
-      name: 'hidden',
-      type: 'checkbox',
-      label: 'Hide this block on the website',
-      defaultValue: false,
-      admin: {
-        description: 'If checked, this block will not be rendered on the frontend.',
-      },
-    },
         { name: 'text', type: 'text' }
       ]
     },

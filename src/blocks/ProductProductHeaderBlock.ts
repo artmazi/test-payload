@@ -4,7 +4,7 @@ export const ProductProductHeaderBlock: Block = {
   slug: 'productProductHeader',
   fields: [
     {
-      name: 'hidden',
+      name: 'hideBlock',
       type: 'checkbox',
       label: 'Hide this block on the website',
       defaultValue: false,

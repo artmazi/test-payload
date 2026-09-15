@@ -4,7 +4,7 @@ export const HomeSliderBlock: Block = {
   slug: 'homeSlider',
   fields: [
     {
-      name: 'hidden',
+      name: 'hideBlock',
       type: 'checkbox',
       label: 'Hide this block on the website',
       defaultValue: false,
@@ -14,16 +14,7 @@ export const HomeSliderBlock: Block = {
     },
     {
       name: 'sliderItems',
-      type: 'array', fields: [
-    {
-      name: 'hidden',
-      type: 'checkbox',
-      label: 'Hide this block on the website',
-      defaultValue: false,
-      admin: {
-        description: 'If checked, this block will not be rendered on the frontend.',
-      },
-    },{name:'text', type:'text'}],
+      type: 'array', fields: [{name:'text', type:'text'}],
     },
     {
       name: 'name',
@@ -52,16 +43,7 @@ export const HomeSliderBlock: Block = {
     },
     {
       name: 'testimonials',
-      type: 'array', fields: [
-    {
-      name: 'hidden',
-      type: 'checkbox',
-      label: 'Hide this block on the website',
-      defaultValue: false,
-      admin: {
-        description: 'If checked, this block will not be rendered on the frontend.',
-      },
-    },{name:'name', type:'text'}, {name:'text', type:'text'}, {name:'description', type:'text'}],
+      type: 'array', fields: [{name:'name', type:'text'}, {name:'text', type:'text'}, {name:'description', type:'text'}],
     },
   ],
 }

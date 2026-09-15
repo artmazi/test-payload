@@ -37,7 +37,7 @@ export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: strin
   if (!blocks || !Array.isArray(blocks)) return null
 
   // Filter out any blocks that have been marked as hidden
-  const visibleBlocks = blocks.filter((block) => !block.hidden)
+  const visibleBlocks = blocks.filter((block) => !block.hideBlock)
 
   return (
     <div className="flex flex-col gap-8">

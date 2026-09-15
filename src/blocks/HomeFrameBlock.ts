@@ -4,7 +4,7 @@ export const HomeFrameBlock: Block = {
   slug: 'homeFrame',
   fields: [
     {
-      name: 'hidden',
+      name: 'hideBlock',
       type: 'checkbox',
       label: 'Hide this block on the website',
       defaultValue: false,

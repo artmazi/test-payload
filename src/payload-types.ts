@@ -188,7 +188,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             heroImg?: (string | null) | Media;
             button2?: string | null;
             button?: string | null;
@@ -205,14 +205,10 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   content?: string | null;
                   leftText?: string | null;
@@ -228,17 +224,13 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             contentBg?: string | null;
             button1Color?: string | null;
             button2?: string | null;
             text?: string | null;
             items?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   text?: string | null;
                   leftText?: string | null;
@@ -261,14 +253,10 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             news?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   date?: string | null;
                   link?: string | null;
@@ -283,7 +271,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             type?: string | null;
             text?: string | null;
             picture?: (string | null) | Media;
@@ -296,7 +284,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             iframe?: string | null;
             className?: string | null;
@@ -308,13 +296,9 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             sliderItems?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   text?: string | null;
                   id?: string | null;
                 }[]
@@ -327,10 +311,6 @@ export interface Page {
             description?: string | null;
             testimonials?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   name?: string | null;
                   text?: string | null;
                   description?: string | null;
@@ -345,7 +325,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             classNames?: string | null;
             content?: string | null;
             id?: string | null;
@@ -356,7 +336,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?: string | null;
             id?: string | null;
@@ -367,7 +347,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             heroText?: string | null;
             hero?: string | null;
@@ -380,15 +360,11 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             button1Color?: string | null;
             contentButtonLink?: string | null;
             items?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   text?: string | null;
                   leftText?: string | null;
@@ -409,7 +385,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?: string | null;
             className?: string | null;
@@ -421,7 +397,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             sub_title?: string | null;
             image?: (string | null) | Media;
             button2?: string | null;
@@ -438,7 +414,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?: string | null;
             center?: string | null;
@@ -451,7 +427,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             content?: string | null;
             id?: string | null;
@@ -462,7 +438,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?: string | null;
             video?: string | null;
@@ -474,7 +450,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             list?: string | null;
             id?: string | null;
@@ -485,13 +461,9 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             items?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   text?: string | null;
                   id?: string | null;
                 }[]
@@ -509,14 +481,10 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             subTitle?: string | null;
             factsLeft?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   text?: string | null;
                   id?: string | null;
@@ -525,84 +493,44 @@ export interface Page {
             title?: string | null;
             factsRight?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   text?: string | null;
                   id?: string | null;
                 }[]
               | null;
             factsMosaic?: {
-              /**
-               * If checked, this block will not be rendered on the frontend.
-               */
-              hidden?: boolean | null;
               fm1?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 title?: string | null;
                 text?: string | null;
               };
               fm2?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 title?: string | null;
                 text?: string | null;
               };
               fm3?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 title?: string | null;
                 text?: string | null;
               };
               fm4?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 title?: string | null;
                 text?: string | null;
               };
               fm5?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 text1?: string | null;
                 text2?: string | null;
                 text3?: string | null;
               };
               fm6?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 text1?: string | null;
                 text2?: string | null;
                 text3?: string | null;
               };
               fm7?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 text1?: string | null;
                 text2?: string | null;
                 text3?: string | null;
               };
               fm8?: {
-                /**
-                 * If checked, this block will not be rendered on the frontend.
-                 */
-                hidden?: boolean | null;
                 text1?: string | null;
                 text2?: string | null;
                 text3?: string | null;
@@ -616,14 +544,10 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   text?: string | null;
                   id?: string | null;
@@ -638,7 +562,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             video?: string | null;
             overlay?: string | null;
             image?: (string | null) | Media;
@@ -650,7 +574,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             menu?: string | null;
             sections?: string | null;
             button?: string | null;
@@ -662,7 +586,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             bigMap?: string | null;
             content?: string | null;
             id?: string | null;
@@ -673,7 +597,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             imageType?: (string | null) | Media;
             href?: string | null;
             items?: string | null;
@@ -689,7 +613,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?: string | null;
             className?: string | null;
@@ -701,14 +625,10 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             title?: string | null;
             items?:
               | {
-                  /**
-                   * If checked, this block will not be rendered on the frontend.
-                   */
-                  hidden?: boolean | null;
                   title?: string | null;
                   text?: string | null;
                   leftText?: string | null;
@@ -726,7 +646,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             headingText: string;
             level?: ('h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') | null;
             id?: string | null;
@@ -737,7 +657,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             content: {
               root: {
                 type: string;
@@ -761,7 +681,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             image: string | Media;
             id?: string | null;
             blockName?: string | null;
@@ -771,7 +691,7 @@ export interface Page {
             /**
              * If checked, this block will not be rendered on the frontend.
              */
-            hidden?: boolean | null;
+            hideBlock?: boolean | null;
             label: string;
             url: string;
             id?: string | null;
@@ -921,7 +841,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeHero?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               heroImg?: T;
               button2?: T;
               button?: T;
@@ -936,12 +856,11 @@ export interface PagesSelect<T extends boolean = true> {
         homeContentVersions?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     content?: T;
                     leftText?: T;
@@ -954,7 +873,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeApplications?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               contentBg?: T;
               button1Color?: T;
               button2?: T;
@@ -962,7 +881,6 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
@@ -982,12 +900,11 @@ export interface PagesSelect<T extends boolean = true> {
         homeNews?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               news?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     date?: T;
                     link?: T;
@@ -999,7 +916,7 @@ export interface PagesSelect<T extends boolean = true> {
         productTextWithPicture?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               type?: T;
               text?: T;
               picture?: T;
@@ -1010,7 +927,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeFrame?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               iframe?: T;
               className?: T;
@@ -1020,11 +937,10 @@ export interface PagesSelect<T extends boolean = true> {
         homeSlider?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               sliderItems?:
                 | T
                 | {
-                    hidden?: T;
                     text?: T;
                     id?: T;
                   };
@@ -1037,7 +953,6 @@ export interface PagesSelect<T extends boolean = true> {
               testimonials?:
                 | T
                 | {
-                    hidden?: T;
                     name?: T;
                     text?: T;
                     description?: T;
@@ -1049,7 +964,7 @@ export interface PagesSelect<T extends boolean = true> {
         productWysiwyg?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               classNames?: T;
               content?: T;
               id?: T;
@@ -1058,7 +973,7 @@ export interface PagesSelect<T extends boolean = true> {
         productFunctions?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?: T;
               id?: T;
@@ -1067,7 +982,7 @@ export interface PagesSelect<T extends boolean = true> {
         productTextSlider?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               heroText?: T;
               hero?: T;
@@ -1078,13 +993,12 @@ export interface PagesSelect<T extends boolean = true> {
         homeSoftware?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               button1Color?: T;
               contentButtonLink?: T;
               items?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
@@ -1102,7 +1016,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeProductVS?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?: T;
               className?: T;
@@ -1112,7 +1026,7 @@ export interface PagesSelect<T extends boolean = true> {
         productInfo?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               sub_title?: T;
               image?: T;
               button2?: T;
@@ -1127,7 +1041,7 @@ export interface PagesSelect<T extends boolean = true> {
         productFeatures?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?: T;
               center?: T;
@@ -1138,7 +1052,7 @@ export interface PagesSelect<T extends boolean = true> {
         productBeforeAfterSlider?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               content?: T;
               id?: T;
@@ -1147,7 +1061,7 @@ export interface PagesSelect<T extends boolean = true> {
         productList?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?: T;
               video?: T;
@@ -1157,7 +1071,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeTitleDescriptionList?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               list?: T;
               id?: T;
@@ -1166,11 +1080,10 @@ export interface PagesSelect<T extends boolean = true> {
         homeInfo?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               items?:
                 | T
                 | {
-                    hidden?: T;
                     text?: T;
                     id?: T;
                   };
@@ -1185,12 +1098,11 @@ export interface PagesSelect<T extends boolean = true> {
         homeFacts?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               subTitle?: T;
               factsLeft?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     text?: T;
                     id?: T;
@@ -1199,7 +1111,6 @@ export interface PagesSelect<T extends boolean = true> {
               factsRight?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     text?: T;
                     id?: T;
@@ -1207,39 +1118,33 @@ export interface PagesSelect<T extends boolean = true> {
               factsMosaic?:
                 | T
                 | {
-                    hidden?: T;
                     fm1?:
                       | T
                       | {
-                          hidden?: T;
                           title?: T;
                           text?: T;
                         };
                     fm2?:
                       | T
                       | {
-                          hidden?: T;
                           title?: T;
                           text?: T;
                         };
                     fm3?:
                       | T
                       | {
-                          hidden?: T;
                           title?: T;
                           text?: T;
                         };
                     fm4?:
                       | T
                       | {
-                          hidden?: T;
                           title?: T;
                           text?: T;
                         };
                     fm5?:
                       | T
                       | {
-                          hidden?: T;
                           text1?: T;
                           text2?: T;
                           text3?: T;
@@ -1247,7 +1152,6 @@ export interface PagesSelect<T extends boolean = true> {
                     fm6?:
                       | T
                       | {
-                          hidden?: T;
                           text1?: T;
                           text2?: T;
                           text3?: T;
@@ -1255,7 +1159,6 @@ export interface PagesSelect<T extends boolean = true> {
                     fm7?:
                       | T
                       | {
-                          hidden?: T;
                           text1?: T;
                           text2?: T;
                           text3?: T;
@@ -1263,7 +1166,6 @@ export interface PagesSelect<T extends boolean = true> {
                     fm8?:
                       | T
                       | {
-                          hidden?: T;
                           text1?: T;
                           text2?: T;
                           text3?: T;
@@ -1275,12 +1177,11 @@ export interface PagesSelect<T extends boolean = true> {
         homeUseCases?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     text?: T;
                     id?: T;
@@ -1292,7 +1193,7 @@ export interface PagesSelect<T extends boolean = true> {
         productHero?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               video?: T;
               overlay?: T;
               image?: T;
@@ -1302,7 +1203,7 @@ export interface PagesSelect<T extends boolean = true> {
         productProductHeader?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               menu?: T;
               sections?: T;
               button?: T;
@@ -1312,7 +1213,7 @@ export interface PagesSelect<T extends boolean = true> {
         productTextWithMap?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               bigMap?: T;
               content?: T;
               id?: T;
@@ -1321,7 +1222,7 @@ export interface PagesSelect<T extends boolean = true> {
         productIntegrationSlider?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               imageType?: T;
               href?: T;
               items?: T;
@@ -1335,7 +1236,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeProductVS2?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?: T;
               className?: T;
@@ -1345,12 +1246,11 @@ export interface PagesSelect<T extends boolean = true> {
         homeData?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               title?: T;
               items?:
                 | T
                 | {
-                    hidden?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
@@ -1365,7 +1265,7 @@ export interface PagesSelect<T extends boolean = true> {
         heading?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               headingText?: T;
               level?: T;
               id?: T;
@@ -1374,7 +1274,7 @@ export interface PagesSelect<T extends boolean = true> {
         richText?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               content?: T;
               id?: T;
               blockName?: T;
@@ -1382,7 +1282,7 @@ export interface PagesSelect<T extends boolean = true> {
         image?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               image?: T;
               id?: T;
               blockName?: T;
@@ -1390,7 +1290,7 @@ export interface PagesSelect<T extends boolean = true> {
         callToAction?:
           | T
           | {
-              hidden?: T;
+              hideBlock?: T;
               label?: T;
               url?: T;
               id?: T;

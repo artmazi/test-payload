@@ -156,7 +156,7 @@ export const Pages: CollectionConfig = {
           slug: 'heading',
           fields: [
             {
-              name: 'hidden',
+              name: 'hideBlock',
               type: 'checkbox',
               label: 'Hide this block on the website',
               defaultValue: false,
@@ -182,7 +182,7 @@ export const Pages: CollectionConfig = {
           slug: 'richText',
           fields: [
             {
-              name: 'hidden',
+              name: 'hideBlock',
               type: 'checkbox',
               label: 'Hide this block on the website',
               defaultValue: false,
@@ -195,7 +195,7 @@ export const Pages: CollectionConfig = {
           slug: 'image',
           fields: [
             {
-              name: 'hidden',
+              name: 'hideBlock',
               type: 'checkbox',
               label: 'Hide this block on the website',
               defaultValue: false,
@@ -208,7 +208,7 @@ export const Pages: CollectionConfig = {
           slug: 'callToAction',
           fields: [
             {
-              name: 'hidden',
+              name: 'hideBlock',
               type: 'checkbox',
               label: 'Hide this block on the website',
               defaultValue: false,

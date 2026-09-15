@@ -8,7 +8,7 @@ export const HomeNewsBlock: Block = {
   },
   fields: [
     {
-      name: 'hidden',
+      name: 'hideBlock',
       type: 'checkbox',
       label: 'Hide this block on the website',
       defaultValue: false,
@@ -28,15 +28,6 @@ export const HomeNewsBlock: Block = {
         plural: 'News Items',
       },
       fields: [
-    {
-      name: 'hidden',
-      type: 'checkbox',
-      label: 'Hide this block on the website',
-      defaultValue: false,
-      admin: {
-        description: 'If checked, this block will not be rendered on the frontend.',
-      },
-    },
         { name: 'title', type: 'text' },
         { name: 'date', type: 'text' },
         { name: 'link', type: 'text' }

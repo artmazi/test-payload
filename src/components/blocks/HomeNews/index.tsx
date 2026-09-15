@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import newsDataJson from '../../../data/news.json';
+import { en, de, fr } from '../../../data/news';
 import { usePathname } from 'next/navigation';
 
 type ParsedNews = {
@@ -30,10 +30,10 @@ const HomeNews = ({ data }: { data: any }) => {
 			// Normalize language to match json keys
 			if (lang.startsWith('de')) lang = 'de';
 			else if (lang.startsWith('fr')) lang = 'fr';
-			else if (lang.startsWith('it')) lang = 'it';
-			else lang = 'en';
+			else lang = 'en'; // fallback for 'it' or others since only en, de, fr exist in news.ts
 
-			const rawNews = (newsDataJson as any)[lang] || [];
+			const newsSources: Record<string, any[]> = { en, de, fr };
+			const rawNews = newsSources[lang] || en;
 
 			const parsedNews: ParsedNews[] = rawNews.map((item: any) => {
 				const date = item.pubDate ? dayjs(item.pubDate).format('DD.MM.YYYY') : '';

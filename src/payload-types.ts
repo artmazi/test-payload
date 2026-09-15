@@ -190,13 +190,13 @@ export interface Page {
              */
             hideBlock?: boolean | null;
             heroImg?: (string | null) | Media;
-            button2?: string | null;
-            button?: string | null;
-            buttonLink2?: string | null;
             title?: string | null;
-            buttonLink?: string | null;
             description?: string | null;
             content?: string | null;
+            button?: string | null;
+            buttonLink?: string | null;
+            button2?: string | null;
+            buttonLink2?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeHero';
@@ -843,13 +843,13 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               hideBlock?: T;
               heroImg?: T;
-              button2?: T;
-              button?: T;
-              buttonLink2?: T;
               title?: T;
-              buttonLink?: T;
               description?: T;
               content?: T;
+              button?: T;
+              buttonLink?: T;
+              button2?: T;
+              buttonLink2?: T;
               id?: T;
               blockName?: T;
             };

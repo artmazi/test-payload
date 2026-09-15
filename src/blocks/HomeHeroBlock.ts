@@ -18,23 +18,7 @@ export const HomeHeroBlock: Block = {
       relationTo: 'media',
     },
     {
-      name: 'button2',
-      type: 'text',
-    },
-    {
-      name: 'button',
-      type: 'text',
-    },
-    {
-      name: 'buttonLink2',
-      type: 'text',
-    },
-    {
       name: 'title',
-      type: 'text',
-    },
-    {
-      name: 'buttonLink',
       type: 'text',
     },
     {
@@ -44,6 +28,36 @@ export const HomeHeroBlock: Block = {
     {
       name: 'content',
       type: 'textarea',
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'button',
+          type: 'text',
+          label: 'Button 1 Text',
+        },
+        {
+          name: 'buttonLink',
+          type: 'text',
+          label: 'Button 1 Link',
+        },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'button2',
+          type: 'text',
+          label: 'Button 2 Text',
+        },
+        {
+          name: 'buttonLink2',
+          type: 'text',
+          label: 'Button 2 Link',
+        },
+      ],
     },
   ],
 }

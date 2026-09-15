@@ -16,7 +16,7 @@ const ProductTextSlider = ({ data }: { data: any }) => {
 		<section id="prod-text-slider" className={clsx(data.background ?? '', 'flex')}>
 			<div className="flex w-full max-w-[1200px] py-6 md:py-16 md:px-16 xl:px-16 px-4 mx-auto gap-16 flex-col">
 				<div>
-					{data.hero && ( (data.hero?.url || data.hero) ? <Image src={data.hero?.url || data.hero} alt="hero"  width={800} height={600} /> : null )}
+					{data.hero && ((data.hero?.url || (typeof data.hero === 'string' && (data.hero.startsWith('/') || data.hero.startsWith('http')) ? data.hero : null)) ? <Image src={(data.hero?.url || (typeof data.hero === 'string' && (data.hero.startsWith('/') || data.hero.startsWith('http')) ? data.hero : null))}  alt="hero"  width={800} height={600} /> : null )}
 					{data.heroText && <p className="text-b2 text-gray text-center mt-2">{data.heroText}</p>}
 				</div>
 

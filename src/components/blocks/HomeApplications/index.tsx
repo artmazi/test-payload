@@ -110,8 +110,7 @@ const HomeApplications = ({ data }: { data: any }) => {
 											</span>
 										)}
 										<div className="flex justify-center items-center flex-1">
-											{ (i.icon?.url || i.icon) ? <Image
-												src={i.icon?.url || i.icon}
+											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))}
 												alt="icon"
 												className="max-h-[155px] max-w-[245px] mx-auto"
 											 width={800} height={600} /> : null }
@@ -145,8 +144,7 @@ const HomeApplications = ({ data }: { data: any }) => {
 											</span>
 										)}
 										<div className="flex justify-center items-center flex-1">
-											{ (i.icon?.url || i.icon) ? <Image
-												src={i.icon?.url || i.icon}
+											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))}
 												alt="icon"
 												className="max-h-[155px] max-w-[245px] mx-auto"
 											 width={800} height={600} /> : null }

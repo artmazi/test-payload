@@ -33,7 +33,7 @@ const ProductFunctions = ({ data }: { data: any }) => {
 				<div className="flex flex-1 gap-16 lg:gap-4 justify-between flex-col lg:flex-row">
 					{items.map((item: any, i: number) => (
 						<div key={i} className="flex flex-1 flex-col items-center gap-4">
-							{ (item.picture?.url || item.picture) ? <Image src={item.picture?.url || item.picture} alt="function-pic" className="max-w-[170px]"  width={800} height={600} /> : null }
+							{ (item.picture?.url || (typeof item.picture === 'string' && (item.picture.startsWith('/') || item.picture.startsWith('http')) ? item.picture : null)) ? <Image src={(item.picture?.url || (typeof item.picture === 'string' && (item.picture.startsWith('/') || item.picture.startsWith('http')) ? item.picture : null))} alt="function-pic" className="max-w-[170px]"  width={800} height={600} /> : null }
 							<h3 className="text-h3 text-center">{item.title}</h3>
 							<p className="text-center">{item.content}</p>
 						</div>

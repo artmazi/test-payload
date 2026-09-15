@@ -30,7 +30,7 @@ const ProductInfo = ({ data }: { data: any }) => {
 					</div>
 				</div>
 				<div className="flex flex-1 lg:order-2 order-1 justify-center">
-					{ (data.image?.url || data.image) ? <Image src={data.image?.url || data.image} alt="image" className="max-h-[450px]"  width={800} height={600} /> : null }
+					{ (data.image?.url || (typeof data.image === 'string' && (data.image.startsWith('/') || data.image.startsWith('http')) ? data.image : null)) ? <Image src={(data.image?.url || (typeof data.image === 'string' && (data.image.startsWith('/') || data.image.startsWith('http')) ? data.image : null))} alt="image" className="max-h-[450px]"  width={800} height={600} /> : null }
 				</div>
 			</div>
 		</section>

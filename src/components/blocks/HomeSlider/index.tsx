@@ -103,7 +103,7 @@ const HomeSlider = ({ data }: { data: any }) => {
 			</div>
 			<div className="flex gap-4 items-center">
 				<div className="flex max-w-[64px] w-full">
-					{ (data.img?.url || data.img) ? <Image src={data.img?.url || data.img} alt="person" className="rounded-full shadow-md"  width={800} height={600} /> : null }
+					{ (data.img?.url || (typeof data.img === 'string' && (data.img.startsWith('/') || data.img.startsWith('http')) ? data.img : null)) ? <Image src={(data.img?.url || (typeof data.img === 'string' && (data.img.startsWith('/') || data.img.startsWith('http')) ? data.img : null))} alt="person" className="rounded-full shadow-md"  width={800} height={600} /> : null }
 				</div>
 				<div className="flex flex-col">
 					<h6 className="text-b2 uppercase font-semibold">{data.name}</h6>

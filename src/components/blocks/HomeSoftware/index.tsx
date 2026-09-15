@@ -68,7 +68,7 @@ const HomeSoftware = ({ data }: { data: any }) => {
 						)}
 					</div>
 					<div className="flex justify-center items-center">
-						{ (data.contentImg?.url || data.contentImg) ? <Image src={data.contentImg?.url || data.contentImg} className="max-w-[400px] w-full" alt="software"  width={800} height={600} /> : null }
+						{ (data.contentImg?.url || (typeof data.contentImg === 'string' && (data.contentImg.startsWith('/') || data.contentImg.startsWith('http')) ? data.contentImg : null)) ? <Image src={(data.contentImg?.url || (typeof data.contentImg === 'string' && (data.contentImg.startsWith('/') || data.contentImg.startsWith('http')) ? data.contentImg : null))} className="max-w-[400px] w-full" alt="software"  width={800} height={600} /> : null }
 					</div>
 				</div>
 				{data.items && (
@@ -80,7 +80,7 @@ const HomeSoftware = ({ data }: { data: any }) => {
 										onClick={() => router.push(i.link)}
 										className="min-h-[250px] cursor-pointer ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)]">
 										<div className="flex flex-col relative rounded-md p-2 lg:p-8 w-full bg-teal text-center justify-between">
-											{ (i.icon?.url || i.icon) ? <Image src={i.icon?.url || i.icon} alt="icon" className="max-h-[80px] my-16 lg:my-32"  width={800} height={600} /> : null }
+											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))} alt="icon" className="max-h-[80px] my-16 lg:my-32"  width={800} height={600} /> : null }
 											<p className="md:text-sub text-b1 font-black text-white">{i.title}</p>
 										</div>
 									</div>

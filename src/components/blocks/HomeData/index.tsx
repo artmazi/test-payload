@@ -51,7 +51,7 @@ const HomeData = ({ data }: { data: any }) => {
 				</div>
 				<div className="flex flex-col lg:flex-row px-4 lg:px-0">
 					<div className="flex flex-1 justify-center items-center">
-						{ (data.img?.url || data.img) ? <Image src={data.img?.url || data.img} alt="pic"  width={800} height={600} /> : null }
+						{ (data.img?.url || (typeof data.img === 'string' && (data.img.startsWith('/') || data.img.startsWith('http')) ? data.img : null)) ? <Image src={(data.img?.url || (typeof data.img === 'string' && (data.img.startsWith('/') || data.img.startsWith('http')) ? data.img : null))} alt="pic"  width={800} height={600} /> : null }
 					</div>
 					<div className="flex flex-1 flex-col justify-center items-center">
 						<p className="text-b1 text-gray">
@@ -68,7 +68,7 @@ const HomeData = ({ data }: { data: any }) => {
 								<div
 									onClick={() => router.push(i.link)}
 									className="cursor-pointer min-h-[375px] lg:min-h-[470px] lg:gap-8 flex flex-col relative rounded-md p-4 lg:p-8 w-full text-center justify-between border border-[#0000001A] ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)] [&>h3]:hover:!text-black">
-									{ (i.icon?.url || i.icon) ? <Image src={i.icon?.url || i.icon} alt="icon" className="max-h-[155px]"  width={800} height={600} /> : null }
+									{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))} alt="icon" className="max-h-[155px]"  width={800} height={600} /> : null }
 									<h3 className="md:text-h3 text-b1 font-black text-sky">{i.title}</h3>
 									<p className="md:text-b2 text-b3 text-gray">{i.text}</p>
 								</div>

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import newsDataJson from '@/data/news.json';
+import newsDataJson from '../../../data/news.json';
 import { usePathname } from 'next/navigation';
 
 type ParsedNews = {

@@ -36,9 +36,12 @@ import ProductTextWithPicture from './ProductTextWithPicture';
 export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: string }) => {
   if (!blocks || !Array.isArray(blocks)) return null
 
+  // Filter out any blocks that have been marked as hidden
+  const visibleBlocks = blocks.filter((block) => !block.hidden)
+
   return (
     <div className="flex flex-col gap-8">
-      {blocks.map((block, i) => {
+      {visibleBlocks.map((block, i) => {
         // Inject pageId and blockIndex into block data
         const blockWithMeta = { ...block, pageId, blockIndex: i }
         const renderBlock = () => {

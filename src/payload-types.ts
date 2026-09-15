@@ -89,8 +89,14 @@ export interface Config {
     defaultIDType: string;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+    footer: Footer;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -179,6 +185,548 @@ export interface Page {
   content?:
     | (
         | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            heroImg?: (string | null) | Media;
+            button2?: string | null;
+            button?: string | null;
+            buttonLink2?: string | null;
+            title?: string | null;
+            buttonLink?: string | null;
+            description?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeHero';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  content?: string | null;
+                  leftText?: string | null;
+                  rightText?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeContentVersions';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            contentBg?: string | null;
+            button1Color?: string | null;
+            button2?: string | null;
+            text?: string | null;
+            items?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  text?: string | null;
+                  leftText?: string | null;
+                  rightText?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            contentButtonLink?: string | null;
+            items2?: string | null;
+            contentTitle?: string | null;
+            contentText?: string | null;
+            title?: string | null;
+            contentButton?: string | null;
+            button2Link?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeApplications';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            news?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  date?: string | null;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeNews';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            type?: string | null;
+            text?: string | null;
+            picture?: (string | null) | Media;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productTextWithPicture';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            iframe?: string | null;
+            className?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeFrame';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            sliderItems?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            name?: string | null;
+            text?: string | null;
+            slidePerView?: string | null;
+            title?: string | null;
+            img?: (string | null) | Media;
+            description?: string | null;
+            testimonials?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  name?: string | null;
+                  text?: string | null;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            classNames?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productWysiwyg';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productFunctions';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            heroText?: string | null;
+            hero?: string | null;
+            background?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productTextSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            button1Color?: string | null;
+            contentButtonLink?: string | null;
+            items?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  text?: string | null;
+                  leftText?: string | null;
+                  rightText?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            contentImg?: (string | null) | Media;
+            contentTitle?: string | null;
+            title?: string | null;
+            contentButton?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeSoftware';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            className?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeProductVS';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            sub_title?: string | null;
+            image?: (string | null) | Media;
+            button2?: string | null;
+            text?: string | null;
+            button1?: string | null;
+            title?: string | null;
+            button1Link?: string | null;
+            button2Link?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productInfo';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            center?: string | null;
+            itemsBgSize?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productFeatures';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productBeforeAfterSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            video?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productList';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            list?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTitleDescriptionList';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            items?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            infoHero?: string | null;
+            title?: string | null;
+            oneRow?: string | null;
+            className?: string | null;
+            hideCheck?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeInfo';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            subTitle?: string | null;
+            factsLeft?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            title?: string | null;
+            factsRight?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            factsMosaic?: {
+              /**
+               * If checked, this block will not be rendered on the frontend.
+               */
+              hidden?: boolean | null;
+              fm1?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                title?: string | null;
+                text?: string | null;
+              };
+              fm2?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                title?: string | null;
+                text?: string | null;
+              };
+              fm3?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                title?: string | null;
+                text?: string | null;
+              };
+              fm4?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                title?: string | null;
+                text?: string | null;
+              };
+              fm5?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+              fm6?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+              fm7?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+              fm8?: {
+                /**
+                 * If checked, this block will not be rendered on the frontend.
+                 */
+                hidden?: boolean | null;
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeFacts';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            slidesPerView?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeUseCases';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            video?: string | null;
+            overlay?: string | null;
+            image?: (string | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productHero';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            menu?: string | null;
+            sections?: string | null;
+            button?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productProductHeader';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            bigMap?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productTextWithMap';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            imageType?: (string | null) | Media;
+            href?: string | null;
+            items?: string | null;
+            classNames?: string | null;
+            title?: string | null;
+            contact?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productIntegrationSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            className?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeProductVS2';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  /**
+                   * If checked, this block will not be rendered on the frontend.
+                   */
+                  hidden?: boolean | null;
+                  title?: string | null;
+                  text?: string | null;
+                  leftText?: string | null;
+                  rightText?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            img?: (string | null) | Media;
+            text?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeData';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
             headingText: string;
             level?: ('h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') | null;
             id?: string | null;
@@ -186,6 +734,10 @@ export interface Page {
             blockType: 'heading';
           }
         | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
             content: {
               root: {
                 type: string;
@@ -206,12 +758,20 @@ export interface Page {
             blockType: 'richText';
           }
         | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
             image: string | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'image';
           }
         | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hidden?: boolean | null;
             label: string;
             url: string;
             id?: string | null;
@@ -358,9 +918,454 @@ export interface PagesSelect<T extends boolean = true> {
   content?:
     | T
     | {
+        homeHero?:
+          | T
+          | {
+              hidden?: T;
+              heroImg?: T;
+              button2?: T;
+              button?: T;
+              buttonLink2?: T;
+              title?: T;
+              buttonLink?: T;
+              description?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeContentVersions?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    content?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeApplications?:
+          | T
+          | {
+              hidden?: T;
+              contentBg?: T;
+              button1Color?: T;
+              button2?: T;
+              text?: T;
+              items?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    text?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    id?: T;
+                  };
+              contentButtonLink?: T;
+              items2?: T;
+              contentTitle?: T;
+              contentText?: T;
+              title?: T;
+              contentButton?: T;
+              button2Link?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeNews?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              news?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    date?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        productTextWithPicture?:
+          | T
+          | {
+              hidden?: T;
+              type?: T;
+              text?: T;
+              picture?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeFrame?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              iframe?: T;
+              className?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeSlider?:
+          | T
+          | {
+              hidden?: T;
+              sliderItems?:
+                | T
+                | {
+                    hidden?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              name?: T;
+              text?: T;
+              slidePerView?: T;
+              title?: T;
+              img?: T;
+              description?: T;
+              testimonials?:
+                | T
+                | {
+                    hidden?: T;
+                    name?: T;
+                    text?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        productWysiwyg?:
+          | T
+          | {
+              hidden?: T;
+              classNames?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productFunctions?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productTextSlider?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              heroText?: T;
+              hero?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeSoftware?:
+          | T
+          | {
+              hidden?: T;
+              button1Color?: T;
+              contentButtonLink?: T;
+              items?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    text?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    id?: T;
+                  };
+              contentImg?: T;
+              contentTitle?: T;
+              title?: T;
+              contentButton?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeProductVS?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?: T;
+              className?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productInfo?:
+          | T
+          | {
+              hidden?: T;
+              sub_title?: T;
+              image?: T;
+              button2?: T;
+              text?: T;
+              button1?: T;
+              title?: T;
+              button1Link?: T;
+              button2Link?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productFeatures?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?: T;
+              center?: T;
+              itemsBgSize?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productBeforeAfterSlider?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productList?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?: T;
+              video?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeTitleDescriptionList?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              list?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeInfo?:
+          | T
+          | {
+              hidden?: T;
+              items?:
+                | T
+                | {
+                    hidden?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              infoHero?: T;
+              title?: T;
+              oneRow?: T;
+              className?: T;
+              hideCheck?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeFacts?:
+          | T
+          | {
+              hidden?: T;
+              subTitle?: T;
+              factsLeft?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              title?: T;
+              factsRight?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              factsMosaic?:
+                | T
+                | {
+                    hidden?: T;
+                    fm1?:
+                      | T
+                      | {
+                          hidden?: T;
+                          title?: T;
+                          text?: T;
+                        };
+                    fm2?:
+                      | T
+                      | {
+                          hidden?: T;
+                          title?: T;
+                          text?: T;
+                        };
+                    fm3?:
+                      | T
+                      | {
+                          hidden?: T;
+                          title?: T;
+                          text?: T;
+                        };
+                    fm4?:
+                      | T
+                      | {
+                          hidden?: T;
+                          title?: T;
+                          text?: T;
+                        };
+                    fm5?:
+                      | T
+                      | {
+                          hidden?: T;
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                    fm6?:
+                      | T
+                      | {
+                          hidden?: T;
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                    fm7?:
+                      | T
+                      | {
+                          hidden?: T;
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                    fm8?:
+                      | T
+                      | {
+                          hidden?: T;
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeUseCases?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              slidesPerView?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productHero?:
+          | T
+          | {
+              hidden?: T;
+              video?: T;
+              overlay?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productProductHeader?:
+          | T
+          | {
+              hidden?: T;
+              menu?: T;
+              sections?: T;
+              button?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productTextWithMap?:
+          | T
+          | {
+              hidden?: T;
+              bigMap?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productIntegrationSlider?:
+          | T
+          | {
+              hidden?: T;
+              imageType?: T;
+              href?: T;
+              items?: T;
+              classNames?: T;
+              title?: T;
+              contact?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeProductVS2?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?: T;
+              className?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeData?:
+          | T
+          | {
+              hidden?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    hidden?: T;
+                    title?: T;
+                    text?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    id?: T;
+                  };
+              img?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
         heading?:
           | T
           | {
+              hidden?: T;
               headingText?: T;
               level?: T;
               id?: T;
@@ -369,6 +1374,7 @@ export interface PagesSelect<T extends boolean = true> {
         richText?:
           | T
           | {
+              hidden?: T;
               content?: T;
               id?: T;
               blockName?: T;
@@ -376,6 +1382,7 @@ export interface PagesSelect<T extends boolean = true> {
         image?:
           | T
           | {
+              hidden?: T;
               image?: T;
               id?: T;
               blockName?: T;
@@ -383,6 +1390,7 @@ export interface PagesSelect<T extends boolean = true> {
         callToAction?:
           | T
           | {
+              hidden?: T;
               label?: T;
               url?: T;
               id?: T;
@@ -431,6 +1439,114 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  menuItems?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        target?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  mobileMenuItems?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        subMenus?:
+          | {
+              name?: string | null;
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  links?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform?: string | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  menuItems?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        target?: T;
+        id?: T;
+      };
+  mobileMenuItems?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        subMenus?:
+          | T
+          | {
+              name?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  links?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

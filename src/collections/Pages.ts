@@ -1,10 +1,44 @@
 import type { CollectionConfig } from 'payload'
 import { revalidatePath } from 'next/cache'
 
+import { HomeHeroBlock } from '../blocks/HomeHeroBlock'
+import { HomeContentVersionsBlock } from '../blocks/HomeContentVersionsBlock'
+import { HomeApplicationsBlock } from '../blocks/HomeApplicationsBlock'
+import { HomeNewsBlock } from '../blocks/HomeNewsBlock'
+import { ProductTextWithPictureBlock } from '../blocks/ProductTextWithPictureBlock'
+import { HomeFrameBlock } from '../blocks/HomeFrameBlock'
+import { HomeSliderBlock } from '../blocks/HomeSliderBlock'
+import { ProductWysiwygBlock } from '../blocks/ProductWysiwygBlock'
+import { ProductFunctionsBlock } from '../blocks/ProductFunctionsBlock'
+import { ProductTextSliderBlock } from '../blocks/ProductTextSliderBlock'
+import { HomeSoftwareBlock } from '../blocks/HomeSoftwareBlock'
+import { HomeProductVSBlock } from '../blocks/HomeProductVSBlock'
+import { ProductInfoBlock } from '../blocks/ProductInfoBlock'
+import { ProductFeaturesBlock } from '../blocks/ProductFeaturesBlock'
+import { ProductBeforeAfterSliderBlock } from '../blocks/ProductBeforeAfterSliderBlock'
+import { ProductListBlock } from '../blocks/ProductListBlock'
+import { HomeTitleDescriptionListBlock } from '../blocks/HomeTitleDescriptionListBlock'
+import { HomeInfoBlock } from '../blocks/HomeInfoBlock'
+import { HomeFactsBlock } from '../blocks/HomeFactsBlock'
+import { HomeUseCasesBlock } from '../blocks/HomeUseCasesBlock'
+import { ProductHeroBlock } from '../blocks/ProductHeroBlock'
+import { ProductProductHeaderBlock } from '../blocks/ProductProductHeaderBlock'
+import { ProductTextWithMapBlock } from '../blocks/ProductTextWithMapBlock'
+import { ProductIntegrationSliderBlock } from '../blocks/ProductIntegrationSliderBlock'
+import { HomeProductVS2Block } from '../blocks/HomeProductVS2Block'
+import { HomeDataBlock } from '../blocks/HomeDataBlock'
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'title',
+    livePreview: {
+      url: ({ data }) => {
+        const baseUrl = process.env.PAYLOAD_URL || 'http://localhost:3000'
+        const path = data?.slug === 'home' ? '/' : `/${data?.slug || ''}`
+        return `${baseUrl}${path}`
+      },
+    },
   },
   access: {
     read: ({ req: { user } }) => {
@@ -38,7 +72,7 @@ export const Pages: CollectionConfig = {
         if (doc._status === 'published') {
           const path = doc.slug === 'home' ? '/' : `/${doc.slug}`
           payload.logger.info(`Revalidating cache for deleted path: ${path}`)
-          revalidatePath(path)
+          console.log("revalidate skipped")
         }
         return doc
       },
@@ -92,9 +126,42 @@ export const Pages: CollectionConfig = {
       name: 'content',
       type: 'blocks',
       blocks: [
+        HomeHeroBlock,
+        HomeContentVersionsBlock,
+        HomeApplicationsBlock,
+        HomeNewsBlock,
+        ProductTextWithPictureBlock,
+        HomeFrameBlock,
+        HomeSliderBlock,
+        ProductWysiwygBlock,
+        ProductFunctionsBlock,
+        ProductTextSliderBlock,
+        HomeSoftwareBlock,
+        HomeProductVSBlock,
+        ProductInfoBlock,
+        ProductFeaturesBlock,
+        ProductBeforeAfterSliderBlock,
+        ProductListBlock,
+        HomeTitleDescriptionListBlock,
+        HomeInfoBlock,
+        HomeFactsBlock,
+        HomeUseCasesBlock,
+        ProductHeroBlock,
+        ProductProductHeaderBlock,
+        ProductTextWithMapBlock,
+        ProductIntegrationSliderBlock,
+        HomeProductVS2Block,
+        HomeDataBlock,
         {
           slug: 'heading',
           fields: [
+            {
+              name: 'hidden',
+              type: 'checkbox',
+              label: 'Hide this block on the website',
+              defaultValue: false,
+              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
+            },
             { name: 'headingText', type: 'text', required: true },
             { 
               name: 'level', 
@@ -114,18 +181,39 @@ export const Pages: CollectionConfig = {
         {
           slug: 'richText',
           fields: [
+            {
+              name: 'hidden',
+              type: 'checkbox',
+              label: 'Hide this block on the website',
+              defaultValue: false,
+              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
+            },
             { name: 'content', type: 'richText', required: true }
           ]
         },
         {
           slug: 'image',
           fields: [
+            {
+              name: 'hidden',
+              type: 'checkbox',
+              label: 'Hide this block on the website',
+              defaultValue: false,
+              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
+            },
             { name: 'image', type: 'upload', relationTo: 'media', required: true }
           ]
         },
         {
           slug: 'callToAction',
           fields: [
+            {
+              name: 'hidden',
+              type: 'checkbox',
+              label: 'Hide this block on the website',
+              defaultValue: false,
+              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
+            },
             { name: 'label', type: 'text', required: true },
             { name: 'url', type: 'text', required: true }
           ]

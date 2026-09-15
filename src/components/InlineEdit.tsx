@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 interface InlineEditProps {
   pageId?: string
@@ -18,25 +18,40 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
   className = '',
 }) => {
   const [isSaving, setIsSaving] = useState(false)
+  const [canEdit, setCanEdit] = useState(false)
   const textRef = useRef(initialText)
 
+  useEffect(() => {
+    // 1. If we are in the Payload Live Preview iframe, we are definitely authenticated as an admin
+    if (window !== window.parent) {
+      setCanEdit(true)
+      return
+    }
+
+    // 2. Otherwise, ping Payload to see if we have an active admin session
+    fetch('/api/users/me')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user) {
+          setCanEdit(true)
+        }
+      })
+      .catch((err) => console.error('Failed to check Payload auth session:', err))
+  }, [])
+
   const handleBlur = async (e: React.FocusEvent<HTMLElement>) => {
+    if (!canEdit) return
     const newText = e.currentTarget.textContent || ''
     if (newText === textRef.current) return
 
-    // 1. Are we inside the Payload Live Preview iframe?
     const inIframe = window !== window.parent
 
     if (inIframe) {
-      // If we are in the Admin panel iframe, we MUST update the React Hook Form in the sidebar
-      // otherwise clicking 'Save' will overwrite the database with the sidebar's stale data.
       try {
         const parentDoc = window.parent.document
-        // Payload v3 inputs typically use name="path" e.g. name="content.0.title"
         const input = parentDoc.querySelector(`[name="${fieldPath}"]`) as HTMLInputElement | HTMLTextAreaElement
         
         if (input) {
-          // React overrides standard input setters, so we must call the native setter to trigger events properly
           const nativeSetter = Object.getOwnPropertyDescriptor(
             window[input.tagName === 'TEXTAREA' ? 'HTMLTextAreaElement' : 'HTMLInputElement'].prototype,
             'value'
@@ -44,13 +59,12 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
           
           if (nativeSetter) {
             nativeSetter.call(input, newText)
-            // Dispatch input event for React Hook Form to catch it
             input.dispatchEvent(new Event('input', { bubbles: true }))
             input.dispatchEvent(new Event('change', { bubbles: true }))
           }
           
           textRef.current = newText
-          return // Successfully updated parent form, stop here so user can click Save in sidebar.
+          return
         } else {
           console.warn(`Could not find parent input for ${fieldPath}`)
         }
@@ -59,7 +73,6 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
       }
     }
 
-    // 2. If we are NOT in the iframe (viewing the live site), or parent update failed, use API
     if (!pageId) {
       console.warn('No pageId provided to InlineEdit, cannot save.')
       return
@@ -82,10 +95,15 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
       textRef.current = newText
     } catch (err) {
       console.error('Error saving inline edit:', err)
-      e.currentTarget.textContent = textRef.current // Revert on failure
+      e.currentTarget.textContent = textRef.current
     } finally {
       setIsSaving(false)
     }
+  }
+
+  // If not authenticated, render exactly like a normal static text element
+  if (!canEdit) {
+    return <Tag className={className}>{initialText}</Tag>
   }
 
   const editableClasses = 'hover:outline hover:outline-2 hover:outline-blue-400 hover:bg-blue-50/50 cursor-text transition-all rounded px-1 -mx-1'

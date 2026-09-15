@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { NextResponse } from 'next/server'
+import { headers } from 'next/headers'
 
 // Helper to set nested object properties via dot notation
 function setNestedProperty(obj: any, path: string, value: any) {
@@ -23,6 +24,15 @@ function setNestedProperty(obj: any, path: string, value: any) {
 export async function POST(req: Request) {
   try {
     const payload = await getPayload({ config })
+    
+    // Authenticate request using Payload's token
+    const reqHeaders = await headers()
+    const { user } = await payload.auth({ headers: reqHeaders })
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized: You must be logged in to edit.' }, { status: 401 })
+    }
+
     const body = await req.json()
     const { collection, id, path, value } = body
 

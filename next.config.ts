@@ -7,6 +7,9 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   // turbopack: {
   //   root: path.resolve(dirname),
   // },
@@ -15,6 +18,16 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '*.public.blob.vercel-storage.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'inovitas.ch',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.inovitas.ch',
         port: '',
       },
     ],

@@ -1,0 +1,82 @@
+{
+  "de": [
+    {
+      "title": "Neues Add-On 'Erweiterte Suche' ab sofort verfügbar",
+      "link": "https://www.infra3d.com/de/news/erweiterte-suche",
+      "pubDate": "2026-09-10T10:00:00Z",
+      "image": "/news-1.png"
+    },
+    {
+      "title": "Erfolgreicher infra3D Workshop in Zürich",
+      "link": "https://www.infra3d.com/de/news/workshop-zuerich",
+      "pubDate": "2026-08-22T08:30:00Z",
+      "image": "/news-2.png"
+    },
+    {
+      "title": "infra3D Administration: Neue Funktionen",
+      "link": "https://www.infra3d.com/de/news/admin-funktionen",
+      "pubDate": "2026-07-15T14:00:00Z",
+      "image": "/news/infra3d-administration.png"
+    }
+  ],
+  "en": [
+    {
+      "title": "New Add-On 'Advanced Search' available now",
+      "link": "https://www.infra3d.com/en/news/advanced-search",
+      "pubDate": "2026-09-10T10:00:00Z",
+      "image": "/news-1.png"
+    },
+    {
+      "title": "Successful infra3D Workshop in Zurich",
+      "link": "https://www.infra3d.com/en/news/workshop-zurich",
+      "pubDate": "2026-08-22T08:30:00Z",
+      "image": "/news-2.png"
+    },
+    {
+      "title": "infra3D Administration: New Features",
+      "link": "https://www.infra3d.com/en/news/admin-features",
+      "pubDate": "2026-07-15T14:00:00Z",
+      "image": "/news/infra3d-administration.png"
+    }
+  ],
+  "fr": [
+    {
+      "title": "Nouveau module complémentaire 'Recherche avancée' disponible",
+      "link": "https://www.infra3d.com/fr/news/recherche-avancee",
+      "pubDate": "2026-09-10T10:00:00Z",
+      "image": "/news-1.png"
+    },
+    {
+      "title": "Atelier infra3D réussi à Zurich",
+      "link": "https://www.infra3d.com/fr/news/atelier-zurich",
+      "pubDate": "2026-08-22T08:30:00Z",
+      "image": "/news-2.png"
+    },
+    {
+      "title": "Administration infra3D: Nouvelles fonctionnalités",
+      "link": "https://www.infra3d.com/fr/news/fonctions-admin",
+      "pubDate": "2026-07-15T14:00:00Z",
+      "image": "/news/infra3d-administration.png"
+    }
+  ],
+  "it": [
+    {
+      "title": "Nuovo Add-On 'Ricerca Avanzata' disponibile",
+      "link": "https://www.infra3d.com/it/news/ricerca-avanzata",
+      "pubDate": "2026-09-10T10:00:00Z",
+      "image": "/news-1.png"
+    },
+    {
+      "title": "Workshop infra3D di successo a Zurigo",
+      "link": "https://www.infra3d.com/it/news/workshop-zurigo",
+      "pubDate": "2026-08-22T08:30:00Z",
+      "image": "/news-2.png"
+    },
+    {
+      "title": "Amministrazione infra3D: Nuove Funzionalità",
+      "link": "https://www.infra3d.com/it/news/funzioni-admin",
+      "pubDate": "2026-07-15T14:00:00Z",
+      "image": "/news/infra3d-administration.png"
+    }
+  ]
+}

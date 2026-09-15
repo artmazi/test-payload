@@ -20,18 +20,5 @@ export const HomeNewsBlock: Block = {
       name: 'title',
       type: 'text',
     },
-    {
-      name: 'news',
-      type: 'array',
-      labels: {
-        singular: 'News Item',
-        plural: 'News Items',
-      },
-      fields: [
-        { name: 'title', type: 'text' },
-        { name: 'date', type: 'text' },
-        { name: 'link', type: 'text' }
-      ],
-    },
   ],
 }

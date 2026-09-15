@@ -256,14 +256,6 @@ export interface Page {
              */
             hideBlock?: boolean | null;
             title?: string | null;
-            news?:
-              | {
-                  title?: string | null;
-                  date?: string | null;
-                  link?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeNews';
@@ -903,14 +895,6 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               hideBlock?: T;
               title?: T;
-              news?:
-                | T
-                | {
-                    title?: T;
-                    date?: T;
-                    link?: T;
-                    id?: T;
-                  };
               id?: T;
               blockName?: T;
             };

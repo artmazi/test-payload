@@ -4,7 +4,8 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-const en = [], de = [], fr = [], RssNews = [];
+import newsDataJson from '@/data/news.json';
+import { usePathname } from 'next/navigation';
 
 type ParsedNews = {
 	title: string;
@@ -13,25 +14,29 @@ type ParsedNews = {
 	img: { url: string; CSSClasses: string } | null;
 };
 
-
 const HomeNews = ({ data }: { data: any }) => {
 	const { i18n } = useTranslation();
+	const pathname = usePathname();
 	const [newsData, setNewsData] = useState<ParsedNews[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+
 	useEffect(() => {
 		setIsLoading(true);
 		try {
-			const lang = i18n.language || 'en';
-			let rawNews = en;
-			if (lang.startsWith('de')) {
-				rawNews = de;
-			} else if (lang.startsWith('fr')) {
-				rawNews = fr;
-			}
+			// Determine current language, fallback to 'en'
+			const pathLang = pathname ? pathname.split('/')[1] : null;
+			let lang = pathLang || i18n.language || 'en';
+			
+			// Normalize language to match json keys
+			if (lang.startsWith('de')) lang = 'de';
+			else if (lang.startsWith('fr')) lang = 'fr';
+			else if (lang.startsWith('it')) lang = 'it';
+			else lang = 'en';
 
-			const parsedNews: ParsedNews[] = (rawNews || []).map((item: RssNews) => {
+			const rawNews = (newsDataJson as any)[lang] || [];
+
+			const parsedNews: ParsedNews[] = rawNews.map((item: any) => {
 				const date = item.pubDate ? dayjs(item.pubDate).format('DD.MM.YYYY') : '';
-				
 				return {
 					title: item.title,
 					link: item.link,
@@ -46,10 +51,9 @@ const HomeNews = ({ data }: { data: any }) => {
 		} finally {
 			setIsLoading(false);
 		}
-	}, [i18n.language]);
+	}, [i18n.language, pathname]);
 
-	// Use data.news ONLY if RSS feed failed to load anything
-	const displayNews = (!isLoading && newsData.length === 0) ? (data?.news?.slice(0, 3) || []) : newsData.slice(0, 3);
+	const displayNews = newsData.slice(0, 3);
 
 	if (isLoading) {
 		return (
@@ -85,7 +89,7 @@ const HomeNews = ({ data }: { data: any }) => {
 					<h1 className="text-h1 font-black relative inline-block">{data?.title}</h1>
 				</div>
 				<div className="grid lg:grid-cols-4 grid-cols-1 gap-8">
-					{(newsData || []).map((news: ParsedNews, i: number) => (
+					{displayNews.map((news: ParsedNews, i: number) => (
 						<article
 							key={i}
 							className="flex flex-col rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white group h-full">
@@ -100,8 +104,6 @@ const HomeNews = ({ data }: { data: any }) => {
 									<div className="w-full shrink-0 overflow-hidden bg-slate-100 border-b border-slate-100">
 										{ (news.img.url) ? <Image 
 											src={news.img.url} 
-											alt="" 
-											className={`w-full h-auto group-hover:scale-105 transition-transform duration-500 ${news.img.CSSClasses}`?.url || news.img.url} 
 											alt="" 
 											className={`w-full h-auto group-hover:scale-105 transition-transform duration-500 ${news.img.CSSClasses}`}
 										 width={800} height={600} /> : null }

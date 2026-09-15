@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 
 interface InlineEditProps {
   pageId?: string
@@ -22,9 +22,44 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
 
   const handleBlur = async (e: React.FocusEvent<HTMLElement>) => {
     const newText = e.currentTarget.textContent || ''
-    
-    // Only save if it actually changed
     if (newText === textRef.current) return
+
+    // 1. Are we inside the Payload Live Preview iframe?
+    const inIframe = window !== window.parent
+
+    if (inIframe) {
+      // If we are in the Admin panel iframe, we MUST update the React Hook Form in the sidebar
+      // otherwise clicking 'Save' will overwrite the database with the sidebar's stale data.
+      try {
+        const parentDoc = window.parent.document
+        // Payload v3 inputs typically use name="path" e.g. name="content.0.title"
+        const input = parentDoc.querySelector(`[name="${fieldPath}"]`) as HTMLInputElement | HTMLTextAreaElement
+        
+        if (input) {
+          // React overrides standard input setters, so we must call the native setter to trigger events properly
+          const nativeSetter = Object.getOwnPropertyDescriptor(
+            window[input.tagName === 'TEXTAREA' ? 'HTMLTextAreaElement' : 'HTMLInputElement'].prototype,
+            'value'
+          )?.set
+          
+          if (nativeSetter) {
+            nativeSetter.call(input, newText)
+            // Dispatch input event for React Hook Form to catch it
+            input.dispatchEvent(new Event('input', { bubbles: true }))
+            input.dispatchEvent(new Event('change', { bubbles: true }))
+          }
+          
+          textRef.current = newText
+          return // Successfully updated parent form, stop here so user can click Save in sidebar.
+        } else {
+          console.warn(`Could not find parent input for ${fieldPath}`)
+        }
+      } catch (err) {
+        console.warn('Could not access parent document (cross-origin or error):', err)
+      }
+    }
+
+    // 2. If we are NOT in the iframe (viewing the live site), or parent update failed, use API
     if (!pageId) {
       console.warn('No pageId provided to InlineEdit, cannot save.')
       return
@@ -43,21 +78,16 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
         }),
       })
       
-      if (!res.ok) {
-        throw new Error('Failed to save')
-      }
-      
+      if (!res.ok) throw new Error('Failed to save')
       textRef.current = newText
     } catch (err) {
       console.error('Error saving inline edit:', err)
-      // Revert text on failure
-      e.currentTarget.textContent = textRef.current
+      e.currentTarget.textContent = textRef.current // Revert on failure
     } finally {
       setIsSaving(false)
     }
   }
 
-  // A visual indicator so we know it's editable
   const editableClasses = 'hover:outline hover:outline-2 hover:outline-blue-400 hover:bg-blue-50/50 cursor-text transition-all rounded px-1 -mx-1'
 
   return (

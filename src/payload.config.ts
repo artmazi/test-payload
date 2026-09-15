@@ -17,9 +17,6 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
-    components: {
-      providers: ['@/components/AdminPanelTweaks'],
-    },
     livePreview: {
       breakpoints: [
         {

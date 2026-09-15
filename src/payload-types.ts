@@ -455,17 +455,13 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
+            title?: string | null;
             items?:
               | {
                   text?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            infoHero?: string | null;
-            title?: string | null;
-            oneRow?: string | null;
-            className?: string | null;
-            hideCheck?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeInfo';
@@ -1066,17 +1062,13 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
+              title?: T;
               items?:
                 | T
                 | {
                     text?: T;
                     id?: T;
                   };
-              infoHero?: T;
-              title?: T;
-              oneRow?: T;
-              className?: T;
-              hideCheck?: T;
               id?: T;
               blockName?: T;
             };

@@ -17,31 +17,19 @@ export const HomeInfoBlock: Block = {
       },
     },
     {
-      name: 'items',
-      type: 'array',
-      fields: [
-        { name: 'text', type: 'text' }
-      ]
-    },
-    {
-      name: 'infoHero',
-      type: 'text',
-    },
-    {
       name: 'title',
       type: 'text',
     },
     {
-      name: 'oneRow',
-      type: 'text',
-    },
-    {
-      name: 'className',
-      type: 'text',
-    },
-    {
-      name: 'hideCheck',
-      type: 'text',
+      name: 'items',
+      type: 'array',
+      labels: {
+        singular: 'Item',
+        plural: 'Items',
+      },
+      fields: [
+        { name: 'text', type: 'text' }
+      ]
     },
   ],
 }

@@ -35,7 +35,7 @@ const Button = ({
 			type={type}
 			onClick={onClick}
 			disabled={disabled}
-			className={clsx('hover:opacity-90 transition-all', `${btnStyles[color]} ${btnStyles[variant]}`, className)}
+			className={clsx('hover:opacity-90 transition-all cursor-pointer', `${btnStyles[color]} ${btnStyles[variant]}`, className)}
 			{...rest}>
 			{children}
 		</button>

@@ -17,9 +17,10 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
+    components: {
+      providers: ['@/components/AdminPanelTweaks'],
+    },
     livePreview: {
-      url: process.env.PAYLOAD_URL || 'http://localhost:3000',
-      collections: ['pages'],
       breakpoints: [
         {
           label: 'Mobile',

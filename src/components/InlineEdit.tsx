@@ -41,7 +41,7 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
 
   const handleBlur = async (e: React.FocusEvent<HTMLElement>) => {
     if (!canEdit) return
-    const newText = e.currentTarget.textContent || ''
+    const newText = e.currentTarget.innerText || ''
     if (newText === textRef.current) return
 
     const inIframe = window !== window.parent
@@ -95,7 +95,7 @@ export const InlineEdit: React.FC<InlineEditProps> = ({
       textRef.current = newText
     } catch (err) {
       console.error('Error saving inline edit:', err)
-      e.currentTarget.textContent = textRef.current
+      e.currentTarget.innerText = textRef.current
     } finally {
       setIsSaving(false)
     }

@@ -21,14 +21,14 @@ const HomeHero = ({ data }: { data: any }) => {
 						fieldPath={`content.${data.blockIndex}.title`}
 						initialText={data.title || ''}
 						tag="h1"
-						className="text-h1 font-black"
+						className="text-h1 font-black whitespace-pre-wrap"
 					/>
 					<InlineEdit
 						pageId={data.pageId}
 						fieldPath={`content.${data.blockIndex}.description`}
 						initialText={data.description || ''}
 						tag="h3"
-						className="text-h3 font-medium italic text-sky"
+						className="text-h3 font-medium italic text-sky whitespace-pre-wrap"
 					/>
 				</div>
 				<div>
@@ -37,7 +37,7 @@ const HomeHero = ({ data }: { data: any }) => {
 						fieldPath={`content.${data.blockIndex}.content`}
 						initialText={data.content || ''}
 						tag="p"
-						className="text-b1 text-gray"
+						className="text-b1 text-gray whitespace-pre-wrap"
 					/>
 				</div>
 				<div className="flex gap-4">

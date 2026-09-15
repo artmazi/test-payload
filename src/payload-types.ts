@@ -455,6 +455,7 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
+            bgImage?: (string | null) | Media;
             title?: string | null;
             items?:
               | {
@@ -1062,6 +1063,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
+              bgImage?: T;
               title?: T;
               items?:
                 | T

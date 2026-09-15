@@ -17,6 +17,12 @@ export const HomeInfoBlock: Block = {
       },
     },
     {
+      name: 'bgImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Background Image',
+    },
+    {
       name: 'title',
       type: 'text',
     },

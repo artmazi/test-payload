@@ -8,10 +8,15 @@ import checkOrange from '@/assets/check-orange.svg';
 import { md2html } from '@/helpers/markdown';
 
 const HomeInfo = ({ data }: { data: any }) => {
+	const bgUrl = data.bgImage?.url || (typeof data.bgImage === 'string' ? data.bgImage : null);
+
 	return (
 		<section
 			id="info"
-			style={{ backgroundColor: '#002F47' }}
+			style={{ 
+				backgroundColor: '#002F47',
+				...(bgUrl ? { backgroundImage: `url('${bgUrl}')` } : {})
+			}}
 			className="bg-fixed bg-right bg-no-repeat bg-cover">
 			<div className="container flex flex-col w-full max-w-[1200px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-4 text-white">
 				<p className="text-h3 font-semibold">{data.title}</p>

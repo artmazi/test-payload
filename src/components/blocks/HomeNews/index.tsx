@@ -1,11 +1,9 @@
 "use client";
 
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import { en, de, fr } from '../../../data/news';
-import { usePathname } from 'next/navigation';
+import { en, de, fr, News as RssNews } from '../../../data/news';
 
 type ParsedNews = {
 	title: string;
@@ -16,27 +14,23 @@ type ParsedNews = {
 
 const HomeNews = ({ data }: { data: any }) => {
 	const { i18n } = useTranslation();
-	const pathname = usePathname();
 	const [newsData, setNewsData] = useState<ParsedNews[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		setIsLoading(true);
 		try {
-			// Determine current language, fallback to 'en'
-			const pathLang = pathname ? pathname.split('/')[1] : null;
-			let lang = pathLang || i18n.language || 'en';
-			
-			// Normalize language to match json keys
-			if (lang.startsWith('de')) lang = 'de';
-			else if (lang.startsWith('fr')) lang = 'fr';
-			else lang = 'en'; // fallback for 'it' or others since only en, de, fr exist in news.ts
+			const lang = i18n.language || 'en';
+			let rawNews = en;
+			if (lang.startsWith('de')) {
+				rawNews = de;
+			} else if (lang.startsWith('fr')) {
+				rawNews = fr;
+			}
 
-			const newsSources: Record<string, any[]> = { en, de, fr };
-			const rawNews = newsSources[lang] || en;
-
-			const parsedNews: ParsedNews[] = rawNews.map((item: any) => {
+			const parsedNews: ParsedNews[] = rawNews.map((item: RssNews) => {
 				const date = item.pubDate ? dayjs(item.pubDate).format('DD.MM.YYYY') : '';
+				
 				return {
 					title: item.title,
 					link: item.link,
@@ -51,9 +45,7 @@ const HomeNews = ({ data }: { data: any }) => {
 		} finally {
 			setIsLoading(false);
 		}
-	}, [i18n.language, pathname]);
-
-	const displayNews = newsData.slice(0, 3);
+	}, [i18n.language]);
 
 	if (isLoading) {
 		return (
@@ -89,7 +81,7 @@ const HomeNews = ({ data }: { data: any }) => {
 					<h1 className="text-h1 font-black relative inline-block">{data?.title}</h1>
 				</div>
 				<div className="grid lg:grid-cols-4 grid-cols-1 gap-8">
-					{displayNews.map((news: ParsedNews, i: number) => (
+					{newsData.map((news: ParsedNews, i: number) => (
 						<article
 							key={i}
 							className="flex flex-col rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-white group h-full">
@@ -102,11 +94,11 @@ const HomeNews = ({ data }: { data: any }) => {
 								{/* Image Section */}
 								{news.img ? (
 									<div className="w-full shrink-0 overflow-hidden bg-slate-100 border-b border-slate-100">
-										{ (news.img.url) ? <Image 
+										<img 
 											src={news.img.url} 
 											alt="" 
 											className={`w-full h-auto group-hover:scale-105 transition-transform duration-500 ${news.img.CSSClasses}`}
-										 width={800} height={600} /> : null }
+										/>
 									</div>
 								) : (
 									<div className="w-full h-2 shrink-0 bg-teal"></div>

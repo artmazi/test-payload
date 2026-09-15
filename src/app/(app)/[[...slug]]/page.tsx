@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation'
-import { RenderBlocks } from '@/components/blocks/RenderBlocks'
+import { LivePreviewWrapper } from '@/components/LivePreviewWrapper'
 
 export async function generateStaticParams() {
   try {
@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   const { slug } = await params;
   const parsedSlug = slug ? slug.join('/') : 'home'
   const payload = await getPayload({ config })
-  
+
   const pages = await payload.find({
     collection: 'pages',
     depth: 2,
@@ -46,8 +46,8 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   }
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-4xl">
-      <RenderBlocks blocks={page.content || []} />
+    <main>
+      <LivePreviewWrapper initialPage={page} />
     </main>
   )
 }

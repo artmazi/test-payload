@@ -33,28 +33,30 @@ import ProductProductHeader from './ProductProductHeader';
 import ProductTextWithPicture from './ProductTextWithPicture';
 
 
-export const RenderBlocks = ({ blocks }: { blocks: any[] }) => {
+export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: string }) => {
   if (!blocks || !Array.isArray(blocks)) return null
 
   return (
     <div className="flex flex-col gap-8">
       {blocks.map((block, i) => {
+        // Inject pageId and blockIndex into block data
+        const blockWithMeta = { ...block, pageId, blockIndex: i }
         const renderBlock = () => {
           switch (block.blockType) {
             case 'heading':
-              return <HeadingBlock {...block} />
+              return <HeadingBlock {...blockWithMeta} />
             case 'richText':
-              return <RichTextBlock {...block} />
+              return <RichTextBlock {...blockWithMeta} />
             case 'image':
-              return <ImageBlock {...block} />
+              return <ImageBlock {...blockWithMeta} />
             case 'callToAction':
-              return <CallToActionBlock {...block} />
+              return <CallToActionBlock {...blockWithMeta} />
             case 'homeUseCases':
-              return <HomeUseCases data={block} />
+              return <HomeUseCases data={blockWithMeta} />
             case 'homeHero':
-              return <HomeHero data={block} />
+              return <HomeHero data={blockWithMeta} />
             case 'homeProductVS':
-              return <HomeProductVS data={block} />
+              return <HomeProductVS data={blockWithMeta} />
             case 'homeSlider':
               return <HomeSlider data={block} />
             case 'homeFacts':

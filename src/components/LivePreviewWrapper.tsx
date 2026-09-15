@@ -10,5 +10,5 @@ export const LivePreviewWrapper = ({ initialPage }: { initialPage: any }) => {
     initialData: initialPage,
   })
 
-  return <RenderBlocks blocks={data?.content || []} />
+  return <RenderBlocks pageId={initialPage.id} blocks={data?.content || []} />
 }

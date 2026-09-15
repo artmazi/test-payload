@@ -83,6 +83,7 @@ export const Pages: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
@@ -112,10 +113,12 @@ export const Pages: CollectionConfig = {
         {
           name: 'title',
           type: 'text',
+          localized: true,
         },
         {
           name: 'description',
           type: 'textarea',
+          localized: true,
         },
       ],
       admin: {
@@ -125,6 +128,7 @@ export const Pages: CollectionConfig = {
     {
       name: 'content',
       type: 'blocks',
+      localized: true,
       blocks: [
         HomeHeroBlock,
         HomeContentVersionsBlock,

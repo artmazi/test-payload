@@ -1,0 +1,33 @@
+.inputField label {
+  font-size: 12px;
+}
+.inputField input {
+  padding: 12px 10px;
+  font-size: 14px;
+}
+.phoneNumber {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  width: 100% !important;
+  height: 44px !important;
+  border: 0px;
+  border-radius: 4px;
+  outline-color: #0d92d2;
+}
+.phoneNumberDark{
+  background-color: #000;
+  outline-color: transparent;
+  color: white !important;
+}
+.privacyLabelStepper {
+  font-size: 12px !important;
+}
+.legendTooltip {
+  padding: 12px !important;
+  background-color: #be64ac !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  line-height: 20px !important;
+  letter-spacing: 0.05em !important;
+  max-width: 250px !important;
+}

@@ -21,8 +21,11 @@ export const Pages: CollectionConfig = {
     groupBy: true,
     defaultColumns: ['title', 'category', 'slug', '_status'],
     livePreview: {
-      url: async ({ data, locale, payload }) => {
-        const baseUrl = process.env.PAYLOAD_URL || 'http://localhost:3000'
+      url: async ({ data, locale, payload, req }) => {
+        // Same origin as the admin by default (works on localhost, Vercel previews and production); PAYLOAD_URL overrides
+        const host = req.headers.get('x-forwarded-host') || req.headers.get('host')
+        const proto = req.headers.get('x-forwarded-proto') || (host?.startsWith('localhost') ? 'http' : 'https')
+        const baseUrl = process.env.PAYLOAD_URL || (host ? `${proto}://${host}` : 'http://localhost:3000')
         const categoryId = typeof data?.category === 'object' ? data.category?.id : data?.category
         const category = categoryId
           ? await payload.findByID({ collection: 'categories', id: categoryId, depth: 0 }).catch(() => null)

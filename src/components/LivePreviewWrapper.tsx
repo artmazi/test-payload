@@ -5,13 +5,13 @@ import { payloadEditable, VisualEditing } from '@payload-inline-visual-editor/re
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 
 export const LivePreviewWrapper = ({ initialPage }: { initialPage: any }) => {
+  // The preview iframe is served by the same app as the admin, so its own origin is the Payload server
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || (typeof window !== 'undefined' ? window.location.origin : '')
   const { data } = useLivePreview({
-    serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+    serverURL,
     depth: 2,
     initialData: initialPage,
   })
-
-  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
   return (
     <div {...payloadEditable.scope({ collection: 'pages', id: initialPage.id })}>

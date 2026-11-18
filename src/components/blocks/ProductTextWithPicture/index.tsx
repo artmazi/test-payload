@@ -1,10 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
-import { md2htmlBreaks } from '@/helpers/markdown';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import Image from 'next/image';
 import React from 'react';
+import { hasRichText, richTextToHtml } from '@/helpers/richText';
 
 // lg flex-grow ratios [picture, text] per "split" option; basis-0 makes the grow values the real width ratio
 const splits: Record<string, [string, string]> = {
@@ -37,7 +37,7 @@ const ProductTextWithPicture = ({ data }: { data: any }) => {
 							<div
 								className={textStyles[row.textStyle] || textStyles.body}
 								{...payloadEditable(`content.${data.blockIndex}.rows.${i}.content`)}
-								dangerouslySetInnerHTML={{ __html: md2htmlBreaks(row.content) }}
+								dangerouslySetInnerHTML={{ __html: richTextToHtml(row.content) }}
 							/>
 							{row.button?.label && row.button?.link && (
 								<a
@@ -45,7 +45,7 @@ const ProductTextWithPicture = ({ data }: { data: any }) => {
 									{...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
 									className="w-fit mt-2 border border-sky px-3 py-2 text-b2 text-black transition-colors hover:bg-sky hover:text-white"
 								>
-									{row.button.label}
+									<span {...payloadEditable(`content.${data.blockIndex}.rows.${i}.button.label`)}>{row.button.label}</span>
 								</a>
 							)}
 						</div>
@@ -75,7 +75,7 @@ const ProductTextWithPicture = ({ data }: { data: any }) => {
 						</div>
 					);
 				})}
-				{data.text && <p className="text-center" dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data.text) }} />}
+				{hasRichText(data.text) && <p className="text-center" {...payloadEditable(`content.${data.blockIndex}.text`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data.text) }} />}
 			</section>
 		</div>
 	);

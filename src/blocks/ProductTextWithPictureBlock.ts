@@ -56,9 +56,9 @@ export const ProductTextWithPictureBlock: Block = {
               defaultValue: 'body',
               options: [
                 { label: 'Section title (centered)', value: 'sectionTitle' },
-                { label: 'Large heading (**bold** = blue)', value: 'heading' },
+                { label: 'Large heading (bold = blue)', value: 'heading' },
                 { label: 'Subheading', value: 'subheading' },
-                { label: 'Body text (**bold** = bold)', value: 'body' },
+                { label: 'Body text', value: 'body' },
               ],
               admin: { width: '50%' },
             },
@@ -80,7 +80,7 @@ export const ProductTextWithPictureBlock: Block = {
           },
         },
         { name: 'title', type: 'text', admin: { description: 'Optional subheading above the text.' } },
-        { name: 'content', type: 'textarea', required: true, admin: { description: 'Markdown: **bold**, [link](/path), lines starting with "- " form a bullet list. Empty lines start a new paragraph.' } },
+        { name: 'content', type: 'richText', required: true },
         {
           name: 'button',
           type: 'group',
@@ -103,6 +103,6 @@ export const ProductTextWithPictureBlock: Block = {
         },
       ],
     },
-    { name: 'text', type: 'textarea', label: 'Centered note below', admin: { description: 'Optional. Markdown.' } },
+    { name: 'text', type: 'richText', label: 'Centered note below', admin: { description: 'Optional.' } },
   ],
 }

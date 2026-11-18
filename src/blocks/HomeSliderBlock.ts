@@ -16,7 +16,7 @@ export const HomeSliderBlock: Block = {
       },
     },
     { name: 'title', type: 'text' },
-    { name: 'description', type: 'textarea', admin: { description: '**bold** is highlighted; line breaks are kept.' } },
+    { name: 'description', type: 'richText', admin: { description: 'Bold text is highlighted.' } },
     {
       name: 'sliderItems',
       type: 'array',

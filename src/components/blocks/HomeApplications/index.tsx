@@ -103,12 +103,12 @@ const HomeApplications = ({ data }: { data: any }) => {
 										className="cursor-pointer gap-8 h-full flex flex-col relative rounded-md p-4 lg:p-8 w-full text-center justify-between border border-[#0000001A] ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)] [&>div>h3]:hover:!text-black overflow-hidden">
 										{i.leftText && (
 											<span className="absolute left-0 top-0 bg-sky text-white font-bold uppercase p-2">
-												{i.leftText}
+												<span {...payloadEditable(`content.${data.blockIndex}.items.${_i}.leftText`)}>{i.leftText}</span>
 											</span>
 										)}
 										{i.rightText && (
 											<span className="absolute right-0 top-0 bg-orange text-white font-bold uppercase p-2">
-												{i.rightText}
+												<span {...payloadEditable(`content.${data.blockIndex}.items.${_i}.rightText`)}>{i.rightText}</span>
 											</span>
 										)}
 										<div className="flex justify-center items-center flex-1">
@@ -137,12 +137,12 @@ const HomeApplications = ({ data }: { data: any }) => {
 										className="cursor-pointer gap-8 h-full flex flex-col relative rounded-md p-4 lg:p-8 w-full text-center justify-between border border-[#0000001A] ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)] [&>div>h3]:hover:!text-black overflow-hidden">
 										{i.leftText && (
 											<span className="absolute left-0 top-0 bg-sky text-white font-bold uppercase p-2">
-												{i.leftText}
+												<span {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.leftText`)}>{i.leftText}</span>
 											</span>
 										)}
 										{i.rightText && (
 											<span className="absolute right-0 top-0 bg-orange text-white font-bold uppercase p-2">
-												{i.rightText}
+												<span {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.rightText`)}>{i.rightText}</span>
 											</span>
 										)}
 										<div className="flex justify-center items-center flex-1">
@@ -152,8 +152,8 @@ const HomeApplications = ({ data }: { data: any }) => {
 											 width={800} height={600} /> : null }
 										</div>
 										<div className="flex gap-2 flex-col">
-											<h3 className="text-h3 font-black text-sky">{i.title}</h3>
-											<p className="text-b2 text-gray">{i.text}</p>
+											<h3 className="text-h3 font-black text-sky" {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.title`)}>{i.title}</h3>
+											<p className="text-b2 text-gray" {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.text`)}>{i.text}</p>
 										</div>
 									</div>
 								</SwiperSlide>
@@ -176,7 +176,7 @@ const HomeApplications = ({ data }: { data: any }) => {
 										className="w-fit"
 										color={data.button1Color ?? 'primary'}
 										onClick={() => window.open(data.contentButtonLink, '_blank')}>
-										{data.contentButton}
+										<span {...payloadEditable(`content.${data.blockIndex}.contentButton`)}>{data.contentButton}</span>
 									</Button>
 								)}
 								{data.button2 && (
@@ -184,7 +184,7 @@ const HomeApplications = ({ data }: { data: any }) => {
 										className="w-fit"
 										color="secondary"
 										onClick={() => window.open(data.button2Link, '_blank')}>
-										{data.button2}
+										<span {...payloadEditable(`content.${data.blockIndex}.button2`)}>{data.button2}</span>
 									</Button>
 								)}
 							</div>

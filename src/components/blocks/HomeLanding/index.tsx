@@ -53,7 +53,7 @@ const HomeLanding = ({ data }: { data: any }) => {
 									'group flex w-full items-center justify-between gap-4 rounded-2xl border px-5 py-4 md:px-7 md:py-6 text-left text-b1 md:text-[20px] font-medium backdrop-blur-md transition-all cursor-pointer',
 									open ? 'border-white bg-white/15' : 'border-white/60 bg-white/5 hover:border-white hover:bg-white/10'
 								)}>
-								{data.chooseCategory}
+								<span {...payloadEditable(`content.${data.blockIndex}.chooseCategory`)}>{data.chooseCategory}</span>
 								<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 transition-colors group-hover:bg-white/25">
 									<Chevron className={clsx('h-5 w-5 transition-transform duration-200', open && 'rotate-180')} />
 								</span>
@@ -67,7 +67,7 @@ const HomeLanding = ({ data }: { data: any }) => {
 											key={c.id ?? i}
 											href={c.url}
 											className="group/item flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-b2 font-medium transition-colors hover:bg-water hover:text-sky">
-											{c.title}
+											<span {...payloadEditable(`content.${data.blockIndex}.categories.${i}.title`)}>{c.title}</span>
 											<Chevron className="h-4 w-4 shrink-0 -rotate-90 text-sky opacity-0 transition-all group-hover/item:translate-x-0.5 group-hover/item:opacity-100" />
 										</Link>
 									))}
@@ -80,7 +80,7 @@ const HomeLanding = ({ data }: { data: any }) => {
 				<nav className="w-full text-center md:absolute bottom-8 left-0 gap-x-6 gap-y-2 md:gap-x-8 flex justify-center pb-4 md:pb-0 flex-wrap text-b3 text-white/70">
 					{data.links?.map((l: any, i: number) => (
 						<Link key={l.id ?? i} href={l.url} className="transition-colors hover:text-white">
-							{l.title}
+							<span {...payloadEditable(`content.${data.blockIndex}.links.${i}.title`)}>{l.title}</span>
 						</Link>
 					))}
 				</nav>

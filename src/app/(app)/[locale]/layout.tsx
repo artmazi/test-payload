@@ -7,6 +7,7 @@ import config from '@/payload.config'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import I18nProvider from '@/components/I18nProvider'
+import { adminBarBootScript } from '@/components/AdminBar'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,9 +58,12 @@ export default async function RootLayout({ children, params }: { children: React
       lang={locale}
       // Lets Next.js turn smooth scrolling off during route changes so page navigation stays instant
       data-scroll-behavior="smooth"
+      // The admin bar boot script may add a class before React hydrates
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script dangerouslySetInnerHTML={{ __html: adminBarBootScript }} />
         <I18nProvider locale={locale}>
           <Header categoryMenus={categoryMenus} />
           {children}

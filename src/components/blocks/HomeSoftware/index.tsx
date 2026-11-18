@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 import textLine from '@/assets/text-line.svg';
 import Button from '@/components/Button';
-import { md2htmlBreaks } from '@/helpers/markdown';
+import { richTextToHtml } from '@/helpers/richText';
 
 const HomeSoftware = ({ data }: { data: any }) => {
 	const router = useRouter();
@@ -59,7 +59,8 @@ const HomeSoftware = ({ data }: { data: any }) => {
 						<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.contentTitle`)}>{data.contentTitle}</h2>
 						<p
 							className="font-semibold text-b1 [&_strong]:font-semibold [&_strong]:text-orange"
-							dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data.content) }}
+							{...payloadEditable(`content.${data.blockIndex}.content`)}
+							dangerouslySetInnerHTML={{ __html: richTextToHtml(data.content) }}
 						/>
 						{data.contentButton && (
 							<Button
@@ -84,7 +85,7 @@ const HomeSoftware = ({ data }: { data: any }) => {
 										className="min-h-[250px] cursor-pointer ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)]">
 										<div className="flex flex-col relative rounded-md p-2 lg:p-8 w-full bg-teal text-center justify-between">
 											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))} alt="icon" className="max-h-[80px] my-16 lg:my-32"  width={800} height={600} /> : null }
-											<p className="md:text-sub text-b1 font-black text-white">{i.title}</p>
+											<p className="md:text-sub text-b1 font-black text-white" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title}</p>
 										</div>
 									</div>
 								</SwiperSlide>

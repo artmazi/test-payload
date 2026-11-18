@@ -52,7 +52,7 @@ const ContactButtons = ({ data }: { data: any }) => (
 						return (
 							<a key={i} href={href} className={button} {...extra}>
 								<Icon />
-								{b.label}
+								<span {...payloadEditable(`content.${data.blockIndex}.buttons.${i}.label`)}>{b.label}</span>
 							</a>
 						);
 					})}

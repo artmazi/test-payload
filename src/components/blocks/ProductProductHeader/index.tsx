@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 
 const ProductProductHeader = ({ data }: { data: any }) => {
 	const pathname = usePathname();
@@ -63,7 +64,7 @@ const ProductProductHeader = ({ data }: { data: any }) => {
 										? 'bg-white font-semibold text-teal shadow-[0_1px_3px_rgba(14,58,81,0.15)]'
 										: 'font-medium text-teal/60 hover:bg-white/60 hover:text-teal'
 								)}>
-								{m.name}
+								<span {...payloadEditable(`content.${data.blockIndex}.menu.${i}.name`)}>{m.name}</span>
 							</Link>
 						);
 					})}

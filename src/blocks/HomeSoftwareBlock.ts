@@ -21,7 +21,7 @@ export const HomeSoftwareBlock: Block = {
     },
     { name: 'title', type: 'text' },
     { name: 'contentTitle', type: 'textarea' },
-    { name: 'content', type: 'textarea', admin: { description: '**bold** is shown in orange; line breaks are kept.' } },
+    { name: 'content', type: 'richText', admin: { description: 'Bold text is shown in orange.' } },
     { name: 'contentImg', type: 'upload', relationTo: 'media' },
     {
       type: 'row',

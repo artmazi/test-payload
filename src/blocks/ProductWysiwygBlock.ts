@@ -30,7 +30,7 @@ export const ProductWysiwygBlock: Block = {
     },
     {
       name: 'content',
-      type: 'textarea',
+      type: 'richText',
     },
   ],
 }

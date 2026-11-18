@@ -20,11 +20,11 @@ const LinkTiles = ({ data }: { data: any }) => (
 				{(data.items || []).map((i: any, _i: number) =>
 					i.link ? (
 						<Link key={_i} href={i.link} className={clsx(tile, 'transition-colors hover:border-sky')}>
-							{i.label}
+							<span {...payloadEditable(`content.${data.blockIndex}.items.${_i}.label`)}>{i.label}</span>
 						</Link>
 					) : (
 						<div key={_i} className={tile}>
-							{i.label}
+							<span {...payloadEditable(`content.${data.blockIndex}.items.${_i}.label`)}>{i.label}</span>
 						</div>
 					),
 				)}

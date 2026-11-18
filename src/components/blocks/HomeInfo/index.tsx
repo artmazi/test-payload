@@ -6,8 +6,8 @@ import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 import checkOrange from '@/assets/check-orange.svg';
-import { md2html } from '@/helpers/markdown';
 import { bgImage } from '@/helpers/bgImage';
+import { richTextToHtml } from '@/helpers/richText';
 
 const HomeInfo = ({ data }: { data: any }) => {
 	const bgUrl = data.bgImage?.url || (typeof data.bgImage === 'string' ? data.bgImage : null);
@@ -31,7 +31,7 @@ const HomeInfo = ({ data }: { data: any }) => {
 							{ (checkOrange?.url || checkOrange) ? <Image src={checkOrange?.url || checkOrange} alt="Check" className="h-[24px] pr-2 w-auto flex-shrink-0"  width={24} height={24} /> : null }
 							<div
 								className="[&>a]:cursor-pointer [&>a]:underline [&>a]:text-red-500" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.text`)}
-								dangerouslySetInnerHTML={{ __html: md2html(i.text || i) }}
+								dangerouslySetInnerHTML={{ __html: richTextToHtml(i.text ?? i) }}
 							/>
 						</div>
 					))}

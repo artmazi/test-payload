@@ -26,14 +26,14 @@ export const HomeFactsBlock: Block = {
     {
       name: 'factsMosaic',
       type: 'group',
-      admin: { description: 'Tiles next to the blue box. **bold** makes the number large (e.g. **322**t/Jahr); line breaks are kept.' },
+      admin: { description: 'Tiles next to the blue box. Bold text makes the number large (e.g. 322 in bold, then t/Jahr).' },
       fields: [
-        { name: 'fm1', type: 'group', fields: [{ name: 'title', type: 'text' }, { name: 'text', type: 'textarea' }] },
+        { name: 'fm1', type: 'group', fields: [{ name: 'title', type: 'text' }, { name: 'text', type: 'richText' }] },
         { name: 'fm2', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'text' }, { name: 'text3', type: 'text' }] },
         { name: 'fm3', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'text' }] },
-        { name: 'fm4', type: 'group', fields: [{ name: 'text1', type: 'textarea' }] },
+        { name: 'fm4', type: 'group', fields: [{ name: 'text1', type: 'richText' }] },
         { name: 'fm5', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'text' }] },
-        { name: 'fm6', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'text' }, { name: 'text3', type: 'text' }] },
+        { name: 'fm6', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'richText' }, { name: 'text3', type: 'text' }] },
         { name: 'fm7', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'text' }, { name: 'text3', type: 'text' }] },
         { name: 'fm8', type: 'group', fields: [{ name: 'text1', type: 'text' }, { name: 'text2', type: 'text' }, { name: 'text3', type: 'text' }] },
       ],

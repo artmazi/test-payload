@@ -9,7 +9,7 @@ import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 import quote from '@/assets/quote.webp';
-import { md2htmlBreaks } from '@/helpers/markdown';
+import { richTextToHtml } from '@/helpers/richText';
 
 const HomeSlider = ({ data }: { data: any }) => {
 	const logosSwiperOptions = {
@@ -61,7 +61,7 @@ const HomeSlider = ({ data }: { data: any }) => {
 		<section id="slider" className="flex flex-col pt-16 pb-0 md:pb-16 gap-4 md:gap-16">
 			<div className="container flex flex-col w-full max-w-[1200px] gap-8 mx-auto md:px-16 xl:px-30 px-4 text-center">
 				<h1 className="text-h1 font-black" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data.title}</h1>
-				<h3 className="text-h3 font-normal text-gray" dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data.description) }} />
+				<h3 className="text-h3 font-normal text-gray" {...payloadEditable(`content.${data.blockIndex}.description`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data.description) }} />
 			</div>
 			<div className="flex">
 				<Swiper {...logosSwiperOptions} className="mySwiper">

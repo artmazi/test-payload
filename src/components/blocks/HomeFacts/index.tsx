@@ -1,6 +1,6 @@
 "use client";
 
-import { md2htmlBreaks } from '@/helpers/markdown';
+import { richTextToHtml } from '@/helpers/richText';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
@@ -19,14 +19,14 @@ const HomeFacts = ({ data }: { data: any }) => {
 							{(data.factsLeft || []).map((f: any, i: number) => (
 								<div key={i} className="flex flex-col justify-between gap-6 rounded-xl border border-[#0000001A] p-6">
 									<p className="text-b2 text-gray font-semibold" {...payloadEditable(`content.${data.blockIndex}.factsLeft.${i}.title`)}>{f.title}</p>
-									<h1 className="text-h1 font-black">{f.value}</h1>
+									<h1 className="text-h1 font-black" {...payloadEditable(`content.${data.blockIndex}.factsLeft.${i}.value`)}>{f.value}</h1>
 								</div>
 							))}
 						</div>
 						<div className="grid gap-4 auto-rows-fr">
 							{(data.factsRight || []).map((f: any, i: number) => (
 								<div key={i} className="flex flex-col justify-center gap-1 rounded-xl border border-[#0000001A] px-6 py-5 lg:flex-row lg:items-center lg:justify-start lg:gap-6">
-									<h3 className="text-h3 font-black text-orange lg:w-44 lg:shrink-0">{f.value}</h3>
+									<h3 className="text-h3 font-black text-orange lg:w-44 lg:shrink-0" {...payloadEditable(`content.${data.blockIndex}.factsRight.${i}.value`)}>{f.value}</h3>
 									<p className="text-b1 text-gray font-semibold" {...payloadEditable(`content.${data.blockIndex}.factsRight.${i}.title`)}>{f.title}</p>
 								</div>
 							))}
@@ -36,7 +36,7 @@ const HomeFacts = ({ data }: { data: any }) => {
 				<div className="flex flex-col gap-4 lg:flex-row">
 					<div className="flex flex-col justify-center gap-8 rounded-md bg-sky px-8 py-12 text-white lg:w-[340px] lg:shrink-0">
 						<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm1.title`)}>{data?.factsMosaic?.fm1.title}</h2>
-						<p className="text-b1" dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data?.factsMosaic?.fm1.text) }} />
+						<p className="text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm1.text`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data?.factsMosaic?.fm1.text) }} />
 					</div>
 					{/* Bento: 3 columns on desktop (bottom row reuses them, so edges line up); 2 below, wide tiles span both */}
 					<div className="grid flex-1 grid-cols-2 lg:grid-cols-3 gap-4 text-center break-normal max-sm:hyphens-auto max-sm:[&_h3]:text-[18px] max-sm:[&_h2]:text-[24px] [&>div]:flex [&>div]:flex-col [&>div]:items-center [&>div]:justify-center [&>div]:gap-2 [&>div]:rounded-md [&>div]:px-4 [&>div]:py-6">
@@ -54,11 +54,11 @@ const HomeFacts = ({ data }: { data: any }) => {
 							<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm5.text2`)}>{data?.factsMosaic?.fm5.text2}</h2>
 						</div>
 						<div className="bg-sky text-white">
-							<h3 className="text-h3 font-bold" dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data?.factsMosaic?.fm4.text1) }} />
+							<h3 className="text-h3 font-bold" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm4.text1`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data?.factsMosaic?.fm4.text1) }} />
 						</div>
 						<div className="bg-green">
 							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm6.text1`)}>{data?.factsMosaic?.fm6.text1}</p>
-							<p className="font-bold text-b1 [&_strong]:text-h1 [&_strong]:font-black" dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data?.factsMosaic?.fm6.text2) }} />
+							<p className="font-bold text-b1 [&_strong]:text-h1 [&_strong]:font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm6.text2`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data?.factsMosaic?.fm6.text2) }} />
 							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm6.text3`)}>{data?.factsMosaic?.fm6.text3}</p>
 						</div>
 						<div className="col-span-2 bg-teal text-white">

@@ -374,10 +374,21 @@ export interface Page {
                    * Optional subheading above the text.
                    */
                   title?: string | null;
-                  /**
-                   * Markdown: **bold**, [link](/path), lines starting with "- " form a bullet list. Empty lines start a new paragraph.
-                   */
-                  content: string;
+                  content: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
                   button?: {
                     label?: string | null;
                     /**
@@ -390,9 +401,23 @@ export interface Page {
                 }[]
               | null;
             /**
-             * Optional. Markdown.
+             * Optional.
              */
-            text?: string | null;
+            text?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productTextWithPicture';
@@ -416,9 +441,23 @@ export interface Page {
             hideBlock?: boolean | null;
             title?: string | null;
             /**
-             * **bold** is highlighted; line breaks are kept.
+             * Bold text is highlighted.
              */
-            description?: string | null;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             sliderItems?:
               | {
                   logo: string | Media;
@@ -449,7 +488,21 @@ export interface Page {
              */
             layout?: ('default' | 'document') | null;
             classNames?: string | null;
-            content?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productWysiwyg';
@@ -486,9 +539,23 @@ export interface Page {
             title?: string | null;
             contentTitle?: string | null;
             /**
-             * **bold** is shown in orange; line breaks are kept.
+             * Bold text is shown in orange.
              */
-            content?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             contentImg?: (string | null) | Media;
             contentButton?: string | null;
             contentButtonLink?: string | null;
@@ -617,7 +684,21 @@ export interface Page {
             oneColumn?: boolean | null;
             items?:
               | {
-                  text?: string | null;
+                  text?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -647,12 +728,26 @@ export interface Page {
                 }[]
               | null;
             /**
-             * Tiles next to the blue box. **bold** makes the number large (e.g. **322**t/Jahr); line breaks are kept.
+             * Tiles next to the blue box. Bold text makes the number large (e.g. 322 in bold, then t/Jahr).
              */
             factsMosaic?: {
               fm1?: {
                 title?: string | null;
-                text?: string | null;
+                text?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: any;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
               };
               fm2?: {
                 text1?: string | null;
@@ -664,7 +759,21 @@ export interface Page {
                 text2?: string | null;
               };
               fm4?: {
-                text1?: string | null;
+                text1?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: any;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
               };
               fm5?: {
                 text1?: string | null;
@@ -672,7 +781,21 @@ export interface Page {
               };
               fm6?: {
                 text1?: string | null;
-                text2?: string | null;
+                text2?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: any;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
                 text3?: string | null;
               };
               fm7?: {
@@ -1107,10 +1230,21 @@ export interface Template {
                    * Optional subheading above the text.
                    */
                   title?: string | null;
-                  /**
-                   * Markdown: **bold**, [link](/path), lines starting with "- " form a bullet list. Empty lines start a new paragraph.
-                   */
-                  content: string;
+                  content: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
                   button?: {
                     label?: string | null;
                     /**
@@ -1123,9 +1257,23 @@ export interface Template {
                 }[]
               | null;
             /**
-             * Optional. Markdown.
+             * Optional.
              */
-            text?: string | null;
+            text?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productTextWithPicture';
@@ -1149,9 +1297,23 @@ export interface Template {
             hideBlock?: boolean | null;
             title?: string | null;
             /**
-             * **bold** is highlighted; line breaks are kept.
+             * Bold text is highlighted.
              */
-            description?: string | null;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             sliderItems?:
               | {
                   logo: string | Media;
@@ -1182,7 +1344,21 @@ export interface Template {
              */
             layout?: ('default' | 'document') | null;
             classNames?: string | null;
-            content?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productWysiwyg';
@@ -1219,9 +1395,23 @@ export interface Template {
             title?: string | null;
             contentTitle?: string | null;
             /**
-             * **bold** is shown in orange; line breaks are kept.
+             * Bold text is shown in orange.
              */
-            content?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
             contentImg?: (string | null) | Media;
             contentButton?: string | null;
             contentButtonLink?: string | null;
@@ -1350,7 +1540,21 @@ export interface Template {
             oneColumn?: boolean | null;
             items?:
               | {
-                  text?: string | null;
+                  text?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1380,12 +1584,26 @@ export interface Template {
                 }[]
               | null;
             /**
-             * Tiles next to the blue box. **bold** makes the number large (e.g. **322**t/Jahr); line breaks are kept.
+             * Tiles next to the blue box. Bold text makes the number large (e.g. 322 in bold, then t/Jahr).
              */
             factsMosaic?: {
               fm1?: {
                 title?: string | null;
-                text?: string | null;
+                text?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: any;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
               };
               fm2?: {
                 text1?: string | null;
@@ -1397,7 +1615,21 @@ export interface Template {
                 text2?: string | null;
               };
               fm4?: {
-                text1?: string | null;
+                text1?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: any;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
               };
               fm5?: {
                 text1?: string | null;
@@ -1405,7 +1637,21 @@ export interface Template {
               };
               fm6?: {
                 text1?: string | null;
-                text2?: string | null;
+                text2?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: any;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
                 text3?: string | null;
               };
               fm7?: {

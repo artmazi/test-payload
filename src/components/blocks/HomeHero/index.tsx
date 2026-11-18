@@ -24,14 +24,14 @@ const HomeHero = ({ data }: { data: any }) => {
 				</div>
 				<div className="flex gap-4">
 					<Button className="w-fit" onClick={() => window.open(data.buttonLink, '_blank')}>
-						{data.button}
+						<span {...payloadEditable(`content.${data.blockIndex}.button`)}>{data.button}</span>
 					</Button>
 					{data.button2 && (
 						<Button
 							color="secondary"
 							className="w-fit !text-sky"
 							onClick={() => router.push(data.buttonLink2)}>
-							{data.button2}
+							<span {...payloadEditable(`content.${data.blockIndex}.button2`)}>{data.button2}</span>
 						</Button>
 					)}
 				</div>

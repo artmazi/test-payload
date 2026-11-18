@@ -4,12 +4,12 @@ import { payloadEditable } from '@payload-inline-visual-editor/react';
 import Link from 'next/link';
 import React from 'react';
 
-const Product = ({ side }: { side: any }) => {
+const Product = ({ side, path }: { side: any; path: string }) => {
 	const body = (
 		<span className="flex items-center gap-4 text-h3 font-bold">
 			{/* Plain img: icons have mixed aspect ratios (the GEOINFO logo is wide) */}
 			{side?.icon?.url ? <img src={side.icon.url} alt="" className="h-[44px] w-auto max-w-[75px] object-contain" /> : null}
-			{side?.label}
+			<span {...payloadEditable(`${path}.label`)}>{side?.label}</span>
 		</span>
 	);
 	const cls = 'flex flex-1 items-center justify-center p-4 border-2 border-blue-200 rounded-xl transition-colors hover:border-sky';
@@ -25,9 +25,9 @@ const HomeProductVS = ({ data }: { data: any }) => {
 				<div className="flex flex-col gap-4">
 					{(data.items || []).map((i: any, _i: number) => (
 						<div className="flex flex-col md:flex-row items-stretch" key={_i}>
-							<Product side={i.left} />
-							<div className="flex items-center justify-center p-2 md:p-4 md:min-w-[200px] text-b1">{i.vs}</div>
-							<Product side={i.right} />
+							<Product side={i.left} path={`content.${data.blockIndex}.items.${_i}.left`} />
+							<div className="flex items-center justify-center p-2 md:p-4 md:min-w-[200px] text-b1" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.vs`)}>{i.vs}</div>
+							<Product side={i.right} path={`content.${data.blockIndex}.items.${_i}.right`} />
 						</div>
 					))}
 				</div>

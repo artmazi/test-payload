@@ -103,4 +103,11 @@ body:has(#prod-header) .custom-header-styles {
 }
 
 /* The home page's absolute header would cover the admin bar; move it below */
-body:has(#admin-bar) > header.absolute { top: 2.5rem; }
+/* Admin bar: closed (zero height, unfocusable) unless <html> has .i3d-admin, set before paint for a remembered login */
+.admin-bar { grid-template-rows: 0fr; visibility: hidden; }
+html.i3d-admin .admin-bar { grid-template-rows: 1fr; visibility: visible; }
+html.i3d-admin body > header.absolute { top: 2.5rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .admin-bar { transition: grid-template-rows 0.3s ease-out, visibility 0.3s; }
+  body > header.absolute { transition: top 0.3s ease-out; }
+}

@@ -5,6 +5,7 @@ import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { md2html } from '@/helpers/markdown';
 import { splitDocument, type DocPart } from '@/helpers/splitDocument';
+import { richTextToMarkdown } from '@/helpers/richText';
 
 // Text follows the indent of the nearest sub-heading above it
 const subIndent = (parts: DocPart[], i: number) => {
@@ -83,7 +84,7 @@ const useActiveSection = (ids: string[]) => {
 
 // Also used by the Rich Text block's Document layout (content serialized to markdown first)
 export const DocumentLayout = ({ data }: { data: any }) => {
-	const { title, intro, sections } = splitDocument(data.content);
+	const { title, intro, sections } = splitDocument(richTextToMarkdown(data.content));
 	const hasToc = sections.length >= 3;
 	// First intro paragraph is metadata ("Version von …", "Letzte Aktualisierung …"); any further ones are real text
 	const [introMeta = '', ...rest] = intro.split(/\n[\s\u00a0]*\n/);
@@ -106,7 +107,8 @@ export const DocumentLayout = ({ data }: { data: any }) => {
 		<section id="wysiwyg" className="flex flex-col">
 			<div className="w-full max-w-[1200px] mx-auto px-4 md:px-16 pt-8 pb-8 md:pt-10 md:pb-12 lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
 				{/* Aside always renders so the text column lines up across legal pages; a TOC only pays off from 3 sections */}
-				<aside className="hidden lg:block">
+				{/* The contents list is built from the text, so in the visual editor it opens the text field */}
+				<aside className="hidden lg:block" {...payloadEditable(`content.${data.blockIndex}.content`)}>
 					{/* Sits below the sticky header and in-page menu (--sticky-top, see globals.css) */}
 					{hasToc && (
 						<nav ref={navRef} aria-label="Inhalt" className="sticky top-[calc(var(--sticky-top)+44px)] max-h-[calc(100vh-var(--sticky-top)-64px)] overflow-y-auto pr-2">
@@ -179,7 +181,7 @@ const ProductWysiwyg = ({ data }: { data: any }) => {
 		<section id="wysiwyg" className="flex flex-col">
 			<div className="flex w-full max-w-[1200px] py-6 md:py-16 md:px-16 xl:px-16 px-4 mx-auto gap-16 flex-col">
 				<div className={clsx('text-center gap-8 flex flex-col', data.classNames)}>
-					<div className="text-b1 text-gray whitespace-pre-line break-words [&>span]:font-semibold [&>a]:text-sky" {...payloadEditable(`content.${data.blockIndex}.content`)} dangerouslySetInnerHTML={{ __html: md2html(data.content) }} />
+					<div className="text-b1 text-gray whitespace-pre-line break-words [&>span]:font-semibold [&>a]:text-sky" {...payloadEditable(`content.${data.blockIndex}.content`)} dangerouslySetInnerHTML={{ __html: md2html(richTextToMarkdown(data.content)) }} />
 				</div>
 			</div>
 		</section>

@@ -38,7 +38,7 @@ export const HomeInfoBlock: Block = {
         plural: 'Items',
       },
       fields: [
-        { name: 'text', type: 'text' }
+        { name: 'text', type: 'richText' }
       ]
     },
   ],

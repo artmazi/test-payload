@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
+import { bgImage } from '@/helpers/bgImage';
 
 const HomeUseCases = ({ data }: { data: any }) => {
 	const swiperOptions = {
@@ -56,7 +57,7 @@ const HomeUseCases = ({ data }: { data: any }) => {
 									<div
 										className="flex flex-col relative rounded-md p-8 bg-no-repeat w-full bg-teal bg-cover [&:not(:hover)]:!bg-none"
 										style={{
-											...(i.background?.url ? { backgroundImage: `url('${i.background.url}')` } : {}),
+											...(i.background?.url ? { backgroundImage: bgImage(i.background.url, 828) } : {}),
 										}}>
 										<h2 className="md:text-h2 text-h3 text-sky font-black" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title}</h2>
 										<p className="font-medium text-white" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.text`)}>{i.text}</p>

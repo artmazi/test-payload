@@ -2,6 +2,7 @@
 
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { en, de, fr, News as RssNews } from '../../../data/news';
@@ -95,9 +96,13 @@ const HomeNews = ({ data }: { data: any }) => {
 								{/* Image Section */}
 								{news.img ? (
 									<div className="w-full shrink-0 overflow-hidden bg-slate-100 border-b border-slate-100">
-										<img 
-											src={news.img.url} 
-											alt="" 
+										{/* Through the image optimizer: the feed's originals are ~0.5-0.8 MB PNGs shown at card size */}
+										<Image
+											src={news.img.url}
+											alt=""
+											width={800}
+											height={450}
+											sizes="(min-width: 1024px) 25vw, (min-width: 480px) 50vw, 100vw"
 											className={`w-full h-auto group-hover:scale-105 transition-transform duration-500 ${news.img.CSSClasses}`}
 										/>
 									</div>

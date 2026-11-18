@@ -7,6 +7,7 @@ import React from 'react';
 
 import checkOrange from '@/assets/check-orange.svg';
 import { md2html } from '@/helpers/markdown';
+import { bgImage } from '@/helpers/bgImage';
 
 const HomeInfo = ({ data }: { data: any }) => {
 	const bgUrl = data.bgImage?.url || (typeof data.bgImage === 'string' ? data.bgImage : null);
@@ -16,7 +17,7 @@ const HomeInfo = ({ data }: { data: any }) => {
 			id="info"
 			style={{ 
 				backgroundColor: '#002F47',
-				...(bgUrl ? { backgroundImage: `url('${bgUrl}')` } : {})
+				...(bgUrl ? { backgroundImage: bgImage(bgUrl) } : {})
 			}}
 			className="bg-fixed bg-right bg-no-repeat bg-cover">
 			{/* One-column mode is the product-page variant: same 1200px column as the blocks around it */}

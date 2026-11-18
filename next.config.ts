@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     // Skips the locales themselves, admin / API / Next internals, and files (anything with a dot, e.g. /logo.svg).
     return [
       { source: '/', destination: '/de', permanent: false },
-      { source: '/:path((?!(?:de|en|fr|it|admin|api|_next)(?:/|$))(?!.*\\.).+)', destination: '/de/:path', permanent: false },
+      { source: '/:path((?!(?:de|en|fr|it|admin|api|_next|preview)(?:/|$))(?!.*\\.).+)', destination: '/de/:path', permanent: false },
     ]
   },
   images: {

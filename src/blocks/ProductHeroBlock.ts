@@ -5,7 +5,7 @@ export const ProductHeroBlock: Block = {
   slug: 'productHero',
   labels: { singular: 'Page Hero', plural: 'Page Heroes' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/page-hero.png',
+  imageURL: '/blocks/page-hero.webp',
   imageAltText: 'Wide photo banner with a centered white title',
   fields: [
     {

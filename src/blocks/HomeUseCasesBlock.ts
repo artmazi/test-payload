@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeUseCasesBlock: Block = {
   slug: 'homeUseCases',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-use-cases.png',
+  imageURL: '/blocks/home-use-cases.webp',
   imageAltText: 'Carousel of linked use-case cards',
   fields: [
     {

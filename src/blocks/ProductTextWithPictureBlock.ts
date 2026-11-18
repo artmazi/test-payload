@@ -5,7 +5,7 @@ export const ProductTextWithPictureBlock: Block = {
   slug: 'productTextWithPicture',
   labels: { singular: 'Text with Picture', plural: 'Text with Pictures' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/text-with-picture.png',
+  imageURL: '/blocks/text-with-picture.webp',
   imageAltText: 'Rows of text next to pictures, with plain text rows between',
   fields: [
     {

@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeSoftwareBlock: Block = {
   slug: 'homeSoftware',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-software.png',
+  imageURL: '/blocks/home-software.webp',
   imageAltText: 'Gradient intro panel and software cards',
   labels: {
     singular: 'Home Software',

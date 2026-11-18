@@ -2,12 +2,18 @@
 
 import { useEffect, useState } from 'react';
 
-// Shown only to logged-in users (rendered by the page route after payload.auth)
-export default function AdminBar({ pageId, email }: { pageId: string; email?: string }) {
-	const [inIframe, setInIframe] = useState(false);
-	// The admin's live preview loads the page in an iframe, where the bar is just noise
-	useEffect(() => setInIframe(window.self !== window.top), []);
-	if (inIframe) return null;
+// Shown only to logged-in users. The login is checked in the browser so pages can stay static and cached.
+export default function AdminBar({ pageId }: { pageId: string }) {
+	const [email, setEmail] = useState<string | null>(null);
+	useEffect(() => {
+		// The admin's live preview loads the page in an iframe, where the bar is just noise
+		if (window.self !== window.top) return;
+		fetch('/api/users/me', { credentials: 'include' })
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => d?.user && setEmail(d.user.email || ''))
+			.catch(() => {});
+	}, []);
+	if (email === null) return null;
 
 	return (
 		<div id="admin-bar" className="order-first flex h-10 w-full items-center justify-between gap-4 bg-blackTeal px-4 text-b3 text-white">

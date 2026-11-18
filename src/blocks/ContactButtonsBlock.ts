@@ -5,7 +5,7 @@ export const ContactButtonsBlock: Block = {
   slug: 'contactButtons',
   labels: { singular: 'Contact Buttons', plural: 'Contact Buttons' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/contact-buttons.png',
+  imageURL: '/blocks/contact-buttons.webp',
   imageAltText: 'Card with phone and email buttons',
   fields: [
     {

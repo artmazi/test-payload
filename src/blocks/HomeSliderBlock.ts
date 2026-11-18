@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeSliderBlock: Block = {
   slug: 'homeSlider',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-slider.png',
+  imageURL: '/blocks/home-slider.webp',
   imageAltText: 'Customer logos carousel and testimonials',
   fields: [
     {

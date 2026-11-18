@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
-import quote from '@/assets/quote.png';
+import quote from '@/assets/quote.webp';
 import { md2htmlBreaks } from '@/helpers/markdown';
 
 const HomeSlider = ({ data }: { data: any }) => {

@@ -819,7 +819,7 @@ export interface Page {
              */
             hideBlock?: boolean | null;
             /**
-             * Defaults to /home-hero.png when empty.
+             * Defaults to /home-hero.webp when empty.
              */
             bgImage?: (string | null) | Media;
             title?: string | null;
@@ -1552,7 +1552,7 @@ export interface Template {
              */
             hideBlock?: boolean | null;
             /**
-             * Defaults to /home-hero.png when empty.
+             * Defaults to /home-hero.webp when empty.
              */
             bgImage?: (string | null) | Media;
             title?: string | null;

@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import type { CollectionConfig, Field } from 'payload'
 import { categoryIcons } from '../components/admin/categoryIcons'
 
@@ -51,6 +52,15 @@ export const Categories: CollectionConfig = {
   slug: 'categories',
   admin: { useAsTitle: 'title', components: { views: { list: { Component: '/src/components/admin/CategoryCards' } } } },
   access: { read: () => true },
+  hooks: {
+    afterChange: [
+      ({ doc, req: { context } }) => {
+        // Scripts run outside Next, where revalidatePath throws
+        if (!context.disableRevalidate) revalidatePath('/', 'layout')
+        return doc
+      },
+    ],
+  },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', required: true, unique: true, index: true },

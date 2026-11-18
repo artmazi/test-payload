@@ -4,7 +4,7 @@ import type { Block } from 'payload'
 export const HomeLandingBlock: Block = {
   slug: 'homeLanding',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-landing.png',
+  imageURL: '/blocks/home-landing.webp',
   imageAltText: 'Full-screen hero with title, description and category picker',
   fields: [
     {
@@ -20,7 +20,7 @@ export const HomeLandingBlock: Block = {
       name: 'bgImage',
       type: 'upload',
       relationTo: 'media',
-      admin: { description: 'Defaults to /home-hero.png when empty.' },
+      admin: { description: 'Defaults to /home-hero.webp when empty.' },
     },
     { name: 'title', type: 'text' },
     { name: 'description', type: 'textarea' },

@@ -1,8 +1,18 @@
+import { revalidatePath } from 'next/cache'
 import type { GlobalConfig } from 'payload'
 
 // Site footer from infra3dcom's components/Footer (company block, map, legal links, socials)
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  hooks: {
+    afterChange: [
+      ({ doc, req: { context } }) => {
+        // Scripts run outside Next, where revalidatePath throws
+        if (!context.disableRevalidate) revalidatePath('/', 'layout')
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       type: 'row',

@@ -1,3 +1,5 @@
+import { default as default_d26b858735608d882e3305ef709ac8c8 } from '../../../../src/components/admin/MediaSizeCell'
+import { default as default_e806e24dc1dc95ef6f5224a4bc8cf6fb } from '../../../../src/components/admin/MediaGallery'
 import { default as default_e1cad274d3d76a5be6e848739c580986 } from '../../../../src/components/admin/IconPickerField'
 import { default as default_98862ee993d364571dd8bbe7f2dd2ffd } from '../../../../src/components/admin/MenuRowLabel'
 import { default as default_48be8d6a21f4e21be760ced655c8b9d7 } from '../../../../src/components/admin/CategoryCards'
@@ -35,6 +37,8 @@ import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "/src/components/admin/MediaSizeCell#default": default_d26b858735608d882e3305ef709ac8c8,
+  "/src/components/admin/MediaGallery#default": default_e806e24dc1dc95ef6f5224a4bc8cf6fb,
   "/src/components/admin/IconPickerField#default": default_e1cad274d3d76a5be6e848739c580986,
   "/src/components/admin/MenuRowLabel#default": default_98862ee993d364571dd8bbe7f2dd2ffd,
   "/src/components/admin/CategoryCards#default": default_48be8d6a21f4e21be760ced655c8b9d7,

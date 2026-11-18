@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 
 import textLine from '@/assets/text-line.svg';
+import { bgImage } from '@/helpers/bgImage';
 
 const HomeApplications = ({ data }: { data: any }) => {
 	const router = useRouter();
@@ -164,7 +165,7 @@ const HomeApplications = ({ data }: { data: any }) => {
 					<div
 						className="flex text-white p-8 lg:p-12 rounded-md gap-8 mt-8 mx-4 lg:mx-0"
 						style={{
-							background: `${data.contentBg?.url ? `url('${data.contentBg.url}') no-repeat right, ` : ''}linear-gradient(to right, #0E3A51 0%, #0D92D2 100%)`,
+							background: `${data.contentBg?.url ? `${bgImage(data.contentBg.url, 828)} no-repeat right, ` : ''}linear-gradient(to right, #0E3A51 0%, #0D92D2 100%)`,
 						}}>
 						<div className="flex flex-1 flex-col gap-10 lg:max-w-[65%]">
 							<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.contentTitle`)}>{data.contentTitle}</h2>

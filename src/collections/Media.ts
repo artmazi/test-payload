@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
@@ -5,12 +6,36 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
-  upload: true,
+  admin: {
+    defaultColumns: ['filename', 'alt', 'size', 'updatedAt'],
+    // Grid view with a grid / list toggle above the table
+    components: { beforeListTable: ['/src/components/admin/MediaGallery'] },
+  },
+  upload: {
+    // PNG / JPG uploads are stored as WebP (SVG, video and PDF are left as they are)
+    formatOptions: { format: 'webp', options: { quality: 82 } },
+  },
+  hooks: {
+    afterChange: [
+      ({ doc, req: { context } }) => {
+        // Static pages embed media URLs; a replaced file gets a new URL
+        if (!context.disableRevalidate) revalidatePath('/', 'layout')
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'alt',
       type: 'text',
       required: true,
+    },
+    {
+      // List column only: file size and dimensions
+      name: 'size',
+      type: 'ui',
+      label: 'Size',
+      admin: { components: { Cell: '/src/components/admin/MediaSizeCell', Field: false } },
     },
   ],
 }

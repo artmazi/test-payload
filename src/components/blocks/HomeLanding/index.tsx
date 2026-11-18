@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useState } from 'react';
+import { bgImage } from '@/helpers/bgImage';
 
 const Chevron = ({ className }: { className?: string }) => (
 	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
@@ -13,11 +14,11 @@ const Chevron = ({ className }: { className?: string }) => (
 
 const HomeLanding = ({ data }: { data: any }) => {
 	const [open, setOpen] = useState(false);
-	const bg = data.bgImage?.url || '/home-hero.png';
+	const bg = data.bgImage?.url || '/home-hero.webp';
 
 	return (
 		<section
-			style={{ backgroundImage: `url('${bg}')` }}
+			style={{ backgroundImage: bgImage(bg) }}
 			className="relative isolate flex flex-col text-white gap-4 items-center justify-center w-full bg-top bg-no-repeat bg-cover min-h-[100vh] py-16">
 			{/* Darken the busy photo: navy wash top/bottom plus a soft spot behind the text */}
 			<div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-b from-blackTeal/70 via-blackTeal/40 to-blackTeal/85" />

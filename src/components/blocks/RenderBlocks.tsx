@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import { HeadingBlock } from './HeadingBlock';
 import { RichTextBlock } from './RichTextBlock';
@@ -28,7 +29,8 @@ import ProductWysiwyg from './ProductWysiwyg';
 import ProductFunctions from './ProductFunctions';
 import ProductInfo from './ProductInfo';
 import ProductFeatures from './ProductFeatures';
-import ProductTextWithMap from './ProductTextWithMap';
+// The map pulls in OpenLayers + MUI; load it only on pages that actually have a map block
+const ProductTextWithMap = dynamic(() => import('./ProductTextWithMap'));
 import ProductList from './ProductList';
 import ProductBeforeAfterSlider from './ProductBeforeAfterSlider';
 import ProductTextSlider from './ProductTextSlider';

@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation'
-import { headers } from 'next/headers'
+import { draftMode } from 'next/headers'
 import { LivePreviewWrapper } from '@/components/LivePreviewWrapper'
 import AdminBar from '@/components/AdminBar'
 
@@ -42,27 +42,31 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   const category = categories.docs[0]
   const pageSlug = (category ? slug.slice(1) : slug).join('/') || 'home'
 
-  // Logged-in admins (live preview) may see draft pages; the public only sees published ones
-  const { user } = await payload.auth({ headers: await headers() })
+  // Pages are static (rebuilt on publish by the collection hooks). Draft Mode, enabled for admins by /preview,
+  // renders per request and includes unpublished drafts for live preview / the visual editor.
+  const { isEnabled: draft } = await draftMode()
 
   const pages = await payload.find({
     collection: 'pages',
     depth: 2,
+    draft,
+    limit: 1,
     locale: locale as any,
     where: {
       slug: { equals: pageSlug },
       category: category ? { equals: category.id } : { exists: false },
-      ...(user ? {} : { _status: { equals: 'published' } }),
+      ...(draft ? {} : { _status: { equals: 'published' } }),
     },
   })
 
   const page = pages.docs[0]
   if (!page) return notFound()
 
-  // A fragment keeps the bar a direct child of <body>, so its order-first lifts it above the Header
+  // A fragment keeps the bar a direct child of <body>, so its order-first lifts it above the Header.
+  // The bar checks the login in the browser, so the page itself stays static.
   return (
     <>
-      {user ? <AdminBar pageId={String(page.id)} email={user.email} /> : null}
+      <AdminBar pageId={String(page.id)} />
       <main>
         <LivePreviewWrapper initialPage={page} />
       </main>

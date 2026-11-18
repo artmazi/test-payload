@@ -21,7 +21,7 @@ export const HomeProductVSBlock: Block = {
   slug: 'homeProductVS',
   labels: { singular: 'Product Pairs', plural: 'Product Pairs' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/product-pairs.png',
+  imageURL: '/blocks/product-pairs.webp',
   imageAltText: 'Rows of two outlined product buttons joined by "oder" or "und"',
   fields: [
     {

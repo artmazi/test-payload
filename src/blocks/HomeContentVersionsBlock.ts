@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeContentVersionsBlock: Block = {
   slug: 'homeContentVersions',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-content-versions.png',
+  imageURL: '/blocks/home-content-versions.webp',
   imageAltText: 'Three dark content-version cards',
   fields: [
     {

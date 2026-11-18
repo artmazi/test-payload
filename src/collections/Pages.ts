@@ -32,7 +32,8 @@ export const Pages: CollectionConfig = {
           : null
         // The site route is /[locale]/[[...slug]] with an optional category first; the home page has no slug segment
         const path = !data?.slug || data.slug === 'home' ? '' : `/${data.slug}`
-        return `${baseUrl}/${locale?.code || 'de'}${category ? `/${category.slug}` : ''}${path}`
+        // Through /preview, which turns on Draft Mode so the static site shows drafts to the editor
+        return `${baseUrl}/preview?path=${encodeURIComponent(`/${locale?.code || 'de'}${category ? `/${category.slug}` : ''}${path}`)}`
       },
     },
   },
@@ -85,12 +86,9 @@ export const Pages: CollectionConfig = {
       },
     ],
     afterDelete: [
-      ({ doc, req: { payload } }) => {
-        if (doc._status === 'published') {
-          const path = doc.slug === 'home' ? '/' : `/${doc.slug}`
-          payload.logger.info(`Revalidating cache for deleted path: ${path}`)
-          console.log("revalidate skipped")
-        }
+      ({ doc, req: { context } }) => {
+        // Pages are cached statically, so a deleted page must drop out of the cache too
+        if (doc._status === 'published' && !context.disableRevalidate) revalidatePath('/', 'layout')
         return doc
       },
     ],

@@ -5,7 +5,7 @@ export const LogoLinkBlock: Block = {
   slug: 'logoLink',
   labels: { singular: 'Logo Link', plural: 'Logo Links' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/logo-link.png',
+  imageURL: '/blocks/logo-link.webp',
   imageAltText: 'Placeholder logo with an optional link',
   fields: [
     {

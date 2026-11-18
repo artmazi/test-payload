@@ -2,6 +2,7 @@
 
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
+import { bgImage } from '@/helpers/bgImage';
 
 // Port of infra3dcom's ProductPageSections/Hero
 const ProductHero = ({ data }: { data: any }) => {
@@ -10,7 +11,7 @@ const ProductHero = ({ data }: { data: any }) => {
 	return (
 		<section
 			id="prod-hero"
-			style={image ? { backgroundImage: `url("${image}")` } : undefined}
+			style={image ? { backgroundImage: bgImage(image) } : undefined}
 			className="flex w-full h-[230px] lg:h-[550px] bg-teal bg-cover bg-center bg-no-repeat relative overflow-hidden">
 			{data.video && (
 				<video loop muted autoPlay playsInline src={data.video} className="absolute inset-0 w-full h-full object-cover" />

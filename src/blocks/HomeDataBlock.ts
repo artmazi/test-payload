@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeDataBlock: Block = {
   slug: 'homeData',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-data.png',
+  imageURL: '/blocks/home-data.webp',
   imageAltText: 'Image with text and three data cards',
   labels: {
     singular: 'Home Data',

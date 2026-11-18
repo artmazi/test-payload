@@ -1,6 +1,7 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
+import sharp from 'sharp'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { visualEditor } from 'payload-inline-visual-editor'
@@ -63,13 +64,16 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
   }),
+  // Needed for upload formatOptions (PNG/JPG -> WebP) and image dimensions
+  sharp,
   plugins: [
     visualEditor(),
     ...(process.env.BLOB_READ_WRITE_TOKEN
       ? [
           vercelBlobStorage({
             collections: {
-              [Media.slug]: true,
+              // Files load straight from the Blob CDN instead of being streamed through a Payload function (media is public anyway)
+              [Media.slug]: { disablePayloadAccessControl: true },
             },
             token: process.env.BLOB_READ_WRITE_TOKEN,
           }),

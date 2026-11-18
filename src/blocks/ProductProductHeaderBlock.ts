@@ -5,7 +5,7 @@ export const ProductProductHeaderBlock: Block = {
   slug: 'productProductHeader',
   labels: { singular: 'Page Menu', plural: 'Page Menus' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/page-menu.png',
+  imageURL: '/blocks/page-menu.webp',
   imageAltText: 'Pill-style menu linking related pages',
   fields: [
     {

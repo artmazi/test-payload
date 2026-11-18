@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeApplicationsBlock: Block = {
   slug: 'homeApplications',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-applications.png',
+  imageURL: '/blocks/home-applications.webp',
   imageAltText: 'Application cards with tags and a banner',
   fields: [
     {

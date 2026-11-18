@@ -3,7 +3,7 @@ import type { Block } from 'payload'
 export const HomeNewsBlock: Block = {
   slug: 'homeNews',
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/home-news.png',
+  imageURL: '/blocks/home-news.webp',
   imageAltText: 'Grid of news cards from the inovitas feed',
   labels: {
     singular: 'Home News',

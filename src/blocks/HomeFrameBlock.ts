@@ -4,7 +4,7 @@ export const HomeFrameBlock: Block = {
   slug: 'homeFrame',
   labels: { singular: 'Video', plural: 'Videos' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/video-frame.png',
+  imageURL: '/blocks/video-frame.webp',
   imageAltText: 'Embedded video player with optional title',
   fields: [
     {

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 
 import textLine from '@/assets/text-line.svg';
+import { bgImage } from '@/helpers/bgImage';
 
 const ProductFeatures = ({ data }: { data: any }) => {
 	const center = data.center ?? false;
@@ -64,7 +65,7 @@ const ProductFeatures = ({ data }: { data: any }) => {
 							center ? 'lg:bg-center-center bg-contain flex-5' : 'lg:bg-left-top bg-cover flex-4',
 							data.itemsBgSize ?? ''
 						)}
-						style={{ backgroundImage: `url("${sliderItems[activeItem]?.image}")` }}
+						style={{ backgroundImage: bgImage(sliderItems[activeItem]?.image, 1200) }}
 					/>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ export const LinkTilesBlock: Block = {
   slug: 'linkTiles',
   labels: { singular: 'Link Tiles', plural: 'Link Tiles' },
   // Thumbnail in the admin "Add Content" drawer
-  imageURL: '/blocks/link-tiles.png',
+  imageURL: '/blocks/link-tiles.webp',
   imageAltText: 'Centered title above a row of outlined tiles',
   fields: [
     {

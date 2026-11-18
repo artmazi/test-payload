@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useState } from 'react';
 
 import textLine from '@/assets/text-line.svg';
@@ -17,7 +18,7 @@ const ProductTextSlider = ({ data }: { data: any }) => {
 			<div className="flex w-full max-w-[1200px] py-6 md:py-16 md:px-16 xl:px-16 px-4 mx-auto gap-16 flex-col">
 				<div>
 					{data.hero && ((data.hero?.url || (typeof data.hero === 'string' && (data.hero.startsWith('/') || data.hero.startsWith('http')) ? data.hero : null)) ? <Image src={(data.hero?.url || (typeof data.hero === 'string' && (data.hero.startsWith('/') || data.hero.startsWith('http')) ? data.hero : null))}  alt="hero"  width={800} height={600} /> : null )}
-					{data.heroText && <p className="text-b2 text-gray text-center mt-2">{data.heroText}</p>}
+					{data.heroText && <p className="text-b2 text-gray text-center mt-2" {...payloadEditable(`content.${data.blockIndex}.heroText`)}>{data.heroText}</p>}
 				</div>
 
 				{data.title && (

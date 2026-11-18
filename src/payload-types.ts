@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    categories: Category;
+    templates: Template;
     pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -79,6 +81,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    templates: TemplatesSelect<false> | TemplatesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -91,11 +95,9 @@ export interface Config {
   fallbackLocale:
     ('false' | 'none' | 'null') | false | null | ('en' | 'de' | 'fr' | 'it') | ('en' | 'de' | 'fr' | 'it')[];
   globals: {
-    header: Header;
     footer: Footer;
   };
   globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: 'en' | 'de' | 'fr' | 'it';
@@ -139,6 +141,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -158,6 +161,7 @@ export interface User {
 export interface Media {
   id: string;
   alt: string;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -172,12 +176,71 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  slug: string;
+  /**
+   * Shown on the category card in the admin.
+   */
+  icon?: ('layers' | 'landmark' | 'zap' | 'ruler' | 'train' | 'building' | 'map' | 'droplet' | 'truck') | null;
+  menu?:
+    | {
+        type?: ('page' | 'custom') | null;
+        page?: (string | null) | Page;
+        /**
+         * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+         */
+        url?: string | null;
+        /**
+         * Leave empty to use the page title.
+         */
+        name?: string | null;
+        newTab?: boolean | null;
+        subMenus?:
+          | {
+              type?: ('page' | 'custom') | null;
+              page?: (string | null) | Page;
+              /**
+               * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+               */
+              url?: string | null;
+              /**
+               * Leave empty to use the page title.
+               */
+              name?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: string;
   title: string;
   slug: string;
+  /**
+   * Leave empty for global pages shared by all categories.
+   */
+  category?: (string | null) | Category;
+  /**
+   * Start this page from a template (only applied when creating).
+   */
+  template?: (string | null) | Template;
+  /**
+   * On save, store this page's blocks as a new template.
+   */
+  saveAsTemplate?: boolean | null;
+  templateTitle?: string | null;
   _status?: ('draft' | 'published') | null;
   meta?: {
     title?: string | null;
@@ -212,8 +275,11 @@ export interface Page {
               | {
                   title?: string | null;
                   content?: string | null;
-                  leftText?: string | null;
-                  rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -226,25 +292,55 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            contentBg?: string | null;
-            button1Color?: string | null;
-            button2?: string | null;
+            title?: string | null;
             text?: string | null;
             items?:
               | {
                   title?: string | null;
                   text?: string | null;
+                  /**
+                   * e.g. Street
+                   */
                   leftText?: string | null;
+                  /**
+                   * e.g. Neu
+                   */
                   rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            contentButtonLink?: string | null;
-            items2?: string | null;
+            items2?:
+              | {
+                  title?: string | null;
+                  text?: string | null;
+                  /**
+                   * e.g. Street
+                   */
+                  leftText?: string | null;
+                  /**
+                   * e.g. Neu
+                   */
+                  rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             contentTitle?: string | null;
             contentText?: string | null;
-            title?: string | null;
+            contentBg?: (string | null) | Media;
             contentButton?: string | null;
+            contentButtonLink?: string | null;
+            button1Color?: ('primary' | 'secondary' | 'orange') | null;
+            button2?: string | null;
             button2Link?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -265,10 +361,38 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            type?: string | null;
+            background?: ('none' | 'gray') | null;
+            rows?:
+              | {
+                  layout: 'text' | 'textLeft' | 'textLeftBg' | 'textRight' | 'textRightBg';
+                  textStyle: 'sectionTitle' | 'heading' | 'subheading' | 'body';
+                  /**
+                   * Desktop only; on phones the picture sits above the text.
+                   */
+                  split?: ('even' | 'text60' | 'picture60') | null;
+                  /**
+                   * Optional subheading above the text.
+                   */
+                  title?: string | null;
+                  /**
+                   * Markdown: **bold**, [link](/path), lines starting with "- " form a bullet list. Empty lines start a new paragraph.
+                   */
+                  content: string;
+                  button?: {
+                    label?: string | null;
+                    /**
+                     * External links open in a new tab.
+                     */
+                    link?: string | null;
+                  };
+                  picture?: (string | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Markdown.
+             */
             text?: string | null;
-            picture?: (string | null) | Media;
-            content?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productTextWithPicture';
@@ -290,26 +414,27 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
+            title?: string | null;
+            /**
+             * **bold** is highlighted; line breaks are kept.
+             */
+            description?: string | null;
             sliderItems?:
               | {
-                  text?: string | null;
+                  logo: string | Media;
                   id?: string | null;
                 }[]
               | null;
-            name?: string | null;
-            text?: string | null;
-            slidePerView?: string | null;
-            title?: string | null;
-            img?: (string | null) | Media;
-            description?: string | null;
             testimonials?:
               | {
                   name?: string | null;
-                  text?: string | null;
                   description?: string | null;
+                  text?: string | null;
+                  img?: (string | null) | Media;
                   id?: string | null;
                 }[]
               | null;
+            slidePerView?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeSlider';
@@ -319,6 +444,10 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
+            /**
+             * Document: a bold first line becomes the title and bold lines like "**1. Heading**" become sections.
+             */
+            layout?: ('default' | 'document') | null;
             classNames?: string | null;
             content?: string | null;
             id?: string | null;
@@ -354,22 +483,27 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            button1Color?: string | null;
+            title?: string | null;
+            contentTitle?: string | null;
+            /**
+             * **bold** is shown in orange; line breaks are kept.
+             */
+            content?: string | null;
+            contentImg?: (string | null) | Media;
+            contentButton?: string | null;
             contentButtonLink?: string | null;
+            button1Color?: ('primary' | 'secondary' | 'orange') | null;
             items?:
               | {
                   title?: string | null;
-                  text?: string | null;
-                  leftText?: string | null;
-                  rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            contentImg?: (string | null) | Media;
-            contentTitle?: string | null;
-            title?: string | null;
-            contentButton?: string | null;
-            content?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeSoftware';
@@ -380,8 +514,31 @@ export interface Page {
              */
             hideBlock?: boolean | null;
             title?: string | null;
-            items?: string | null;
-            className?: string | null;
+            items?:
+              | {
+                  left: {
+                    label: string;
+                    /**
+                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     */
+                    link?: string | null;
+                    icon?: (string | null) | Media;
+                  };
+                  /**
+                   * e.g. oder / und
+                   */
+                  vs?: string | null;
+                  right: {
+                    label: string;
+                    /**
+                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     */
+                    link?: string | null;
+                    icon?: (string | null) | Media;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeProductVS';
@@ -457,6 +614,7 @@ export interface Page {
             hideBlock?: boolean | null;
             bgImage?: (string | null) | Media;
             title?: string | null;
+            oneColumn?: boolean | null;
             items?:
               | {
                   text?: string | null;
@@ -472,43 +630,45 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
+            title?: string | null;
             subTitle?: string | null;
             factsLeft?:
               | {
+                  value?: string | null;
                   title?: string | null;
-                  text?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            title?: string | null;
             factsRight?:
               | {
+                  value?: string | null;
                   title?: string | null;
-                  text?: string | null;
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Tiles next to the blue box. **bold** makes the number large (e.g. **322**t/Jahr); line breaks are kept.
+             */
             factsMosaic?: {
               fm1?: {
                 title?: string | null;
                 text?: string | null;
               };
               fm2?: {
-                title?: string | null;
-                text?: string | null;
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
               };
               fm3?: {
-                title?: string | null;
-                text?: string | null;
+                text1?: string | null;
+                text2?: string | null;
               };
               fm4?: {
-                title?: string | null;
-                text?: string | null;
+                text1?: string | null;
               };
               fm5?: {
                 text1?: string | null;
                 text2?: string | null;
-                text3?: string | null;
               };
               fm6?: {
                 text1?: string | null;
@@ -540,10 +700,18 @@ export interface Page {
               | {
                   title?: string | null;
                   text?: string | null;
+                  /**
+                   * Shown on hover.
+                   */
+                  background?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            slidesPerView?: string | null;
+            slidesPerView?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeUseCases';
@@ -553,9 +721,13 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            video?: string | null;
-            overlay?: string | null;
             image?: (string | null) | Media;
+            /**
+             * Optional. Plays muted on a loop over the image.
+             */
+            video?: string | null;
+            title?: string | null;
+            subTitle?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productHero';
@@ -565,7 +737,13 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            menu?: string | null;
+            menu?:
+              | {
+                  name: string;
+                  link: string;
+                  id?: string | null;
+                }[]
+              | null;
             sections?: string | null;
             button?: string | null;
             id?: string | null;
@@ -617,20 +795,117 @@ export interface Page {
              */
             hideBlock?: boolean | null;
             title?: string | null;
+            img?: (string | null) | Media;
+            text?: string | null;
             items?:
               | {
                   title?: string | null;
                   text?: string | null;
-                  leftText?: string | null;
-                  rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            img?: (string | null) | Media;
-            text?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeData';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            /**
+             * Defaults to /home-hero.png when empty.
+             */
+            bgImage?: (string | null) | Media;
+            title?: string | null;
+            description?: string | null;
+            chooseCategory?: string | null;
+            categories?:
+              | {
+                  title: string;
+                  url: string;
+                  id?: string | null;
+                }[]
+              | null;
+            links?:
+              | {
+                  title: string;
+                  url: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeLanding';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            /**
+             * Leave off on legal pages, where the card lines up with the text next to the table of contents.
+             */
+            centered?: boolean | null;
+            /**
+             * Optional line above the buttons.
+             */
+            text?: string | null;
+            buttons: {
+              type: 'phone' | 'email' | 'link';
+              /**
+               * Text on the button.
+               */
+              label: string;
+              /**
+               * Phone number, email address, or URL / site path (e.g. /de/impressum).
+               */
+              value: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactButtons';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            image: string | Media;
+            /**
+             * Optional. External links open in a new tab.
+             */
+            url?: string | null;
+            maxWidth?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'logoLink';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  label: string;
+                  /**
+                   * Optional. Without a link the tile is a plain label.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linkTiles';
           }
         | {
             /**
@@ -648,6 +923,743 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
+            /**
+             * Document: Heading 1 is the page title, Heading 2 starts a section (numbered if it starts with "1."), Heading 3 is a sub-heading.
+             */
+            layout?: ('default' | 'document') | null;
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            image: string | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            label: string;
+            url: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'callToAction';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates".
+ */
+export interface Template {
+  id: string;
+  title: string;
+  content?:
+    | (
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            heroImg?: (string | null) | Media;
+            title?: string | null;
+            description?: string | null;
+            content?: string | null;
+            button?: string | null;
+            buttonLink?: string | null;
+            button2?: string | null;
+            buttonLink2?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeHero';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  title?: string | null;
+                  content?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeContentVersions';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            text?: string | null;
+            items?:
+              | {
+                  title?: string | null;
+                  text?: string | null;
+                  /**
+                   * e.g. Street
+                   */
+                  leftText?: string | null;
+                  /**
+                   * e.g. Neu
+                   */
+                  rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            items2?:
+              | {
+                  title?: string | null;
+                  text?: string | null;
+                  /**
+                   * e.g. Street
+                   */
+                  leftText?: string | null;
+                  /**
+                   * e.g. Neu
+                   */
+                  rightText?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            contentTitle?: string | null;
+            contentText?: string | null;
+            contentBg?: (string | null) | Media;
+            contentButton?: string | null;
+            contentButtonLink?: string | null;
+            button1Color?: ('primary' | 'secondary' | 'orange') | null;
+            button2?: string | null;
+            button2Link?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeApplications';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeNews';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            background?: ('none' | 'gray') | null;
+            rows?:
+              | {
+                  layout: 'text' | 'textLeft' | 'textLeftBg' | 'textRight' | 'textRightBg';
+                  textStyle: 'sectionTitle' | 'heading' | 'subheading' | 'body';
+                  /**
+                   * Desktop only; on phones the picture sits above the text.
+                   */
+                  split?: ('even' | 'text60' | 'picture60') | null;
+                  /**
+                   * Optional subheading above the text.
+                   */
+                  title?: string | null;
+                  /**
+                   * Markdown: **bold**, [link](/path), lines starting with "- " form a bullet list. Empty lines start a new paragraph.
+                   */
+                  content: string;
+                  button?: {
+                    label?: string | null;
+                    /**
+                     * External links open in a new tab.
+                     */
+                    link?: string | null;
+                  };
+                  picture?: (string | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional. Markdown.
+             */
+            text?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productTextWithPicture';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            iframe?: string | null;
+            className?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeFrame';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            /**
+             * **bold** is highlighted; line breaks are kept.
+             */
+            description?: string | null;
+            sliderItems?:
+              | {
+                  logo: string | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            testimonials?:
+              | {
+                  name?: string | null;
+                  description?: string | null;
+                  text?: string | null;
+                  img?: (string | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            slidePerView?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            /**
+             * Document: a bold first line becomes the title and bold lines like "**1. Heading**" become sections.
+             */
+            layout?: ('default' | 'document') | null;
+            classNames?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productWysiwyg';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productFunctions';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            heroText?: string | null;
+            hero?: string | null;
+            background?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productTextSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            contentTitle?: string | null;
+            /**
+             * **bold** is shown in orange; line breaks are kept.
+             */
+            content?: string | null;
+            contentImg?: (string | null) | Media;
+            contentButton?: string | null;
+            contentButtonLink?: string | null;
+            button1Color?: ('primary' | 'secondary' | 'orange') | null;
+            items?:
+              | {
+                  title?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeSoftware';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  left: {
+                    label: string;
+                    /**
+                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     */
+                    link?: string | null;
+                    icon?: (string | null) | Media;
+                  };
+                  /**
+                   * e.g. oder / und
+                   */
+                  vs?: string | null;
+                  right: {
+                    label: string;
+                    /**
+                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     */
+                    link?: string | null;
+                    icon?: (string | null) | Media;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeProductVS';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            sub_title?: string | null;
+            image?: (string | null) | Media;
+            button2?: string | null;
+            text?: string | null;
+            button1?: string | null;
+            title?: string | null;
+            button1Link?: string | null;
+            button2Link?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productInfo';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            center?: string | null;
+            itemsBgSize?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productFeatures';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productBeforeAfterSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            video?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productList';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            list?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeTitleDescriptionList';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            bgImage?: (string | null) | Media;
+            title?: string | null;
+            oneColumn?: boolean | null;
+            items?:
+              | {
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeInfo';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            subTitle?: string | null;
+            factsLeft?:
+              | {
+                  value?: string | null;
+                  title?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            factsRight?:
+              | {
+                  value?: string | null;
+                  title?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Tiles next to the blue box. **bold** makes the number large (e.g. **322**t/Jahr); line breaks are kept.
+             */
+            factsMosaic?: {
+              fm1?: {
+                title?: string | null;
+                text?: string | null;
+              };
+              fm2?: {
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+              fm3?: {
+                text1?: string | null;
+                text2?: string | null;
+              };
+              fm4?: {
+                text1?: string | null;
+              };
+              fm5?: {
+                text1?: string | null;
+                text2?: string | null;
+              };
+              fm6?: {
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+              fm7?: {
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+              fm8?: {
+                text1?: string | null;
+                text2?: string | null;
+                text3?: string | null;
+              };
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeFacts';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  title?: string | null;
+                  text?: string | null;
+                  /**
+                   * Shown on hover.
+                   */
+                  background?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            slidesPerView?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeUseCases';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            image?: (string | null) | Media;
+            /**
+             * Optional. Plays muted on a loop over the image.
+             */
+            video?: string | null;
+            title?: string | null;
+            subTitle?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productHero';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            menu?:
+              | {
+                  name: string;
+                  link: string;
+                  id?: string | null;
+                }[]
+              | null;
+            sections?: string | null;
+            button?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productProductHeader';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            bigMap?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productTextWithMap';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            imageType?: (string | null) | Media;
+            href?: string | null;
+            items?: string | null;
+            classNames?: string | null;
+            title?: string | null;
+            contact?: string | null;
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productIntegrationSlider';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?: string | null;
+            className?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeProductVS2';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            img?: (string | null) | Media;
+            text?: string | null;
+            items?:
+              | {
+                  title?: string | null;
+                  text?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Site path (/de/…) or full URL.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeData';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            /**
+             * Defaults to /home-hero.png when empty.
+             */
+            bgImage?: (string | null) | Media;
+            title?: string | null;
+            description?: string | null;
+            chooseCategory?: string | null;
+            categories?:
+              | {
+                  title: string;
+                  url: string;
+                  id?: string | null;
+                }[]
+              | null;
+            links?:
+              | {
+                  title: string;
+                  url: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeLanding';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            /**
+             * Leave off on legal pages, where the card lines up with the text next to the table of contents.
+             */
+            centered?: boolean | null;
+            /**
+             * Optional line above the buttons.
+             */
+            text?: string | null;
+            buttons: {
+              type: 'phone' | 'email' | 'link';
+              /**
+               * Text on the button.
+               */
+              label: string;
+              /**
+               * Phone number, email address, or URL / site path (e.g. /de/impressum).
+               */
+              value: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactButtons';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            image: string | Media;
+            /**
+             * Optional. External links open in a new tab.
+             */
+            url?: string | null;
+            maxWidth?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'logoLink';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            title?: string | null;
+            items?:
+              | {
+                  label: string;
+                  /**
+                   * Optional. Without a link the tile is a plain label.
+                   */
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'linkTiles';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            headingText: string;
+            level?: ('h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heading';
+          }
+        | {
+            /**
+             * If checked, this block will not be rendered on the frontend.
+             */
+            hideBlock?: boolean | null;
+            /**
+             * Document: Heading 1 is the page title, Heading 2 starts a section (numbered if it starts with "1."), Heading 3 is a sub-heading.
+             */
+            layout?: ('default' | 'document') | null;
             content: {
               root: {
                 type: string;
@@ -726,6 +1738,14 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'templates';
+        value: string | Template;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: string | Page;
       } | null);
@@ -783,6 +1803,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
@@ -799,6 +1820,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -813,18 +1835,40 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages_select".
+ * via the `definition` "categories_select".
  */
-export interface PagesSelect<T extends boolean = true> {
+export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  _status?: T;
-  meta?:
+  icon?: T;
+  menu?:
     | T
     | {
-        title?: T;
-        description?: T;
+        type?: T;
+        page?: T;
+        url?: T;
+        name?: T;
+        newTab?: T;
+        subMenus?:
+          | T
+          | {
+              type?: T;
+              page?: T;
+              url?: T;
+              name?: T;
+              id?: T;
+            };
+        id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates_select".
+ */
+export interface TemplatesSelect<T extends boolean = true> {
+  title?: T;
   content?:
     | T
     | {
@@ -853,8 +1897,8 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     title?: T;
                     content?: T;
-                    leftText?: T;
-                    rightText?: T;
+                    icon?: T;
+                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -864,9 +1908,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              contentBg?: T;
-              button1Color?: T;
-              button2?: T;
+              title?: T;
               text?: T;
               items?:
                 | T
@@ -875,14 +1917,28 @@ export interface PagesSelect<T extends boolean = true> {
                     text?: T;
                     leftText?: T;
                     rightText?: T;
+                    icon?: T;
+                    link?: T;
                     id?: T;
                   };
-              contentButtonLink?: T;
-              items2?: T;
+              items2?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    icon?: T;
+                    link?: T;
+                    id?: T;
+                  };
               contentTitle?: T;
               contentText?: T;
-              title?: T;
+              contentBg?: T;
               contentButton?: T;
+              contentButtonLink?: T;
+              button1Color?: T;
+              button2?: T;
               button2Link?: T;
               id?: T;
               blockName?: T;
@@ -899,10 +1955,25 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              type?: T;
+              background?: T;
+              rows?:
+                | T
+                | {
+                    layout?: T;
+                    textStyle?: T;
+                    split?: T;
+                    title?: T;
+                    content?: T;
+                    button?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                        };
+                    picture?: T;
+                    id?: T;
+                  };
               text?: T;
-              picture?: T;
-              content?: T;
               id?: T;
               blockName?: T;
             };
@@ -920,26 +1991,24 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
+              title?: T;
+              description?: T;
               sliderItems?:
                 | T
                 | {
-                    text?: T;
+                    logo?: T;
                     id?: T;
                   };
-              name?: T;
-              text?: T;
-              slidePerView?: T;
-              title?: T;
-              img?: T;
-              description?: T;
               testimonials?:
                 | T
                 | {
                     name?: T;
-                    text?: T;
                     description?: T;
+                    text?: T;
+                    img?: T;
                     id?: T;
                   };
+              slidePerView?: T;
               id?: T;
               blockName?: T;
             };
@@ -947,6 +2016,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
+              layout?: T;
               classNames?: T;
               content?: T;
               id?: T;
@@ -976,22 +2046,21 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              button1Color?: T;
+              title?: T;
+              contentTitle?: T;
+              content?: T;
+              contentImg?: T;
+              contentButton?: T;
               contentButtonLink?: T;
+              button1Color?: T;
               items?:
                 | T
                 | {
                     title?: T;
-                    text?: T;
-                    leftText?: T;
-                    rightText?: T;
+                    icon?: T;
+                    link?: T;
                     id?: T;
                   };
-              contentImg?: T;
-              contentTitle?: T;
-              title?: T;
-              contentButton?: T;
-              content?: T;
               id?: T;
               blockName?: T;
             };
@@ -1000,8 +2069,26 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               hideBlock?: T;
               title?: T;
-              items?: T;
-              className?: T;
+              items?:
+                | T
+                | {
+                    left?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          icon?: T;
+                        };
+                    vs?: T;
+                    right?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          icon?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1065,6 +2152,7 @@ export interface PagesSelect<T extends boolean = true> {
               hideBlock?: T;
               bgImage?: T;
               title?: T;
+              oneColumn?: T;
               items?:
                 | T
                 | {
@@ -1078,20 +2166,20 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
+              title?: T;
               subTitle?: T;
               factsLeft?:
                 | T
                 | {
+                    value?: T;
                     title?: T;
-                    text?: T;
                     id?: T;
                   };
-              title?: T;
               factsRight?:
                 | T
                 | {
+                    value?: T;
                     title?: T;
-                    text?: T;
                     id?: T;
                   };
               factsMosaic?:
@@ -1106,27 +2194,26 @@ export interface PagesSelect<T extends boolean = true> {
                     fm2?:
                       | T
                       | {
-                          title?: T;
-                          text?: T;
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
                         };
                     fm3?:
                       | T
                       | {
-                          title?: T;
-                          text?: T;
+                          text1?: T;
+                          text2?: T;
                         };
                     fm4?:
                       | T
                       | {
-                          title?: T;
-                          text?: T;
+                          text1?: T;
                         };
                     fm5?:
                       | T
                       | {
                           text1?: T;
                           text2?: T;
-                          text3?: T;
                         };
                     fm6?:
                       | T
@@ -1163,6 +2250,8 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     title?: T;
                     text?: T;
+                    background?: T;
+                    link?: T;
                     id?: T;
                   };
               slidesPerView?: T;
@@ -1173,9 +2262,10 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              video?: T;
-              overlay?: T;
               image?: T;
+              video?: T;
+              title?: T;
+              subTitle?: T;
               id?: T;
               blockName?: T;
             };
@@ -1183,7 +2273,13 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              menu?: T;
+              menu?:
+                | T
+                | {
+                    name?: T;
+                    link?: T;
+                    id?: T;
+                  };
               sections?: T;
               button?: T;
               id?: T;
@@ -1227,17 +2323,84 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               hideBlock?: T;
               title?: T;
+              img?: T;
+              text?: T;
               items?:
                 | T
                 | {
                     title?: T;
                     text?: T;
-                    leftText?: T;
-                    rightText?: T;
+                    icon?: T;
+                    link?: T;
                     id?: T;
                   };
-              img?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeLanding?:
+          | T
+          | {
+              hideBlock?: T;
+              bgImage?: T;
+              title?: T;
+              description?: T;
+              chooseCategory?: T;
+              categories?:
+                | T
+                | {
+                    title?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              links?:
+                | T
+                | {
+                    title?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        contactButtons?:
+          | T
+          | {
+              hideBlock?: T;
+              centered?: T;
               text?: T;
+              buttons?:
+                | T
+                | {
+                    type?: T;
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        logoLink?:
+          | T
+          | {
+              hideBlock?: T;
+              image?: T;
+              url?: T;
+              maxWidth?: T;
+              id?: T;
+              blockName?: T;
+            };
+        linkTiles?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1254,6 +2417,599 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
+              layout?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        image?:
+          | T
+          | {
+              hideBlock?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        callToAction?:
+          | T
+          | {
+              hideBlock?: T;
+              label?: T;
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  template?: T;
+  saveAsTemplate?: T;
+  templateTitle?: T;
+  _status?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  content?:
+    | T
+    | {
+        homeHero?:
+          | T
+          | {
+              hideBlock?: T;
+              heroImg?: T;
+              title?: T;
+              description?: T;
+              content?: T;
+              button?: T;
+              buttonLink?: T;
+              button2?: T;
+              buttonLink2?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeContentVersions?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    content?: T;
+                    icon?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeApplications?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              text?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    icon?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              items2?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    leftText?: T;
+                    rightText?: T;
+                    icon?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              contentTitle?: T;
+              contentText?: T;
+              contentBg?: T;
+              contentButton?: T;
+              contentButtonLink?: T;
+              button1Color?: T;
+              button2?: T;
+              button2Link?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeNews?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productTextWithPicture?:
+          | T
+          | {
+              hideBlock?: T;
+              background?: T;
+              rows?:
+                | T
+                | {
+                    layout?: T;
+                    textStyle?: T;
+                    split?: T;
+                    title?: T;
+                    content?: T;
+                    button?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                        };
+                    picture?: T;
+                    id?: T;
+                  };
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeFrame?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              iframe?: T;
+              className?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeSlider?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              description?: T;
+              sliderItems?:
+                | T
+                | {
+                    logo?: T;
+                    id?: T;
+                  };
+              testimonials?:
+                | T
+                | {
+                    name?: T;
+                    description?: T;
+                    text?: T;
+                    img?: T;
+                    id?: T;
+                  };
+              slidePerView?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productWysiwyg?:
+          | T
+          | {
+              hideBlock?: T;
+              layout?: T;
+              classNames?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productFunctions?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productTextSlider?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              heroText?: T;
+              hero?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeSoftware?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              contentTitle?: T;
+              content?: T;
+              contentImg?: T;
+              contentButton?: T;
+              contentButtonLink?: T;
+              button1Color?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    icon?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeProductVS?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    left?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          icon?: T;
+                        };
+                    vs?: T;
+                    right?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          icon?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        productInfo?:
+          | T
+          | {
+              hideBlock?: T;
+              sub_title?: T;
+              image?: T;
+              button2?: T;
+              text?: T;
+              button1?: T;
+              title?: T;
+              button1Link?: T;
+              button2Link?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productFeatures?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?: T;
+              center?: T;
+              itemsBgSize?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productBeforeAfterSlider?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productList?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?: T;
+              video?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeTitleDescriptionList?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              list?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeInfo?:
+          | T
+          | {
+              hideBlock?: T;
+              bgImage?: T;
+              title?: T;
+              oneColumn?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeFacts?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              subTitle?: T;
+              factsLeft?:
+                | T
+                | {
+                    value?: T;
+                    title?: T;
+                    id?: T;
+                  };
+              factsRight?:
+                | T
+                | {
+                    value?: T;
+                    title?: T;
+                    id?: T;
+                  };
+              factsMosaic?:
+                | T
+                | {
+                    fm1?:
+                      | T
+                      | {
+                          title?: T;
+                          text?: T;
+                        };
+                    fm2?:
+                      | T
+                      | {
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                    fm3?:
+                      | T
+                      | {
+                          text1?: T;
+                          text2?: T;
+                        };
+                    fm4?:
+                      | T
+                      | {
+                          text1?: T;
+                        };
+                    fm5?:
+                      | T
+                      | {
+                          text1?: T;
+                          text2?: T;
+                        };
+                    fm6?:
+                      | T
+                      | {
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                    fm7?:
+                      | T
+                      | {
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                    fm8?:
+                      | T
+                      | {
+                          text1?: T;
+                          text2?: T;
+                          text3?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeUseCases?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    background?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              slidesPerView?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productHero?:
+          | T
+          | {
+              hideBlock?: T;
+              image?: T;
+              video?: T;
+              title?: T;
+              subTitle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productProductHeader?:
+          | T
+          | {
+              hideBlock?: T;
+              menu?:
+                | T
+                | {
+                    name?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              sections?: T;
+              button?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productTextWithMap?:
+          | T
+          | {
+              hideBlock?: T;
+              bigMap?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        productIntegrationSlider?:
+          | T
+          | {
+              hideBlock?: T;
+              imageType?: T;
+              href?: T;
+              items?: T;
+              classNames?: T;
+              title?: T;
+              contact?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeProductVS2?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?: T;
+              className?: T;
+              id?: T;
+              blockName?: T;
+            };
+        homeData?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              img?: T;
+              text?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    icon?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeLanding?:
+          | T
+          | {
+              hideBlock?: T;
+              bgImage?: T;
+              title?: T;
+              description?: T;
+              chooseCategory?: T;
+              categories?:
+                | T
+                | {
+                    title?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              links?:
+                | T
+                | {
+                    title?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        contactButtons?:
+          | T
+          | {
+              hideBlock?: T;
+              centered?: T;
+              text?: T;
+              buttons?:
+                | T
+                | {
+                    type?: T;
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        logoLink?:
+          | T
+          | {
+              hideBlock?: T;
+              image?: T;
+              url?: T;
+              maxWidth?: T;
+              id?: T;
+              blockName?: T;
+            };
+        linkTiles?:
+          | T
+          | {
+              hideBlock?: T;
+              title?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        heading?:
+          | T
+          | {
+              hideBlock?: T;
+              headingText?: T;
+              level?: T;
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              hideBlock?: T;
+              layout?: T;
               content?: T;
               id?: T;
               blockName?: T;
@@ -1321,105 +3077,59 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
- */
-export interface Header {
-  id: string;
-  menuItems?:
-    | {
-        name?: string | null;
-        url?: string | null;
-        target?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  mobileMenuItems?:
-    | {
-        name?: string | null;
-        url?: string | null;
-        subMenus?:
-          | {
-              name?: string | null;
-              url?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
  */
 export interface Footer {
   id: string;
+  companyName?: string | null;
+  copyrights?: string | null;
+  /**
+   * One line per address line.
+   */
+  companyAddress?: string | null;
+  companyPhone?: string | null;
+  companyEmail?: string | null;
   links?:
     | {
-        name?: string | null;
-        url?: string | null;
+        title: string;
+        /**
+         * Site path without locale, e.g. /impressum
+         */
+        url: string;
         id?: string | null;
       }[]
     | null;
-  socialLinks?:
+  socials?:
     | {
-        platform?: string | null;
-        url?: string | null;
+        type: 'linkedin' | 'twitter' | 'instagram' | 'facebook' | 'youtube';
+        url: string;
         id?: string | null;
       }[]
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
- */
-export interface HeaderSelect<T extends boolean = true> {
-  menuItems?:
-    | T
-    | {
-        name?: T;
-        url?: T;
-        target?: T;
-        id?: T;
-      };
-  mobileMenuItems?:
-    | T
-    | {
-        name?: T;
-        url?: T;
-        subMenus?:
-          | T
-          | {
-              name?: T;
-              url?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  companyName?: T;
+  copyrights?: T;
+  companyAddress?: T;
+  companyPhone?: T;
+  companyEmail?: T;
   links?:
     | T
     | {
-        name?: T;
+        title?: T;
         url?: T;
         id?: T;
       };
-  socialLinks?:
+  socials?:
     | T
     | {
-        platform?: T;
+        type?: T;
         url?: T;
         id?: T;
       };

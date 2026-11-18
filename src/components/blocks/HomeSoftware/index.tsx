@@ -1,35 +1,40 @@
 "use client";
 
-import { Trans } from 'react-i18next';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import textLine from '@/assets/text-line.svg';
 import Button from '@/components/Button';
+import { md2htmlBreaks } from '@/helpers/markdown';
 
 const HomeSoftware = ({ data }: { data: any }) => {
 	const router = useRouter();
 
 	const swiperOptions = {
+		// Fractional counts let the next card peek in, so visitors see there is more to swipe.
+		// Below md the container has no side padding, so the offsets keep cards on the 16px page edge.
+		slidesPerView: 1.3,
+		spaceBetween: 16,
+		slidesOffsetBefore: 16,
+		slidesOffsetAfter: 16,
 		breakpoints: {
-			400: {
-				slidesPerView: 2,
-				spaceBetween: 5,
-				centeredSlides: true,
-				initialSlide: 1,
+			640: {
+				slidesPerView: 2.3,
 			},
 			768: {
-				modules: [Autoplay],
-				slidesPerView: 1,
-				initialSlide: 1,
-				centeredSlides: true,
+				slidesPerView: 2.3,
+				slidesOffsetBefore: 0,
+				slidesOffsetAfter: 0,
 			},
 			1024: {
+				slidesOffsetBefore: 0,
+				slidesOffsetAfter: 0,
 				slidesPerView: 3,
 				spaceBetween: 25,
 			},
@@ -38,9 +43,9 @@ const HomeSoftware = ({ data }: { data: any }) => {
 
 	return (
 		<section id="software">
-			<div className="container flex flex-col w-full max-w-[1600px] gap-4 lg:gap-8 mx-auto py-16 md:px-16 xl:px-32 px-0 lg:px-4">
-				<div className="text-center mb-4">
-					<h1 className="text-h1 font-black relative inline-block">
+			<div className="container flex flex-col w-full max-w-[1600px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-0">
+				<div className="text-center">
+					<h1 className="text-h1 font-black relative inline-block" {...payloadEditable(`content.${data.blockIndex}.title`)}>
 						{data.title}
 						{ (textLine?.url || textLine) ? <Image
 							src={textLine?.url || textLine}
@@ -51,13 +56,11 @@ const HomeSoftware = ({ data }: { data: any }) => {
 				</div>
 				<div className="flex bg-gradient-to-r from-[#0E3A51] to-[#0D92D2] text-white p-12 rounded-md gap-8 flex-col-reverse lg:flex-row mx-4 lg:mx-0">
 					<div className="flex flex-1 flex-col gap-4">
-						<h2 className="text-h2 font-black">{data.contentTitle}</h2>
-						<p className="font-semibold text-b1">
-							<Trans i18nKey={data.content}>
-								<br />
-								<span className="text-orange" />
-							</Trans>
-						</p>
+						<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.contentTitle`)}>{data.contentTitle}</h2>
+						<p
+							className="font-semibold text-b1 [&_strong]:font-semibold [&_strong]:text-orange"
+							dangerouslySetInnerHTML={{ __html: md2htmlBreaks(data.content) }}
+						/>
 						{data.contentButton && (
 							<Button
 								className="w-fit"
@@ -75,7 +78,7 @@ const HomeSoftware = ({ data }: { data: any }) => {
 					<div className="">
 						<Swiper {...swiperOptions} className="mySwiper">
 							{(data.items || []).map((i: any, _i: number) => (
-								<SwiperSlide key={_i} className="xs:p-4">
+								<SwiperSlide key={_i}>
 									<div
 										onClick={() => router.push(i.link)}
 										className="min-h-[250px] cursor-pointer ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)]">

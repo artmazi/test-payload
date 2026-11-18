@@ -1,7 +1,12 @@
 import type { Block } from 'payload'
 
 export const ProductProductHeaderBlock: Block = {
+  // Admin name only; the slug stays so stored pages keep working
   slug: 'productProductHeader',
+  labels: { singular: 'Page Menu', plural: 'Page Menus' },
+  // Thumbnail in the admin "Add Content" drawer
+  imageURL: '/blocks/page-menu.png',
+  imageAltText: 'Pill-style menu linking related pages',
   fields: [
     {
       name: 'hideBlock',
@@ -14,7 +19,12 @@ export const ProductProductHeaderBlock: Block = {
     },
     {
       name: 'menu',
-      type: 'text',
+      type: 'array',
+      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'link', type: 'text', required: true },
+      ],
     },
     {
       name: 'sections',

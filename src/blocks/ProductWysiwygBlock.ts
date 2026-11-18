@@ -13,6 +13,18 @@ export const ProductWysiwygBlock: Block = {
       },
     },
     {
+      name: 'layout',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        { label: 'Default', value: 'default' },
+        { label: 'Document (title, numbered sections, table of contents)', value: 'document' },
+      ],
+      admin: {
+        description: 'Document: a bold first line becomes the title and bold lines like "**1. Heading**" become sections.',
+      },
+    },
+    {
       name: 'classNames',
       type: 'text',
     },

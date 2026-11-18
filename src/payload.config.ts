@@ -3,12 +3,14 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import { visualEditor } from 'payload-inline-visual-editor'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Header } from './globals/Header'
+import { Categories } from './collections/Categories'
+import { Templates } from './collections/Templates'
 import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
@@ -22,6 +24,12 @@ export default buildConfig({
   },
   admin: {
     user: Users.slug,
+    components: {
+      // Top-bar link to the public site; the admin otherwise only offers preview / edit views
+      actions: ['/src/components/admin/ViewSiteLink'],
+      // Branded welcome strip with live counts; collection icons live in custom.scss
+      beforeDashboard: ['/src/components/admin/DashboardBanner'],
+    },
     livePreview: {
       breakpoints: [
         {
@@ -45,8 +53,8 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Pages],
-  globals: [Header, Footer],
+  collections: [Users, Media, Categories, Templates, Pages],
+  globals: [Footer],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'fallback-secret',
   typescript: {
@@ -56,6 +64,7 @@ export default buildConfig({
     url: process.env.MONGODB_URI || '',
   }),
   plugins: [
+    visualEditor(),
     ...(process.env.BLOB_READ_WRITE_TOKEN
       ? [
           vercelBlobStorage({

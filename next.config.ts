@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
   // turbopack: {
   //   root: path.resolve(dirname),
   // },
+  async redirects() {
+    // Any path without a locale prefix gets the default one: /verwaltungen/platform -> /de/verwaltungen/platform.
+    // Skips the locales themselves, admin / API / Next internals, and files (anything with a dot, e.g. /logo.svg).
+    return [
+      { source: '/', destination: '/de', permanent: false },
+      { source: '/:path((?!(?:de|en|fr|it|admin|api|_next)(?:/|$))(?!.*\\.).+)', destination: '/de/:path', permanent: false },
+    ]
+  },
   images: {
     remotePatterns: [
       {

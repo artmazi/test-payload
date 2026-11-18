@@ -2,13 +2,14 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 const HomeFrame = ({ data }: { data: any }) => {
 	return (
 		<section id="iframe" className={clsx(data.className)}>
 			<div className="container flex flex-col w-full max-w-[1200px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-4">
-				{data.title && <p className="text-h1 text-center text-black font-bold">{data.title}</p>}
+				{data.title && <p className="text-h1 text-center text-black font-bold" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data.title}</p>}
 				{data.iframe && (
 					<iframe
 						style={{ aspectRatio: '16/9', height: 'auto' }}

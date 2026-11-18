@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Classes typed into CMS fields (e.g. productWysiwyg.classNames) never appear in source, so generate them explicitly */
+@source inline("!text-left [&>h1]:text-h2");
 
 @theme {
   --color-teal: #0E3A51;
@@ -50,3 +52,55 @@ body {
 button, a {
   cursor: pointer;
 }
+
+/* When a sticky in-page menu sits under the header, the menu carries the scroll shadow instead */
+body:has(#prod-header) .custom-header-styles {
+  box-shadow: none;
+}
+
+/* Smooth in-page anchor jumps (e.g. the legal pages' Inhalt list), unless the user asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Height of what sticks to the top: site header (102px), plus the in-page menu when present.
+   The menu block overwrites it with its measured height (it can wrap); these are the pre-hydration fallbacks.
+   Anchor targets and the sticky table of contents use it to sit just below the sticky bars. */
+:root {
+  --sticky-top: 102px;
+}
+:root:has(#prod-header) {
+  --sticky-top: 175px;
+}
+
+/* Ported from infra3dcom's tailwind.config.cjs: the Home* blocks rely on these */
+@custom-variant xs (@media (max-width: 479px));
+@utility flex-0-5 { flex: 0 0 50%; }
+@utility flex-0-33 { flex: 0 0 33%; }
+@utility flex-2-11 { flex: 2 0 11%; }
+
+/* infra3dcom set these on #root; scoped to the ported landing sections so other pages keep their look.
+   pre-line is what shows line breaks typed into CMS textareas (testimonials, facts).
+   In the base layer so leading-* / text-* utilities on individual elements still win. */
+@layer base {
+  :is(#hero, #news, #info, #slider, #use-cases, #software, #data, #content-versions, #application, #facts) {
+    color: var(--color-teal);
+    white-space: pre-line;
+    word-break: break-word;
+  }
+  :is(#hero, #news, #info, #slider, #use-cases, #software, #data, #content-versions, #application, #facts) :is(h1, h2, h3) {
+    line-height: 1.2;
+  }
+}
+/* Smaller display sizes on phones so section titles don't break word by word */
+@media (max-width: 767px) {
+  :is(#hero, #news, #info, #slider, #use-cases, #software, #data, #content-versions, #application, #facts) {
+    --text-h1: 36px;
+    --text-h2: 28px;
+  }
+}
+
+/* The home page's absolute header would cover the admin bar; move it below */
+body:has(#admin-bar) > header.absolute { top: 2.5rem; }

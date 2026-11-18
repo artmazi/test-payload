@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useState } from 'react';
 import DataMapMini from '@/components/DataMapInfra3d/DataMapMini';
 import DataMapPage from '@/components/DataMapInfra3d/DataMapPage';
@@ -16,7 +17,7 @@ const ProductTextWithMap = ({ data }: { data: any }) => {
 			) : (
 				<div className="flex w-full max-w-[1600px] py-16 md:px-16 xl:px-32 px-4 text-white mx-auto gap-8 lg:flex-row flex-col">
 					<div className={clsx('content flex flex-1 justify-center items-center')}>
-						<div className="p-8">{data.content}</div>
+						<div className="p-8" {...payloadEditable(`content.${data.blockIndex}.content`)}>{data.content}</div>
 					</div>
 					<div className="relative flex flex-1">
 						{showHover && (

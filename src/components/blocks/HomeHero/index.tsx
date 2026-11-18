@@ -1,11 +1,11 @@
 "use client";
 
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import { InlineEdit } from '@/components/InlineEdit';
 
 const HomeHero = ({ data }: { data: any }) => {
 	const router = useRouter();
@@ -13,32 +13,14 @@ const HomeHero = ({ data }: { data: any }) => {
 	return (
 		<section
 			id="hero"
-			className="flex w-full container mx-auto py-16 md:px-16 xl:px-32 px-4 lg:flex-row flex-col-reverse">
+			className="flex w-full max-w-[1600px] mx-auto py-16 md:px-16 xl:px-32 px-4 lg:flex-row flex-col-reverse">
 			<div className="flex flex-1 flex-col gap-8 justify-center">
 				<div>
-					<InlineEdit
-						pageId={data.pageId}
-						fieldPath={`content.${data.blockIndex}.title`}
-						initialText={data.title || ''}
-						tag="h1"
-						className="text-h1 font-black whitespace-pre-wrap"
-					/>
-					<InlineEdit
-						pageId={data.pageId}
-						fieldPath={`content.${data.blockIndex}.description`}
-						initialText={data.description || ''}
-						tag="h3"
-						className="text-h3 font-medium italic text-sky whitespace-pre-wrap"
-					/>
+					<h1 className="text-h1 font-black whitespace-pre-wrap" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data.title}</h1>
+					<h3 className="text-h3 font-medium italic text-sky whitespace-pre-wrap" {...payloadEditable(`content.${data.blockIndex}.description`)}>{data.description}</h3>
 				</div>
 				<div>
-					<InlineEdit
-						pageId={data.pageId}
-						fieldPath={`content.${data.blockIndex}.content`}
-						initialText={data.content || ''}
-						tag="p"
-						className="text-b1 text-gray whitespace-pre-wrap"
-					/>
+					<p className="text-b1 text-gray whitespace-pre-wrap" {...payloadEditable(`content.${data.blockIndex}.content`)}>{data.content}</p>
 				</div>
 				<div className="flex gap-4">
 					<Button className="w-fit" onClick={() => window.open(data.buttonLink, '_blank')}>

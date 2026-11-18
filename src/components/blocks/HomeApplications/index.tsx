@@ -5,6 +5,7 @@ import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -73,11 +74,11 @@ const HomeApplications = ({ data }: { data: any }) => {
 
 	return (
 		<section id="application">
-			<div className="container flex flex-col w-full max-w-[1600px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-0 lg:px-4">
+			<div className="container flex flex-col w-full max-w-[1600px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-0">
 				{data.title && data.text && (
 					<>
 						<div className="text-center">
-							<h1 className="text-h1 font-black relative inline-block">
+							<h1 className="text-h1 font-black relative inline-block" {...payloadEditable(`content.${data.blockIndex}.title`)}>
 								{data.title}
 								{ (textLine?.url || textLine) ? <Image
 									src={textLine?.url || textLine}
@@ -86,8 +87,8 @@ const HomeApplications = ({ data }: { data: any }) => {
 								 width={800} height={600} /> : null }
 							</h1>
 						</div>
-						<div className="flex mt-4 px-4 lg:px-0 text-center">
-							<p className="text-b1 text-gray">{data.text}</p>
+						<div className="flex px-4 lg:px-0 text-center">
+							<p className="text-b1 text-gray" {...payloadEditable(`content.${data.blockIndex}.text`)}>{data.text}</p>
 						</div>
 					</>
 				)}
@@ -112,12 +113,12 @@ const HomeApplications = ({ data }: { data: any }) => {
 										<div className="flex justify-center items-center flex-1">
 											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))}
 												alt="icon"
-												className="max-h-[155px] max-w-[245px] mx-auto"
+												className="max-h-[155px] max-w-[245px] w-auto h-auto mx-auto"
 											 width={800} height={600} /> : null }
 										</div>
 										<div className="flex gap-2 flex-col">
-											<h3 className="text-h3 font-black text-sky">{i.title}</h3>
-											<p className="text-b2 text-gray">{i.text}</p>
+											<h3 className="text-h3 font-black text-sky" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title}</h3>
+											<p className="text-b2 text-gray" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.text`)}>{i.text}</p>
 										</div>
 									</div>
 								</SwiperSlide>
@@ -146,7 +147,7 @@ const HomeApplications = ({ data }: { data: any }) => {
 										<div className="flex justify-center items-center flex-1">
 											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))}
 												alt="icon"
-												className="max-h-[155px] max-w-[245px] mx-auto"
+												className="max-h-[155px] max-w-[245px] w-auto h-auto mx-auto"
 											 width={800} height={600} /> : null }
 										</div>
 										<div className="flex gap-2 flex-col">
@@ -163,11 +164,11 @@ const HomeApplications = ({ data }: { data: any }) => {
 					<div
 						className="flex text-white p-8 lg:p-12 rounded-md gap-8 mt-8 mx-4 lg:mx-0"
 						style={{
-							background: `url(${data.contentBg}) no-repeat right, linear-gradient(to right, #0E3A51 0%, #0D92D2 100%)`,
+							background: `${data.contentBg?.url ? `url('${data.contentBg.url}') no-repeat right, ` : ''}linear-gradient(to right, #0E3A51 0%, #0D92D2 100%)`,
 						}}>
 						<div className="flex flex-1 flex-col gap-10 lg:max-w-[65%]">
-							<h2 className="text-h2 font-black">{data.contentTitle}</h2>
-							<p className="text-b1">{data.contentText}</p>
+							<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.contentTitle`)}>{data.contentTitle}</h2>
+							<p className="text-b1" {...payloadEditable(`content.${data.blockIndex}.contentText`)}>{data.contentText}</p>
 							<div className="flex gap-4 mt-8">
 								{data.contentButton && (
 									<Button

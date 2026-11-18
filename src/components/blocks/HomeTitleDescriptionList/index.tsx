@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 export default function TitleDescriptionList({ data }: { data: any }) {
@@ -9,7 +10,7 @@ export default function TitleDescriptionList({ data }: { data: any }) {
 		<section id="title-description-list" className="flex flex-col">
 			<div className="flex w-full max-w-[1200px] py-6 md:pb-16 md:px-16 xl:px-16 px-4 mx-auto gap-16 flex-col">
 				<div className={clsx('content text-left')}>
-					<h2 className="text-h2 font-black relative inline-block mb-8">{data.title}</h2>
+					<h2 className="text-h2 font-black relative inline-block mb-8" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data.title}</h2>
 					<ul className="p-0">
 						{Object.keys(data.list).map((key: any) => (
 							<li key={key} className="my-10">

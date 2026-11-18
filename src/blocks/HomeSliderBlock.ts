@@ -2,6 +2,9 @@ import type { Block } from 'payload'
 
 export const HomeSliderBlock: Block = {
   slug: 'homeSlider',
+  // Thumbnail in the admin "Add Content" drawer
+  imageURL: '/blocks/home-slider.png',
+  imageAltText: 'Customer logos carousel and testimonials',
   fields: [
     {
       name: 'hideBlock',
@@ -12,38 +15,25 @@ export const HomeSliderBlock: Block = {
         description: 'If checked, this block will not be rendered on the frontend.',
       },
     },
+    { name: 'title', type: 'text' },
+    { name: 'description', type: 'textarea', admin: { description: '**bold** is highlighted; line breaks are kept.' } },
     {
       name: 'sliderItems',
-      type: 'array', fields: [{name:'text', type:'text'}],
-    },
-    {
-      name: 'name',
-      type: 'text',
-    },
-    {
-      name: 'text',
-      type: 'textarea',
-    },
-    {
-      name: 'slidePerView',
-      type: 'text',
-    },
-    {
-      name: 'title',
-      type: 'text',
-    },
-    {
-      name: 'img',
-      type: 'upload',
-      relationTo: 'media',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
+      type: 'array',
+      label: 'Logos',
+      fields: [{ name: 'logo', type: 'upload', relationTo: 'media', required: true }],
     },
     {
       name: 'testimonials',
-      type: 'array', fields: [{name:'name', type:'text'}, {name:'text', type:'text'}, {name:'description', type:'text'}],
+      type: 'array',
+      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
+      fields: [
+        { name: 'name', type: 'text' },
+        { name: 'description', type: 'text', label: 'Role' },
+        { name: 'text', type: 'textarea' },
+        { name: 'img', type: 'upload', relationTo: 'media', label: 'Photo' },
+      ],
     },
+    { name: 'slidePerView', type: 'number', label: 'Testimonials per view (desktop)', defaultValue: 3, min: 1, max: 4 },
   ],
 }

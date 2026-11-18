@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import { HeadingBlock } from './HeadingBlock';
 import { RichTextBlock } from './RichTextBlock';
 import { ImageBlock } from './ImageBlock';
@@ -14,6 +15,9 @@ import HomeInfo from './HomeInfo';
 import HomeNews from './HomeNews';
 import HomeTitleDescriptionList from './HomeTitleDescriptionList';
 import HomeData from './HomeData';
+import HomeLanding from './HomeLanding';
+import ContactButtons from './ContactButtons';
+import LogoLink from './LogoLink';
 import HomeSoftware from './HomeSoftware';
 import HomeProductVS2 from './HomeProductVS2';
 import HomeContentVersions from './HomeContentVersions';
@@ -31,17 +35,17 @@ import ProductTextSlider from './ProductTextSlider';
 import ProductIntegrationSlider from './ProductIntegrationSlider';
 import ProductProductHeader from './ProductProductHeader';
 import ProductTextWithPicture from './ProductTextWithPicture';
+import LinkTiles from './LinkTiles';
 
 
 export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: string }) => {
   if (!blocks || !Array.isArray(blocks)) return null
 
-  // Filter out any blocks that have been marked as hidden
-  const visibleBlocks = blocks.filter((block) => !block.hideBlock)
-
   return (
-    <div className="flex flex-col gap-8">
-      {visibleBlocks.map((block, i) => {
+    <div className="flex flex-col gap-8" {...payloadEditable.container('content')}>
+      {blocks.map((block, i) => {
+        // Hidden blocks are skipped but keep their index so editor paths stay correct
+        if (block.hideBlock) return null
         // Inject pageId and blockIndex into block data
         const blockWithMeta = { ...block, pageId, blockIndex: i }
         const renderBlock = () => {
@@ -61,51 +65,59 @@ export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: strin
             case 'homeProductVS':
               return <HomeProductVS data={blockWithMeta} />
             case 'homeSlider':
-              return <HomeSlider data={block} />
+              return <HomeSlider data={blockWithMeta} />
             case 'homeFacts':
-              return <HomeFacts data={block} />
+              return <HomeFacts data={blockWithMeta} />
             case 'homeInfo':
-              return <HomeInfo data={block} />
+              return <HomeInfo data={blockWithMeta} />
             case 'homeNews':
-              return <HomeNews data={block} />
+              return <HomeNews data={blockWithMeta} />
             case 'homeTitleDescriptionList':
-              return <HomeTitleDescriptionList data={block} />
+              return <HomeTitleDescriptionList data={blockWithMeta} />
+            case 'logoLink':
+              return <LogoLink data={blockWithMeta} />
+            case 'contactButtons':
+              return <ContactButtons data={blockWithMeta} />
+            case 'homeLanding':
+              return <HomeLanding data={blockWithMeta} />
             case 'homeData':
-              return <HomeData data={block} />
+              return <HomeData data={blockWithMeta} />
             case 'homeSoftware':
-              return <HomeSoftware data={block} />
+              return <HomeSoftware data={blockWithMeta} />
             case 'homeProductVS2':
-              return <HomeProductVS2 data={block} />
+              return <HomeProductVS2 data={blockWithMeta} />
             case 'homeContentVersions':
-              return <HomeContentVersions data={block} />
+              return <HomeContentVersions data={blockWithMeta} />
             case 'homeApplications':
-              return <HomeApplications data={block} />
+              return <HomeApplications data={blockWithMeta} />
             case 'homeFrame':
-              return <HomeFrame data={block} />
+              return <HomeFrame data={blockWithMeta} />
             case 'productHero':
-              return <ProductHero data={block} />
+              return <ProductHero data={blockWithMeta} />
             case 'productWysiwyg':
-              return <ProductWysiwyg data={block} />
+              return <ProductWysiwyg data={blockWithMeta} />
             case 'productFunctions':
-              return <ProductFunctions data={block} />
+              return <ProductFunctions data={blockWithMeta} />
             case 'productInfo':
-              return <ProductInfo data={block} />
+              return <ProductInfo data={blockWithMeta} />
             case 'productFeatures':
-              return <ProductFeatures data={block} />
+              return <ProductFeatures data={blockWithMeta} />
             case 'productTextWithMap':
-              return <ProductTextWithMap data={block} />
+              return <ProductTextWithMap data={blockWithMeta} />
             case 'productList':
-              return <ProductList data={block} />
+              return <ProductList data={blockWithMeta} />
             case 'productBeforeAfterSlider':
-              return <ProductBeforeAfterSlider data={block} />
+              return <ProductBeforeAfterSlider data={blockWithMeta} />
             case 'productTextSlider':
-              return <ProductTextSlider data={block} />
+              return <ProductTextSlider data={blockWithMeta} />
             case 'productIntegrationSlider':
-              return <ProductIntegrationSlider data={block} />
+              return <ProductIntegrationSlider data={blockWithMeta} />
             case 'productProductHeader':
-              return <ProductProductHeader data={block} />
+              return <ProductProductHeader data={blockWithMeta} />
             case 'productTextWithPicture':
-              return <ProductTextWithPicture data={block} />
+              return <ProductTextWithPicture data={blockWithMeta} />
+            case 'linkTiles':
+              return <LinkTiles data={blockWithMeta} />
             default:
               return null
           }
@@ -115,7 +127,9 @@ export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: strin
         if (!BlockContent) return null
 
         return (
-          <div key={i} data-payload-field-path={`content.${i}`}>
+          <div
+            key={block.id ?? i}
+            {...payloadEditable(`content.${i}`, { row: { id: block.id, blockType: block.blockType } })}>
             {BlockContent}
           </div>
         )

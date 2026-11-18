@@ -2,6 +2,9 @@ import type { Block } from 'payload'
 
 export const HomeInfoBlock: Block = {
   slug: 'homeInfo',
+  // Thumbnail in the admin "Add Content" drawer
+  imageURL: '/blocks/home-info.png',
+  imageAltText: 'Dark band with a checklist of benefits',
   labels: {
     singular: 'Home Info',
     plural: 'Home Info',
@@ -26,6 +29,7 @@ export const HomeInfoBlock: Block = {
       name: 'title',
       type: 'text',
     },
+    { name: 'oneColumn', type: 'checkbox', label: 'Product-page style (one column, narrower)', defaultValue: false },
     {
       name: 'items',
       type: 'array',

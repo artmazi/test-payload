@@ -1,42 +1,35 @@
 import type { CollectionConfig } from 'payload'
 import { revalidatePath } from 'next/cache'
 
-import { HomeHeroBlock } from '../blocks/HomeHeroBlock'
-import { HomeContentVersionsBlock } from '../blocks/HomeContentVersionsBlock'
-import { HomeApplicationsBlock } from '../blocks/HomeApplicationsBlock'
-import { HomeNewsBlock } from '../blocks/HomeNewsBlock'
-import { ProductTextWithPictureBlock } from '../blocks/ProductTextWithPictureBlock'
-import { HomeFrameBlock } from '../blocks/HomeFrameBlock'
-import { HomeSliderBlock } from '../blocks/HomeSliderBlock'
-import { ProductWysiwygBlock } from '../blocks/ProductWysiwygBlock'
-import { ProductFunctionsBlock } from '../blocks/ProductFunctionsBlock'
-import { ProductTextSliderBlock } from '../blocks/ProductTextSliderBlock'
-import { HomeSoftwareBlock } from '../blocks/HomeSoftwareBlock'
-import { HomeProductVSBlock } from '../blocks/HomeProductVSBlock'
-import { ProductInfoBlock } from '../blocks/ProductInfoBlock'
-import { ProductFeaturesBlock } from '../blocks/ProductFeaturesBlock'
-import { ProductBeforeAfterSliderBlock } from '../blocks/ProductBeforeAfterSliderBlock'
-import { ProductListBlock } from '../blocks/ProductListBlock'
-import { HomeTitleDescriptionListBlock } from '../blocks/HomeTitleDescriptionListBlock'
-import { HomeInfoBlock } from '../blocks/HomeInfoBlock'
-import { HomeFactsBlock } from '../blocks/HomeFactsBlock'
-import { HomeUseCasesBlock } from '../blocks/HomeUseCasesBlock'
-import { ProductHeroBlock } from '../blocks/ProductHeroBlock'
-import { ProductProductHeaderBlock } from '../blocks/ProductProductHeaderBlock'
-import { ProductTextWithMapBlock } from '../blocks/ProductTextWithMapBlock'
-import { ProductIntegrationSliderBlock } from '../blocks/ProductIntegrationSliderBlock'
-import { HomeProductVS2Block } from '../blocks/HomeProductVS2Block'
-import { HomeDataBlock } from '../blocks/HomeDataBlock'
+import { contentField } from '../fields/contentField'
+
+
+// Drop row ids so copied blocks get fresh ones instead of sharing ids with the source
+const stripIds = (value: any): any =>
+  Array.isArray(value)
+    ? value.map(stripIds)
+    : value && typeof value === 'object'
+      ? Object.fromEntries(Object.entries(value).filter(([k]) => k !== 'id').map(([k, v]) => [k, stripIds(v)]))
+      : value
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  // The same slug may exist once per category
+  indexes: [{ fields: ['category', 'slug'], unique: true }],
   admin: {
     useAsTitle: 'title',
+    groupBy: true,
+    defaultColumns: ['title', 'category', 'slug', '_status'],
     livePreview: {
-      url: ({ data }) => {
+      url: async ({ data, locale, payload }) => {
         const baseUrl = process.env.PAYLOAD_URL || 'http://localhost:3000'
-        const path = data?.slug === 'home' ? '/' : `/${data?.slug || ''}`
-        return `${baseUrl}${path}`
+        const categoryId = typeof data?.category === 'object' ? data.category?.id : data?.category
+        const category = categoryId
+          ? await payload.findByID({ collection: 'categories', id: categoryId, depth: 0 }).catch(() => null)
+          : null
+        // The site route is /[locale]/[[...slug]] with an optional category first; the home page has no slug segment
+        const path = !data?.slug || data.slug === 'home' ? '' : `/${data.slug}`
+        return `${baseUrl}/${locale?.code || 'de'}${category ? `/${category.slug}` : ''}${path}`
       },
     },
   },
@@ -50,19 +43,40 @@ export const Pages: CollectionConfig = {
     },
   },
   hooks: {
+    beforeChange: [
+      async ({ data, operation, req }) => {
+        // Start a new page from a template, unless blocks were already provided
+        if (operation === 'create' && data.template && !data.content?.length) {
+          const id = typeof data.template === 'object' ? data.template.id : data.template
+          const tpl = await req.payload.findByID({ collection: 'templates', id, depth: 0, locale: req.locale, req })
+          data.content = stripIds(tpl.content)
+        }
+        // Defer saving as a template until the page itself saved successfully
+        if (data.saveAsTemplate && data.templateTitle) {
+          req.context.newTemplate = { title: data.templateTitle, content: stripIds(data.content ?? []) }
+        }
+        delete data.template
+        delete data.saveAsTemplate
+        delete data.templateTitle
+        return data
+      },
+    ],
     afterChange: [
-      ({ doc, previousDoc, req: { payload } }) => {
+      async ({ doc, req }) => {
+        const newTemplate = req.context.newTemplate as { title: string; content: unknown } | undefined
+        if (newTemplate) {
+          delete req.context.newTemplate
+          await req.payload.create({ collection: 'templates', data: newTemplate as any, locale: req.locale, req })
+        }
+        return doc
+      },
+      ({ doc, previousDoc, req: { payload, context } }) => {
+        // Scripts run outside Next, where revalidatePath throws
+        if (context.disableRevalidate) return doc
         if (doc._status === 'published' || previousDoc?._status === 'published') {
-          const newPath = doc.slug === 'home' ? '/' : `/${doc.slug}`
-          payload.logger.info(`Revalidating cache for path: ${newPath}`)
-          revalidatePath(newPath)
-
-          // If the slug changed, revalidate the old path too
-          if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
-            const oldPath = previousDoc.slug === 'home' ? '/' : `/${previousDoc.slug}`
-            payload.logger.info(`Revalidating cache for old path: ${oldPath}`)
-            revalidatePath(oldPath)
-          }
+          // Paths depend on the category and locale, so invalidate the whole site
+          payload.logger.info('Revalidating site cache')
+          revalidatePath('/', 'layout')
         }
         return doc
       },
@@ -89,9 +103,45 @@ export const Pages: CollectionConfig = {
       name: 'slug',
       type: 'text',
       required: true,
-      unique: true,
       admin: {
         position: 'sidebar',
+      },
+    },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+      index: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Leave empty for global pages shared by all categories.',
+      },
+    },
+    {
+      name: 'template',
+      type: 'relationship',
+      relationTo: 'templates',
+      // Not stored: the beforeChange hook consumes it (a `virtual` field would be read-only in the admin)
+      admin: {
+        position: 'sidebar',
+        description: 'Start this page from a template (only applied when creating).',
+        condition: (data) => !data?.id,
+      },
+    },
+    {
+      name: 'saveAsTemplate',
+      type: 'checkbox',
+      admin: {
+        position: 'sidebar',
+        description: 'On save, store this page\'s blocks as a new template.',
+      },
+    },
+    {
+      name: 'templateTitle',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        condition: (data) => !!data?.saveAsTemplate,
       },
     },
     {
@@ -125,104 +175,6 @@ export const Pages: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    {
-      name: 'content',
-      type: 'blocks',
-      localized: true,
-      blocks: [
-        HomeHeroBlock,
-        HomeContentVersionsBlock,
-        HomeApplicationsBlock,
-        HomeNewsBlock,
-        ProductTextWithPictureBlock,
-        HomeFrameBlock,
-        HomeSliderBlock,
-        ProductWysiwygBlock,
-        ProductFunctionsBlock,
-        ProductTextSliderBlock,
-        HomeSoftwareBlock,
-        HomeProductVSBlock,
-        ProductInfoBlock,
-        ProductFeaturesBlock,
-        ProductBeforeAfterSliderBlock,
-        ProductListBlock,
-        HomeTitleDescriptionListBlock,
-        HomeInfoBlock,
-        HomeFactsBlock,
-        HomeUseCasesBlock,
-        ProductHeroBlock,
-        ProductProductHeaderBlock,
-        ProductTextWithMapBlock,
-        ProductIntegrationSliderBlock,
-        HomeProductVS2Block,
-        HomeDataBlock,
-        {
-          slug: 'heading',
-          fields: [
-            {
-              name: 'hideBlock',
-              type: 'checkbox',
-              label: 'Hide this block on the website',
-              defaultValue: false,
-              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
-            },
-            { name: 'headingText', type: 'text', required: true },
-            { 
-              name: 'level', 
-              type: 'select', 
-              options: [
-                { label: 'H1', value: 'h1' },
-                { label: 'H2', value: 'h2' },
-                { label: 'H3', value: 'h3' },
-                { label: 'H4', value: 'h4' },
-                { label: 'H5', value: 'h5' },
-                { label: 'H6', value: 'h6' },
-              ], 
-              defaultValue: 'h2' 
-            }
-          ]
-        },
-        {
-          slug: 'richText',
-          fields: [
-            {
-              name: 'hideBlock',
-              type: 'checkbox',
-              label: 'Hide this block on the website',
-              defaultValue: false,
-              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
-            },
-            { name: 'content', type: 'richText', required: true }
-          ]
-        },
-        {
-          slug: 'image',
-          fields: [
-            {
-              name: 'hideBlock',
-              type: 'checkbox',
-              label: 'Hide this block on the website',
-              defaultValue: false,
-              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
-            },
-            { name: 'image', type: 'upload', relationTo: 'media', required: true }
-          ]
-        },
-        {
-          slug: 'callToAction',
-          fields: [
-            {
-              name: 'hideBlock',
-              type: 'checkbox',
-              label: 'Hide this block on the website',
-              defaultValue: false,
-              admin: { description: 'If checked, this block will not be rendered on the frontend.' }
-            },
-            { name: 'label', type: 'text', required: true },
-            { name: 'url', type: 'text', required: true }
-          ]
-        }
-      ]
-    }
+    contentField,
   ],
 }

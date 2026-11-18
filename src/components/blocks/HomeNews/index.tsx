@@ -1,5 +1,6 @@
 "use client";
 
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
@@ -54,11 +55,11 @@ const HomeNews = ({ data }: { data: any }) => {
 					<div className="text-center">
 						<h1 className="text-h1 font-black relative inline-block text-transparent bg-slate-200 rounded-md animate-pulse">{data?.title || 'News'}</h1>
 					</div>
-					<div className="grid lg:grid-cols-4 grid-cols-1 gap-8">
+					<div className="grid grid-cols-2 xs:grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8">
 						{[1, 2, 3, 4].map((i) => (
 							<article key={i} className="flex flex-col rounded-xl overflow-hidden shadow-md bg-white h-full animate-pulse">
 								<div className="w-full h-52 bg-slate-100"></div>
-								<div className="flex flex-col flex-1 p-6 lg:p-8 border border-t-0 border-slate-100 rounded-b-xl">
+								<div className="flex flex-col flex-1 p-4 sm:p-6 lg:p-8 border border-t-0 border-slate-100 rounded-b-xl">
 									<div className="w-24 h-4 bg-slate-200 rounded mb-3"></div>
 									<div className="w-full h-6 bg-slate-200 rounded mb-2"></div>
 									<div className="w-3/4 h-6 bg-slate-200 rounded mb-6"></div>
@@ -78,9 +79,9 @@ const HomeNews = ({ data }: { data: any }) => {
 		<section id="news" className="relative">
 			<div className="container flex flex-col w-full max-w-[1600px] gap-8 mx-auto pt-2 pb-16 md:px-16 xl:px-32 px-4">
 				<div className="text-center">
-					<h1 className="text-h1 font-black relative inline-block">{data?.title}</h1>
+					<h1 className="text-h1 font-black relative inline-block" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data?.title}</h1>
 				</div>
-				<div className="grid lg:grid-cols-4 grid-cols-1 gap-8">
+				<div className="grid grid-cols-2 xs:grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8">
 					{newsData.map((news: ParsedNews, i: number) => (
 						<article
 							key={i}
@@ -105,10 +106,10 @@ const HomeNews = ({ data }: { data: any }) => {
 								)}
 								
 								{/* Text Section */}
-								<div className="flex flex-col flex-1 p-6 lg:p-8 bg-white border border-t-0 border-slate-100 rounded-b-xl">
+								<div className="flex flex-col flex-1 p-4 sm:p-6 lg:p-8 bg-white border border-t-0 border-slate-100 rounded-b-xl">
 									<span className="text-sky font-bold text-sm mb-3 uppercase tracking-wider">{news.date}</span>
 									<h3 
-										className="text-xl font-bold leading-snug text-slate-800 group-hover:text-teal transition-colors"
+										className="text-base sm:text-xl font-bold leading-snug hyphens-auto text-slate-800 group-hover:text-teal transition-colors"
 										dangerouslySetInnerHTML={{ __html: news.title }}
 									/>
 								</div>

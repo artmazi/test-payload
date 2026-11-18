@@ -2,6 +2,9 @@ import type { Block } from 'payload'
 
 export const HomeDataBlock: Block = {
   slug: 'homeData',
+  // Thumbnail in the admin "Add Content" drawer
+  imageURL: '/blocks/home-data.png',
+  imageAltText: 'Image with text and three data cards',
   labels: {
     singular: 'Home Data',
     plural: 'Home Data',
@@ -16,22 +19,19 @@ export const HomeDataBlock: Block = {
         description: 'If checked, this block will not be rendered on the frontend.',
       },
     },
-    {
-      name: 'title',
-      type: 'text',
-    },
+    { name: 'title', type: 'text' },
+    { name: 'img', type: 'upload', relationTo: 'media' },
+    { name: 'text', type: 'textarea' },
     {
       name: 'items',
-      type: 'array', fields: [{name:'title', type:'text'}, {name:'text', type:'text'}, {name:'leftText', type:'text'}, {name:'rightText', type:'text'}],
-    },
-    {
-      name: 'img',
-      type: 'upload',
-      relationTo: 'media',
-    },
-    {
-      name: 'text',
-      type: 'textarea',
+      type: 'array',
+      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
+      fields: [
+        { name: 'title', type: 'text' },
+        { name: 'text', type: 'textarea' },
+        { name: 'icon', type: 'upload', relationTo: 'media' },
+        { name: 'link', type: 'text', admin: { description: 'Site path (/de/…) or full URL.' } },
+      ],
     },
   ],
 }

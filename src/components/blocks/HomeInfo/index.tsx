@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 import checkOrange from '@/assets/check-orange.svg';
@@ -18,16 +19,17 @@ const HomeInfo = ({ data }: { data: any }) => {
 				...(bgUrl ? { backgroundImage: `url('${bgUrl}')` } : {})
 			}}
 			className="bg-fixed bg-right bg-no-repeat bg-cover">
-			<div className="container flex flex-col w-full max-w-[1200px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-4 text-white">
-				<p className="text-h3 font-semibold">{data.title}</p>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+			{/* One-column mode is the product-page variant: same 1200px column as the blocks around it */}
+			<div className={clsx('container flex flex-col w-full gap-8 mx-auto py-16 md:px-16 xl:px-32 px-4 text-white', data.oneColumn ? 'max-w-[1200px]' : 'max-w-[1600px]')}>
+				<p className="text-h3 font-semibold" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data.title}</p>
+				<div className={clsx('grid grid-cols-1 gap-x-8 gap-y-4', !data.oneColumn && 'md:grid-cols-2')}>
 					{(data.items || []).map((i: any, _i: number) => (
 						<div
 							className="flex items-start"
 							key={_i}>
 							{ (checkOrange?.url || checkOrange) ? <Image src={checkOrange?.url || checkOrange} alt="Check" className="h-[24px] pr-2 w-auto flex-shrink-0"  width={24} height={24} /> : null }
 							<div
-								className="[&>a]:cursor-pointer [&>a]:underline [&>a]:text-red-500"
+								className="[&>a]:cursor-pointer [&>a]:underline [&>a]:text-red-500" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.text`)}
 								dangerouslySetInnerHTML={{ __html: md2html(i.text || i) }}
 							/>
 						</div>

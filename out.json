@@ -1,0 +1,319 @@
+{
+  "createdAt": "2026-08-06T09:49:52.735Z",
+  "updatedAt": "2026-09-03T11:11:50.468Z",
+  "title": "Home",
+  "slug": "home",
+  "_status": "published",
+  "meta": {},
+  "content": [
+    {
+      "blockType": "homeHero",
+      "heroImg": {
+        "createdAt": "2026-09-03T08:25:21.111Z",
+        "updatedAt": "2026-09-03T08:25:21.908Z",
+        "alt": "aaaaaaaaaaaa",
+        "url": "/api/media/file/WhatsApp%20Image%202026-09-01%20at%2013.21.55.jpeg",
+        "filename": "WhatsApp Image 2026-09-01 at 13.21.55.jpeg",
+        "mimeType": "image/jpeg",
+        "filesize": 112867,
+        "width": 900,
+        "height": 1600,
+        "focalX": 50,
+        "focalY": 50,
+        "thumbnailURL": null,
+        "id": "6a992ef19ecc912b234c7f68"
+      },
+      "button2": "Zu den Daten",
+      "button": "Trial",
+      "buttonLink2": "/verwaltungen/data-map",
+      "title": "infra3D Platform",
+      "buttonLink": "https://app.infra3d.com/signup/trial",
+      "description": "Das Ökosystem für digitale Strassen & Schienen",
+      "content": "infra3D ist die smarte Plattform für digitalisierte Strassen und Schienen. Diese bietet intuitive Software-Tools und smarte Applikationen. Damit haben Sie als Verwaltung, Infrastruktureigentümer, Energieversorger, Ingenieurbüro oder Unternehmen ein smartes Werkzeug für die Planung, Verwaltung und Nutzung öffentlicher Strassen- und Schienenräume.\n\nGleichzeitig werden Ihre Strassen- und Schienennetze durch die Digitalisierung Bestandteil eines wachsenden Ökosystems. Unterschiedliche Akteure können sich am Ökosystem beteiligen und darauf neue Dienstleistungen erbringen oder solche beziehen. Damit eröffnen sich innovative und spannende Perspektiven für Ihre Region.",
+      "id": "6a9955f62150a81d8113cc87"
+    },
+    {
+      "blockType": "homeNews",
+      "news": [
+        {
+          "title": "infra3D Platfom Release: Administration",
+          "date": "02.12.2025",
+          "link": "https://www.inovitas.ch/de/infra3d-platfom-release-administration",
+          "id": "6a9955f62150a81d8113cc88"
+        },
+        {
+          "title": "Neuer infra3D NextGen Feature Release verfügbar!",
+          "date": "13.08.2025",
+          "link": "https://www.inovitas.ch/de/neuer-infra3d-nextgen-feature-release-Aug25",
+          "id": "6a9955f62150a81d8113cc89"
+        },
+        {
+          "title": "Neue Features: Projekte und Schnittstelle",
+          "date": "02.04.2025",
+          "link": "https://inovitas.ch/de/neue-features-projekte-und-schnittstelle",
+          "id": "6a9955f62150a81d8113cc8a"
+        },
+        {
+          "title": "Das neue Mobile Mapping System Rail und Content 3.0 Rail sind da!",
+          "date": "18.06.2026",
+          "link": "https://inovitas.ch/de/das-neue-mobile-mapping-system-rail-und-content-30-rail-sind-da",
+          "id": "6a9955f62150a81d8113cc8b"
+        }
+      ],
+      "id": "6a9955f62150a81d8113cc8c"
+    },
+    {
+      "blockType": "homeInfo",
+      "items": [
+        {
+          "text": "Optimieren Sie Ihre Prozesse",
+          "id": "6a9955f62150a81d8113cc8d"
+        },
+        {
+          "text": "Treiben Sie die Digitale Transformation voran",
+          "id": "6a9955f62150a81d8113cc8e"
+        },
+        {
+          "text": "Fördern Sie eine bessere und nachhaltige Zukunft",
+          "id": "6a9955f62150a81d8113cc8f"
+        },
+        {
+          "text": "Visualisieren, analysieren und planen Sie direkt im digitalen 3D-Abbild (digitaler Zwilling) des Strassen- und Schienenraums",
+          "id": "6a9955f62150a81d8113cc90"
+        },
+        {
+          "text": "Nutzen Sie die wertvollen 3D-Informationen der Applikationen für effizientere Entscheide und Prozesse",
+          "id": "6a9955f62150a81d8113cc91"
+        },
+        {
+          "text": "Sie müssen nicht mehr für jeden Sachverhalt ins Feld, weil der 3D-Raum jetzt zu Ihnen an den Arbeitsplatz kommt",
+          "id": "6a9955f62150a81d8113cc92"
+        },
+        {
+          "text": "Sparen Sie bis zu 25% ihrer Arbeitszeit ein – egal ob Sie infra3D als Ingenieur, Projektleiterin oder Werkhof-Mitarbeitende nutzen",
+          "id": "6a9955f62150a81d8113cc93"
+        }
+      ],
+      "infoHero": "6a992ef19ecc912b234c7f68",
+      "title": "Warum infra3D?",
+      "id": "6a9955f62150a81d8113cc94"
+    },
+    {
+      "blockType": "homeSlider",
+      "sliderItems": [],
+      "title": "Über 1000 Organisationen vertrauen auf uns",
+      "testimonials": [
+        {
+          "name": "Christian Peterlein",
+          "text": "«Die Anwendung von infra3D spart uns eine Menge Zeit und Geld. Ausserdem ist es ein sehr benutzerfreundliches Tool!»",
+          "description": "Geomatik, Stadt Zürich",
+          "id": "6a9955f62150a81d8113cc95"
+        },
+        {
+          "name": "Sabine Bolfing",
+          "text": "«Dank infra3D haben wir eine lückenlose 3D-Visualisierung des gesamten Strassenraums.»",
+          "description": "Projektleiterin, Tiefbauamt Kanton Zürich",
+          "id": "6a9955f62150a81d8113cc96"
+        },
+        {
+          "name": "Stephan Meyer",
+          "text": "«Dank infra3D müssen wir weniger oft ins Feld. Die Massabfragen im 3D-Bild sind einfach und präzise.»",
+          "description": "Projektleiter, Tiefbauamt Kanton Aargau",
+          "id": "6a9955f62150a81d8113cc97"
+        }
+      ],
+      "id": "6a9955f62150a81d8113cc98"
+    },
+    {
+      "blockType": "homeUseCases",
+      "title": "Fallstudien",
+      "items": [
+        {
+          "title": "Kanton Aargau",
+          "text": "Fallstudie Kanton Aargau",
+          "id": "6a9955f62150a81d8113cc99"
+        },
+        {
+          "title": "Stadt Zug",
+          "text": "Fallstudie Stadt Zug",
+          "id": "6a9955f62150a81d8113cc9a"
+        },
+        {
+          "title": "Gemeinde Glarus Nord",
+          "text": "Fallstudie Gemeinde Glarus Nord",
+          "id": "6a9955f62150a81d8113cc9b"
+        }
+      ],
+      "id": "6a9955f62150a81d8113cc9c"
+    },
+    {
+      "blockType": "homeSoftware",
+      "contentButtonLink": "/software",
+      "items": [
+        {
+          "title": "infra3D View",
+          "text": "Visualisieren, analysieren und planen Sie im digitalen 3D-Abbild",
+          "id": "6a9955f62150a81d8113cc9d"
+        },
+        {
+          "title": "infra3D Edit",
+          "text": "Erfassen und bewirtschaften Sie Ihre Geodaten",
+          "id": "6a9955f62150a81d8113cc9e"
+        },
+        {
+          "title": "Add-ons",
+          "text": "Erweitern Sie infra3D mit zusätzlichen Modulen",
+          "id": "6a9955f62150a81d8113cc9f"
+        },
+        {
+          "title": "Integrations",
+          "text": "Integrieren Sie infra3D in Ihre Umsysteme",
+          "id": "6a9955f62150a81d8113cca0"
+        }
+      ],
+      "contentTitle": "Smarte Software-Tools für das Infrastrukturmanagement",
+      "title": "Software",
+      "contentButton": "Zur Software",
+      "content": "Die intuitive Software-Tools ermöglichen die Visualisierung, Analyse und Planung im digitalen 3D-Abbild der Strassen und Schienen.",
+      "id": "6a9955f62150a81d8113cca1"
+    },
+    {
+      "blockType": "homeData",
+      "title": "Daten",
+      "items": [
+        {
+          "title": "infra3D Generate",
+          "text": "Wir erfassen Ihre Strassen- und Schienennetze",
+          "id": "6a9955f62150a81d8113cca2"
+        },
+        {
+          "title": "infra3D Access",
+          "text": "Greifen Sie auf das grösste mobile Mapping Datenarchiv der Schweiz zu",
+          "id": "6a9955f62150a81d8113cca3"
+        },
+        {
+          "title": "infra3D Integrate",
+          "text": "Integrieren Sie eigene Punktwolken oder Bilder",
+          "id": "6a9955f62150a81d8113cca4"
+        }
+      ],
+      "text": "Basierend auf den neusten Technologien erfassen wir für Sie Strassen und Schienen und bereiten die 3D-Bilddaten massgeschneidert auf.",
+      "id": "6a9955f62150a81d8113cca5"
+    },
+    {
+      "blockType": "homeApplications",
+      "items": [
+        {
+          "title": "Pavement.AI",
+          "text": "Strassenzustand",
+          "id": "6a9955f62150a81d8113cca6"
+        },
+        {
+          "title": "Signs.AI",
+          "text": "Verkehrsschilder",
+          "id": "6a9955f62150a81d8113cca7"
+        },
+        {
+          "title": "Drains.AI",
+          "text": "Schächte",
+          "id": "6a9955f62150a81d8113cca8"
+        }
+      ],
+      "contentButtonLink": "https://inovitas.ch",
+      "contentTitle": "Gemeinsam Mehrwert für das Infrastrukturmanagement generieren.",
+      "contentText": "Gewinnen Sie wertvolle Einblicke und Erkenntnisse durch unsere verschiedenen Anwendungen. Sie gehen auf spezifische Marktbedürfnisse ein und nutzen u.a. künstliche Intelligenz (KI).",
+      "title": "Applications",
+      "contentButton": "Zur Unternehmensseite",
+      "id": "6a9955f62150a81d8113cca9"
+    },
+    {
+      "blockType": "homeFrame",
+      "id": "6a9955f62150a81d8113ccaa"
+    },
+    {
+      "blockType": "homeProductVS2",
+      "id": "6a9955f62150a81d8113ccab"
+    },
+    {
+      "blockType": "homeContentVersions",
+      "title": "Content Versionen",
+      "items": [
+        {
+          "title": "Content 2.2",
+          "content": "Höhere Bildqualität und Genauigkeit von 3D-Information",
+          "id": "6a9955f62150a81d8113ccac"
+        },
+        {
+          "title": "Content 2.1",
+          "content": "Verbesserte 3D-Intelligenz und Messsicherheit",
+          "id": "6a9955f62150a81d8113ccad"
+        },
+        {
+          "title": "Content 3.0",
+          "content": "Maximale Bildqualität, Präzision, Effizienz und Datenschutz",
+          "id": "6a9955f62150a81d8113ccae"
+        }
+      ],
+      "id": "6a9955f62150a81d8113ccaf"
+    },
+    {
+      "blockType": "homeFacts",
+      "subTitle": "iNovitas in Zahlen",
+      "factsLeft": [
+        {
+          "title": "Führend",
+          "text": "Wir sind die führende Technologieanbieterin im Bereich Mobile Mapping",
+          "id": "6a9955f62150a81d8113ccb0"
+        }
+      ],
+      "title": "Facts & Figures",
+      "factsRight": [
+        {
+          "title": "Einzigartig",
+          "text": "Mit infra3D bieten wir eine einzigartige smarte Plattform",
+          "id": "6a9955f62150a81d8113ccb1"
+        }
+      ],
+      "factsMosaic": {
+        "fm1": {
+          "title": "12+",
+          "text": "Jahre Erfahrung"
+        },
+        "fm2": {
+          "title": "1000+",
+          "text": "Organisationen"
+        },
+        "fm3": {
+          "title": "400,000+",
+          "text": "Kilometer digitalisiert"
+        },
+        "fm4": {
+          "title": "3",
+          "text": "Länder"
+        },
+        "fm5": {
+          "text1": "Smarte",
+          "text2": "Plattform",
+          "text3": "Lösungen"
+        },
+        "fm6": {
+          "text1": "Cloud",
+          "text2": "Native",
+          "text3": "Infrastruktur"
+        },
+        "fm7": {
+          "text1": "Künstliche",
+          "text2": "Intelligenz",
+          "text3": "(KI/ML)"
+        },
+        "fm8": {
+          "text1": "Datenschutz",
+          "text2": "konform",
+          "text3": "Sicher"
+        }
+      },
+      "id": "6a9955f62150a81d8113ccb2"
+    }
+  ],
+  "id": "6a7458c0c2532937b1492a49"
+}

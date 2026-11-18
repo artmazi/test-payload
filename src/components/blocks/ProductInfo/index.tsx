@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image';
+import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 import Button from '@/components/Button';
@@ -13,9 +14,9 @@ const ProductInfo = ({ data }: { data: any }) => {
 		<section id="prod-info" className="flex flex-col bg-blackTeal">
 			<div className="flex w-full max-w-[1600px] py-16 md:px-16 xl:px-32 px-4 text-white mx-auto gap-8 lg:flex-row flex-col">
 				<div className="flex flex-1 justify-center flex-col gap-8 lg:order-1 order-2">
-					<h1 className="text-h1 font-black">{data.title}</h1>
-					{data.sub_title && <p className="text-b1 text-sky">{data.sub_title}</p>}
-					<p className="text-b2">{data.text}</p>
+					<h1 className="text-h1 font-black" {...payloadEditable(`content.${data.blockIndex}.title`)}>{data.title}</h1>
+					{data.sub_title && <p className="text-b1 text-sky" {...payloadEditable(`content.${data.blockIndex}.sub_title`)}>{data.sub_title}</p>}
+					<p className="text-b2" {...payloadEditable(`content.${data.blockIndex}.text`)}>{data.text}</p>
 					<div className="flex gap-4 mt-8">
 						{data.button1 && (
 							<Button color="orange" onClick={() => window.open(data.button1Link, '_blank')}>

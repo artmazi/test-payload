@@ -2,6 +2,9 @@ import type { Block } from 'payload'
 
 export const HomeSoftwareBlock: Block = {
   slug: 'homeSoftware',
+  // Thumbnail in the admin "Add Content" drawer
+  imageURL: '/blocks/home-software.png',
+  imageAltText: 'Gradient intro panel and software cards',
   labels: {
     singular: 'Home Software',
     plural: 'Home Software',
@@ -16,38 +19,27 @@ export const HomeSoftwareBlock: Block = {
         description: 'If checked, this block will not be rendered on the frontend.',
       },
     },
+    { name: 'title', type: 'text' },
+    { name: 'contentTitle', type: 'textarea' },
+    { name: 'content', type: 'textarea', admin: { description: '**bold** is shown in orange; line breaks are kept.' } },
+    { name: 'contentImg', type: 'upload', relationTo: 'media' },
     {
-      name: 'button1Color',
-      type: 'text',
-    },
-    {
-      name: 'contentButtonLink',
-      type: 'text',
+      type: 'row',
+      fields: [
+        { name: 'contentButton', type: 'text' },
+        { name: 'contentButtonLink', type: 'text' },
+        { name: 'button1Color', type: 'select', options: ['primary', 'secondary', 'orange'], defaultValue: 'primary' },
+      ],
     },
     {
       name: 'items',
-      type: 'array', fields: [{name:'title', type:'text'}, {name:'text', type:'text'}, {name:'leftText', type:'text'}, {name:'rightText', type:'text'}],
-    },
-    {
-      name: 'contentImg',
-      type: 'upload',
-      relationTo: 'media',
-    },
-    {
-      name: 'contentTitle',
-      type: 'textarea',
-    },
-    {
-      name: 'title',
-      type: 'text',
-    },
-    {
-      name: 'contentButton',
-      type: 'textarea',
-    },
-    {
-      name: 'content',
-      type: 'textarea',
+      type: 'array',
+      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
+      fields: [
+        { name: 'title', type: 'text' },
+        { name: 'icon', type: 'upload', relationTo: 'media' },
+        { name: 'link', type: 'text', admin: { description: 'Site path (/de/…) or full URL.' } },
+      ],
     },
   ],
 }

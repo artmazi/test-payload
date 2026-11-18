@@ -1,0 +1,81 @@
+[12:35:23] [33mWARN[39m: [36mNo email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.[39m
+[
+  {
+    "createdAt": "2026-08-06T09:54:24.678Z",
+    "updatedAt": "2026-08-06T09:55:32.367Z",
+    "title": "artmazi2",
+    "slug": "artmazi/art",
+    "_status": "published",
+    "meta": {},
+    "content": [
+      {
+        "blockType": "heading",
+        "headingText": "Artymazy 2",
+        "level": "h2",
+        "id": "6a7459bfb3af26a8a8749f0f"
+      }
+    ],
+    "id": "6a7459d0c2532937b1492afe"
+  },
+  {
+    "createdAt": "2026-08-06T09:52:12.500Z",
+    "updatedAt": "2026-08-06T09:53:40.175Z",
+    "title": "artmazi",
+    "slug": "artmazi",
+    "_status": "published",
+    "meta": {},
+    "content": [
+      {
+        "blockType": "callToAction",
+        "label": "aaaaaaaaaaaa",
+        "url": "#",
+        "id": "6a745941b3af26a8a8749f0b",
+        "blockName": "asdf"
+      },
+      {
+        "blockType": "heading",
+        "headingText": "dddddddddddddddddddddd",
+        "level": "h2",
+        "id": "6a74596ab3af26a8a8749f0d"
+      }
+    ],
+    "id": "6a74594cc2532937b1492aa5"
+  },
+  {
+    "createdAt": "2026-08-06T09:49:52.735Z",
+    "updatedAt": "2026-09-03T09:14:42.379Z",
+    "title": "Home",
+    "slug": "home",
+    "_status": "published",
+    "meta": {},
+    "content": [
+      {
+        "blockType": "homeHero",
+        "heroImg": {
+          "createdAt": "2026-09-03T08:25:21.111Z",
+          "updatedAt": "2026-09-03T08:25:21.908Z",
+          "alt": "aaaaaaaaaaaa",
+          "url": "/api/media/file/WhatsApp%20Image%202026-09-01%20at%2013.21.55.jpeg",
+          "filename": "WhatsApp Image 2026-09-01 at 13.21.55.jpeg",
+          "mimeType": "image/jpeg",
+          "filesize": 112867,
+          "width": 900,
+          "height": 1600,
+          "focalX": 50,
+          "focalY": 50,
+          "thumbnailURL": null,
+          "id": "6a992ef19ecc912b234c7f68"
+        },
+        "button2": "Zu den Daten",
+        "button": "Trial",
+        "buttonLink2": "//google.com",
+        "title": "infra3D Platform",
+        "buttonLink": "//google.com",
+        "description": "Das Ökosystem für digitale Strassen & Schienen",
+        "content": "infra3D ist die smarte Plattform für digitalisierte Strassen und Schienen. Diese bietet intuitive Software-Tools und smarte Applikationen. Damit haben Sie als Verwaltung, Infrastruktureigentümer, Energieversorger, Ingenieurbüro oder Unternehmen ein smartes Werkzeug für die Planung, Verwaltung und Nutzung öffentlicher Strassen- und Schienenräume.\n\nGleichzeitig werden Ihre Strassen- und Schienennetze durch die Digitalisierung Bestandteil eines wachsenden Ökosystems. Unterschiedliche Akteure können sich am Ökosystem beteiligen und darauf neue Dienstleistungen erbringen oder solche beziehen. Damit eröffnen sich innovative und spannende Perspektiven für Ihre Region.",
+        "id": "6a99389ffd09a37b8e9fbbf1"
+      }
+    ],
+    "id": "6a7458c0c2532937b1492a49"
+  }
+]

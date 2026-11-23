@@ -7,15 +7,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import Button from '@/components/Button';
 
 import textLine from '@/assets/text-line.svg';
 import { bgImage } from '@/helpers/bgImage';
+import { linkHref } from '@/helpers/linkHref';
 
 const HomeApplications = ({ data }: { data: any }) => {
-	const router = useRouter();
+	const { locale } = useParams<{ locale: string }>();
 
 	const swiperOptions = {
 		modules: [Autoplay],
@@ -98,8 +100,9 @@ const HomeApplications = ({ data }: { data: any }) => {
 						<Swiper {...swiperOptions} className="mySwiper">
 							{(data.items || []).map((i: any, _i: number) => (
 								<SwiperSlide key={_i} className="xs:p-4">
-									<div
-										onClick={() => router.push(i.link)}
+									{/* Items store their URL under `link`; linkHref reads `url` */}
+									<Link
+										href={linkHref({ ...i, url: i.link }, locale)}
 										className="cursor-pointer gap-8 h-full flex flex-col relative rounded-md p-4 lg:p-8 w-full text-center justify-between border border-[#0000001A] ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)] [&>div>h3]:hover:!text-black overflow-hidden">
 										{i.leftText && (
 											<span className="absolute left-0 top-0 bg-sky text-white font-bold uppercase p-2">
@@ -118,10 +121,10 @@ const HomeApplications = ({ data }: { data: any }) => {
 											 width={800} height={600} /> : null }
 										</div>
 										<div className="flex gap-2 flex-col">
-											<h3 className="text-h3 font-black text-sky" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title}</h3>
+											<h3 className="text-h3 font-black text-sky" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title || i.page?.title}</h3>
 											<p className="text-b2 text-gray" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.text`)}>{i.text}</p>
 										</div>
-									</div>
+									</Link>
 								</SwiperSlide>
 							))}
 						</Swiper>
@@ -132,8 +135,9 @@ const HomeApplications = ({ data }: { data: any }) => {
 						<Swiper {...swiper2Options} className="mySwiper-2">
 							{(data.items2 || []).map((i: any, _i: number) => (
 								<SwiperSlide key={_i} className="xs:p-4">
-									<div
-										onClick={() => router.push(i.link)}
+									{/* Items store their URL under `link`; linkHref reads `url` */}
+									<Link
+										href={linkHref({ ...i, url: i.link }, locale)}
 										className="cursor-pointer gap-8 h-full flex flex-col relative rounded-md p-4 lg:p-8 w-full text-center justify-between border border-[#0000001A] ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)] [&>div>h3]:hover:!text-black overflow-hidden">
 										{i.leftText && (
 											<span className="absolute left-0 top-0 bg-sky text-white font-bold uppercase p-2">
@@ -152,10 +156,10 @@ const HomeApplications = ({ data }: { data: any }) => {
 											 width={800} height={600} /> : null }
 										</div>
 										<div className="flex gap-2 flex-col">
-											<h3 className="text-h3 font-black text-sky" {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.title`)}>{i.title}</h3>
+											<h3 className="text-h3 font-black text-sky" {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.title`)}>{i.title || i.page?.title}</h3>
 											<p className="text-b2 text-gray" {...payloadEditable(`content.${data.blockIndex}.items2.${_i}.text`)}>{i.text}</p>
 										</div>
-									</div>
+									</Link>
 								</SwiperSlide>
 							))}
 						</Swiper>

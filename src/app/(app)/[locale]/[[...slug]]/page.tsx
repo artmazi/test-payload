@@ -1,3 +1,4 @@
+import { ViewTransition } from 'react'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation'
@@ -67,9 +68,12 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   return (
     <>
       <AdminBar pageId={String(page.id)} />
-      <main>
-        <LivePreviewWrapper initialPage={page} />
-      </main>
+      {/* In page.tsx, not the layout: layouts persist across navigations so enter/exit would never fire */}
+      <ViewTransition enter="auto" exit="auto" default="none">
+        <main>
+          <LivePreviewWrapper initialPage={page} />
+        </main>
+      </ViewTransition>
     </>
   )
 }

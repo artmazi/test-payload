@@ -4,12 +4,9 @@ import Image from 'next/image';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
-import Button from '@/components/Button';
-import { useRouter } from 'next/navigation';
+import LinkButtons from '@/components/LinkButtons';
 
 const HomeHero = ({ data }: { data: any }) => {
-	const router = useRouter();
-
 	return (
 		<section
 			id="hero"
@@ -22,19 +19,7 @@ const HomeHero = ({ data }: { data: any }) => {
 				<div>
 					<p className="text-b1 text-gray whitespace-pre-wrap" {...payloadEditable(`content.${data.blockIndex}.content`)}>{data.content}</p>
 				</div>
-				<div className="flex gap-4">
-					<Button className="w-fit" onClick={() => window.open(data.buttonLink, '_blank')}>
-						<span {...payloadEditable(`content.${data.blockIndex}.button`)}>{data.button}</span>
-					</Button>
-					{data.button2 && (
-						<Button
-							color="secondary"
-							className="w-fit !text-sky"
-							onClick={() => router.push(data.buttonLink2)}>
-							<span {...payloadEditable(`content.${data.blockIndex}.button2`)}>{data.button2}</span>
-						</Button>
-					)}
-				</div>
+				<LinkButtons buttons={data.buttons} path={`content.${data.blockIndex}.buttons`} secondaryClassName="!text-sky" />
 			</div>
 			<div className="flex flex-1 justify-center items-center">
 				{ (data.heroImg?.url || data.heroImg) ? <Image alt="hero-img" src={data.heroImg?.url || data.heroImg} className="max-h-[500px]"  width={800} height={600} /> : null }

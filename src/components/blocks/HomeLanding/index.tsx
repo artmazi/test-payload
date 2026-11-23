@@ -4,7 +4,9 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React, { useState } from 'react';
+import { useParams } from 'next/navigation';
 import { bgImage } from '@/helpers/bgImage';
+import { linkHref } from '@/helpers/linkHref';
 
 const Chevron = ({ className }: { className?: string }) => (
 	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
@@ -14,6 +16,8 @@ const Chevron = ({ className }: { className?: string }) => (
 
 const HomeLanding = ({ data }: { data: any }) => {
 	const [open, setOpen] = useState(false);
+	const { locale } = useParams<{ locale: string }>();
+	const href = (link: any) => linkHref(link, locale);
 	const bg = data.bgImage?.url || '/home-hero.webp';
 
 	return (
@@ -65,9 +69,9 @@ const HomeLanding = ({ data }: { data: any }) => {
 									{data.categories?.map((c: any, i: number) => (
 										<Link
 											key={c.id ?? i}
-											href={c.url}
+											href={href(c)}
 											className="group/item flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-b2 font-medium transition-colors hover:bg-water hover:text-sky">
-											<span {...payloadEditable(`content.${data.blockIndex}.categories.${i}.title`)}>{c.title}</span>
+											<span {...payloadEditable(`content.${data.blockIndex}.categories.${i}.title`)}>{c.title || c.page?.title}</span>
 											<Chevron className="h-4 w-4 shrink-0 -rotate-90 text-sky opacity-0 transition-all group-hover/item:translate-x-0.5 group-hover/item:opacity-100" />
 										</Link>
 									))}
@@ -79,8 +83,8 @@ const HomeLanding = ({ data }: { data: any }) => {
 
 				<nav className="w-full text-center md:absolute bottom-8 left-0 gap-x-6 gap-y-2 md:gap-x-8 flex justify-center pb-4 md:pb-0 flex-wrap text-b3 text-white/70">
 					{data.links?.map((l: any, i: number) => (
-						<Link key={l.id ?? i} href={l.url} className="transition-colors hover:text-white">
-							<span {...payloadEditable(`content.${data.blockIndex}.links.${i}.title`)}>{l.title}</span>
+						<Link key={l.id ?? i} href={href(l)} className="transition-colors hover:text-white">
+							<span {...payloadEditable(`content.${data.blockIndex}.links.${i}.title`)}>{l.title || l.page?.title}</span>
 						</Link>
 					))}
 				</nav>

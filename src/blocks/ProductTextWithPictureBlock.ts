@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { linkFields } from '../fields/linkFields'
 
 // Stack of text / text+picture rows from infra3dcom's ProductPageSections/TextWithPicture
 export const ProductTextWithPictureBlock: Block = {
@@ -84,16 +85,9 @@ export const ProductTextWithPictureBlock: Block = {
         {
           name: 'button',
           type: 'group',
-          admin: { hideGutter: true },
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                { name: 'label', type: 'text', label: 'Button label', admin: { width: '50%' } },
-                { name: 'link', type: 'text', label: 'Button link', admin: { width: '50%', description: 'External links open in a new tab.' } },
-              ],
-            },
-          ],
+          admin: { hideGutter: true, description: 'Optional. External links open in a new tab.' },
+          // Existing buttons keep their keys (label, link) and open as URL links
+          fields: linkFields({ nameField: 'label', nameLabel: 'Button label', urlField: 'link', optional: true }),
         },
         {
           name: 'picture',

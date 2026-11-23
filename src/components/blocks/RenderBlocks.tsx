@@ -128,9 +128,14 @@ export const RenderBlocks = ({ blocks, pageId }: { blocks: any[], pageId?: strin
         const BlockContent = renderBlock()
         if (!BlockContent) return null
 
+        // A hero right after the page navigation sits flush against it (cancels the gap-8)
+        const prev = blocks.slice(0, i).filter((b) => !b.hideBlock).at(-1)
+        const flush = prev?.blockType === 'productProductHeader' && ['productHero', 'homeHero'].includes(block.blockType)
+
         return (
           <div
             key={block.id ?? i}
+            className={flush ? '-mt-8' : undefined}
             {...payloadEditable(`content.${i}`, { row: { id: block.id, blockType: block.blockType } })}>
             {BlockContent}
           </div>

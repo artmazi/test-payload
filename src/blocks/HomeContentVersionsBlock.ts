@@ -1,7 +1,9 @@
 import type { Block } from 'payload'
+import { linkFields } from '../fields/linkFields'
 
 export const HomeContentVersionsBlock: Block = {
   slug: 'homeContentVersions',
+  labels: { singular: 'Content Versions', plural: 'Content Versions' },
   // Thumbnail in the admin "Add Content" drawer
   imageURL: '/blocks/home-content-versions.webp',
   imageAltText: 'Three dark content-version cards',
@@ -19,12 +21,12 @@ export const HomeContentVersionsBlock: Block = {
     {
       name: 'items',
       type: 'array',
-      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
+      admin: { components: { RowLabel: '/src/components/admin/MenuRowLabel' } },
       fields: [
-        { name: 'title', type: 'text' },
+        // Existing items keep their keys (title, link) and open as URL links
+        ...linkFields({ nameField: 'title', urlField: 'link' }),
         { name: 'content', type: 'text' },
         { name: 'icon', type: 'upload', relationTo: 'media' },
-        { name: 'link', type: 'text', admin: { description: 'Site path (/de/…) or full URL.' } },
       ],
     },
   ],

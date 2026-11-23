@@ -24,9 +24,5 @@ export const HomeFrameBlock: Block = {
       name: 'iframe',
       type: 'text',
     },
-    {
-      name: 'className',
-      type: 'text',
-    },
   ],
 }

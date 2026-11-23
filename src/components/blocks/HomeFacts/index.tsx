@@ -1,10 +1,11 @@
 "use client";
 
-import { richTextToHtml } from '@/helpers/richText';
+import { richTextToBlocksHtml } from '@/helpers/richText';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
 
 const HomeFacts = ({ data }: { data: any }) => {
+	const fm = data?.factsMosaic || {};
 	return (
 		<section id="facts">
 			<div className="container flex flex-col w-full max-w-[1600px] gap-8 mx-auto py-16 md:px-16 xl:px-32 px-4">
@@ -34,43 +35,31 @@ const HomeFacts = ({ data }: { data: any }) => {
 					</div>
 				</div>
 				<div className="flex flex-col gap-4 lg:flex-row">
-					<div className="flex flex-col justify-center gap-8 rounded-md bg-sky px-8 py-12 text-white lg:w-[340px] lg:shrink-0">
-						<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm1.title`)}>{data?.factsMosaic?.fm1.title}</h2>
-						<p className="text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm1.text`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data?.factsMosaic?.fm1.text) }} />
-					</div>
-					{/* Bento: 3 columns on desktop (bottom row reuses them, so edges line up); 2 below, wide tiles span both */}
-					<div className="grid flex-1 grid-cols-2 lg:grid-cols-3 gap-4 text-center break-normal max-sm:hyphens-auto max-sm:[&_h3]:text-[18px] max-sm:[&_h2]:text-[24px] [&>div]:flex [&>div]:flex-col [&>div]:items-center [&>div]:justify-center [&>div]:gap-2 [&>div]:rounded-md [&>div]:px-4 [&>div]:py-6">
-						<div className="col-span-2 lg:col-span-1 lg:row-span-2 bg-water">
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm2.text1`)}>{data?.factsMosaic?.fm2.text1}</p>
-							<h1 className="font-black text-h1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm2.text2`)}>{data?.factsMosaic?.fm2.text2}</h1>
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm2.text3`)}>{data?.factsMosaic?.fm2.text3}</p>
-						</div>
-						<div className="bg-teal text-white">
-							<h3 className="text-h3 font-bold" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm3.text1`)}>{data?.factsMosaic?.fm3.text1}</h3>
-							<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm3.text2`)}>{data?.factsMosaic?.fm3.text2}</h2>
-						</div>
-						<div className="bg-sky text-white">
-							<h3 className="text-h3 font-bold" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm5.text1`)}>{data?.factsMosaic?.fm5.text1}</h3>
-							<h2 className="text-h2 font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm5.text2`)}>{data?.factsMosaic?.fm5.text2}</h2>
-						</div>
-						<div className="bg-sky text-white">
-							<h3 className="text-h3 font-bold" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm4.text1`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data?.factsMosaic?.fm4.text1) }} />
-						</div>
-						<div className="bg-green">
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm6.text1`)}>{data?.factsMosaic?.fm6.text1}</p>
-							<p className="font-bold text-b1 [&_strong]:text-h1 [&_strong]:font-black" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm6.text2`)} dangerouslySetInnerHTML={{ __html: richTextToHtml(data?.factsMosaic?.fm6.text2) }} />
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm6.text3`)}>{data?.factsMosaic?.fm6.text3}</p>
-						</div>
-						<div className="col-span-2 bg-teal text-white">
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm7.text1`)}>{data?.factsMosaic?.fm7.text1}</p>
-							<h1 className="font-black text-h1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm7.text2`)}>{data?.factsMosaic?.fm7.text2}</h1>
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm7.text3`)}>{data?.factsMosaic?.fm7.text3}</p>
-						</div>
-						<div className="col-span-2 lg:col-span-1 bg-sky text-white">
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm8.text1`)}>{data?.factsMosaic?.fm8.text1}</p>
-							<h1 className="font-black text-h2" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm8.text2`)}>{data?.factsMosaic?.fm8.text2}</h1>
-							<p className="font-bold text-b1" {...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm8.text3`)}>{data?.factsMosaic?.fm8.text3}</p>
-						</div>
+					<div
+						// The heading keeps the old gap-8 to the text; paragraphs were one <p> split by a blank line, i.e. one line apart
+						className="flex flex-col justify-center rounded-md bg-sky px-8 py-12 text-white lg:w-[340px] lg:shrink-0 [&_h2]:text-h2 [&_h2]:font-black [&_h2]:mb-8 [&_p]:text-b1 [&_p+p]:mt-[1lh]"
+						{...payloadEditable(`content.${data.blockIndex}.factsMosaic.fm1`)}
+						dangerouslySetInnerHTML={{ __html: richTextToBlocksHtml(fm.fm1) }}
+					/>
+					{/* Bento: 3 columns on desktop (bottom row reuses them, so edges line up); 2 below, wide tiles span both.
+					    Each tile is one rich text styled by element: paragraph = label, H1/H2/H3 = figure, bold = large figure. */}
+					<div className="grid flex-1 grid-cols-2 lg:grid-cols-3 gap-4 text-center break-normal max-sm:hyphens-auto [&_p]:text-b1 [&_p]:font-bold [&_h1]:text-h1 [&_h1]:font-black [&_h2]:text-h2 [&_h2]:font-black [&_h3]:text-h3 [&_h3]:font-bold [&_p_strong]:text-h1 [&_p_strong]:font-black max-sm:[&_h3]:text-[18px] max-sm:[&_h2]:text-[24px] [&>div]:flex [&>div]:flex-col [&>div]:items-center [&>div]:justify-center [&>div]:gap-2 [&>div]:rounded-md [&>div]:px-4 [&>div]:py-6">
+						{[
+							['fm2', 'col-span-2 lg:col-span-1 lg:row-span-2 bg-water'],
+							['fm3', 'bg-teal text-white'],
+							['fm5', 'bg-sky text-white'],
+							['fm4', 'bg-sky text-white'],
+							['fm6', 'bg-green'],
+							['fm7', 'col-span-2 bg-teal text-white'],
+							['fm8', 'col-span-2 lg:col-span-1 bg-sky text-white'],
+						].map(([key, className]) => (
+							<div
+								key={key}
+								className={className}
+								{...payloadEditable(`content.${data.blockIndex}.factsMosaic.${key}`)}
+								dangerouslySetInnerHTML={{ __html: richTextToBlocksHtml(fm[key]) }}
+							/>
+						))}
 					</div>
 				</div>
 			</div>

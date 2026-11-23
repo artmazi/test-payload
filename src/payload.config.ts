@@ -32,6 +32,8 @@ export default buildConfig({
       beforeDashboard: ['/src/components/admin/DashboardBanner'],
     },
     livePreview: {
+      // Closed until an editor opens it; Payload then remembers each user's last toggle per collection
+      openByDefault: false,
       breakpoints: [
         {
           label: 'Mobile',

@@ -1,9 +1,10 @@
 import type { Block } from 'payload'
+import { linkFields } from '../fields/linkFields'
 
 export const ProductProductHeaderBlock: Block = {
   // Admin name only; the slug stays so stored pages keep working
   slug: 'productProductHeader',
-  labels: { singular: 'Page Menu', plural: 'Page Menus' },
+  labels: { singular: 'Page Navigation', plural: 'Page Navigations' },
   // Thumbnail in the admin "Add Content" drawer
   imageURL: '/blocks/page-menu.webp',
   imageAltText: 'Pill-style menu linking related pages',
@@ -20,19 +21,10 @@ export const ProductProductHeaderBlock: Block = {
     {
       name: 'menu',
       type: 'array',
-      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
-      fields: [
-        { name: 'name', type: 'text', required: true },
-        { name: 'link', type: 'text', required: true },
-      ],
-    },
-    {
-      name: 'sections',
-      type: 'text',
-    },
-    {
-      name: 'button',
-      type: 'text',
+      labels: { singular: 'Menu item', plural: 'Menu items' },
+      admin: { components: { RowLabel: '/src/components/admin/MenuRowLabel' } },
+      // Existing items keep their keys (name, link) and open as URL links
+      fields: linkFields({ urlField: 'link' }),
     },
   ],
 }

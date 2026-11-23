@@ -32,8 +32,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto), sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,7 +45,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 
 button, a {
@@ -110,4 +109,13 @@ html.i3d-admin body > header.absolute { top: 2.5rem; }
 @media (prefers-reduced-motion: no-preference) {
   .admin-bar { transition: grid-template-rows 0.3s ease-out, visibility 0.3s; }
   body > header.absolute { transition: top 0.3s ease-out; }
+}
+
+/* Page nav bar (ProductProductHeader): the active pill glides to the new entry */
+::view-transition-group(.page-nav), ::view-transition-group(.page-nav-label) { animation-duration: 350ms; animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1); }
+/* Groups stack in DOM order, so a pill after a label would cover it while sliding back; keep labels on top */
+::view-transition-group(.page-nav-label) { z-index: 1; }
+/* The browser's default morph runs regardless of the rule above, so switch everything off for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }

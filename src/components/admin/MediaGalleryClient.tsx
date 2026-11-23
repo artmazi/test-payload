@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { formatBytes } from '@/helpers/formatBytes'
 
 export type GalleryItem = { id: string; url: string; filename: string; alt: string; mimeType: string; filesize: number; width: number | null; height: number | null }
@@ -8,6 +8,10 @@ const KEY = 'i3d-media-view'
 
 export default function MediaGalleryClient({ items }: { items: GalleryItem[] }) {
   const [view, setView] = useState<'grid' | 'list'>('grid')
+  // Inside a picker drawer ("Choose from existing") the default table must handle selection, so the grid steps aside
+  const ref = useRef<HTMLDivElement>(null)
+  const [inDrawer, setInDrawer] = useState(false)
+  useEffect(() => setInDrawer(!!ref.current?.closest('.drawer, .list-drawer')), [])
   // Remember the choice per browser; storage can be unavailable (private mode), so default to grid
   useEffect(() => {
     try {
@@ -16,15 +20,17 @@ export default function MediaGalleryClient({ items }: { items: GalleryItem[] }) 
   }, [])
   useEffect(() => {
     // The default table is hidden with CSS while the grid is shown
+    if (inDrawer) return
     document.body.classList.toggle('i3d-media-grid', view === 'grid')
     try {
       localStorage.setItem(KEY, view)
     } catch {}
     return () => document.body.classList.remove('i3d-media-grid')
-  }, [view])
+  }, [view, inDrawer])
 
+  if (inDrawer) return null
   return (
-    <div className="i3d-gallery">
+    <div className="i3d-gallery" ref={ref}>
       <div className="i3d-gallery__toggle" role="group" aria-label="View">
         {(['grid', 'list'] as const).map((v) => (
           <button key={v} type="button" aria-pressed={view === v} onClick={() => setView(v)}>

@@ -17,9 +17,32 @@ export const ProductHeroBlock: Block = {
         description: 'If checked, this block will not be rendered on the frontend.',
       },
     },
-    { name: 'image', type: 'upload', relationTo: 'media', label: 'Background image' },
-    { name: 'video', type: 'text', label: 'Background video URL', admin: { description: 'Optional. Plays muted on a loop over the image.' } },
     { name: 'title', type: 'text' },
-    { name: 'subTitle', type: 'textarea' },
+    { name: 'subTitle', type: 'textarea', label: 'Description' },
+    {
+      name: 'background',
+      type: 'radio',
+      defaultValue: 'image',
+      options: [
+        { label: 'Image', value: 'image' },
+        { label: 'Video', value: 'video' },
+      ],
+      admin: { layout: 'horizontal' },
+      // Heroes saved before this toggle: a video URL meant the video was shown
+      hooks: { afterRead: [({ value, siblingData }) => value ?? (siblingData?.video ? 'video' : 'image')] },
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Background image',
+      admin: { condition: (_, sibling) => sibling?.background !== 'video' },
+    },
+    {
+      name: 'video',
+      type: 'text',
+      label: 'Background video URL',
+      admin: { condition: (_, sibling) => sibling?.background === 'video', description: 'Plays muted on a loop.' },
+    },
   ],
 }

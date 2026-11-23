@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { linkFields } from '../fields/linkFields'
 
 // Title over a row of outlined tiles, from infra3dcom's HomePageSections/LinkList (tiles without a link are plain labels)
 export const LinkTilesBlock: Block = {
@@ -22,16 +23,9 @@ export const LinkTilesBlock: Block = {
       name: 'items',
       type: 'array',
       labels: { singular: 'Tile', plural: 'Tiles' },
-      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            { name: 'label', type: 'text', required: true, admin: { width: '50%' } },
-            { name: 'link', type: 'text', admin: { width: '50%', description: 'Optional. Without a link the tile is a plain label.' } },
-          ],
-        },
-      ],
+      admin: { components: { RowLabel: '/src/components/admin/MenuRowLabel' } },
+      // Existing tiles keep their keys (label, link) and open as URL links; without a link the tile is a plain label
+      fields: linkFields({ nameField: 'label', urlField: 'link', optional: true }),
     },
   ],
 }

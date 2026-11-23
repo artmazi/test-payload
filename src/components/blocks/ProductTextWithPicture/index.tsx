@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import Image from 'next/image';
 import React from 'react';
+import { useParams } from 'next/navigation';
+import { linkHref } from '@/helpers/linkHref';
 import { hasRichText, richTextToHtml } from '@/helpers/richText';
 
 // lg flex-grow ratios [picture, text] per "split" option; basis-0 makes the grow values the real width ratio
@@ -22,11 +24,15 @@ const textStyles: Record<string, string> = {
 
 // Port of infra3dcom's ProductPageSections/TextWithPicture
 const ProductTextWithPicture = ({ data }: { data: any }) => {
+	const { locale } = useParams<{ locale: string }>();
 	return (
 		<div className={clsx(data.background === 'gray' && 'bg-[#f8f8f8] py-8')}>
 			<section id="prod-text-with-picture" className="flex flex-col gap-8 w-full container max-w-[1200px] mx-auto py-8 md:px-16 xl:px-32 px-4">
 				{(data.rows || []).map((row: any, i: number) => {
-					const external = /^https?:\/\//.test(row.button?.link || '');
+					// Buttons store their URL under `link`; linkHref reads `url`
+					const buttonHref = row.button ? linkHref({ ...row.button, url: row.button.link }, locale) : '#';
+					const buttonLabel = row.button?.label || row.button?.page?.title;
+					const external = /^https?:\/\//.test(buttonHref);
 					const text = (
 						<div className="flex flex-col gap-4">
 							{row.title && (
@@ -39,13 +45,13 @@ const ProductTextWithPicture = ({ data }: { data: any }) => {
 								{...payloadEditable(`content.${data.blockIndex}.rows.${i}.content`)}
 								dangerouslySetInnerHTML={{ __html: richTextToHtml(row.content) }}
 							/>
-							{row.button?.label && row.button?.link && (
+							{buttonLabel && buttonHref !== '#' && (
 								<a
-									href={row.button.link}
+									href={buttonHref}
 									{...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
 									className="w-fit mt-2 border border-sky px-3 py-2 text-b2 text-black transition-colors hover:bg-sky hover:text-white"
 								>
-									<span {...payloadEditable(`content.${data.blockIndex}.rows.${i}.button.label`)}>{row.button.label}</span>
+									<span {...payloadEditable(`content.${data.blockIndex}.rows.${i}.button.label`)}>{buttonLabel}</span>
 								</a>
 							)}
 						</div>

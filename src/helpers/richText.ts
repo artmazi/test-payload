@@ -50,6 +50,19 @@ export const richTextToHtml = (value: unknown): string => {
 	return html
 }
 
+// Block-level HTML that keeps each paragraph / heading as its own element, for layouts that style by tag
+// (Facts mosaic: paragraphs are labels, headings are the figures)
+export const richTextToBlocksHtml = (value: unknown): string => {
+	const blocks: Node[] = (value as any)?.root?.children ?? []
+	return blocks
+		.map((n) => {
+			if (n.type === 'heading' && /^h[1-6]$/.test(n.tag)) return `<${n.tag}>${inline(n.children)}</${n.tag}>`
+			if (isList(n)) return richTextToHtml({ root: { children: [n] } })
+			return `<p>${inline(n.children)}</p>`
+		})
+		.join('')
+}
+
 // For the Wysiwyg document layout, which parses Markdown
 export const richTextToMarkdown = (value: unknown): string => (typeof value === 'string' ? value : value ? lexicalToMarkdown(value) : '')
 

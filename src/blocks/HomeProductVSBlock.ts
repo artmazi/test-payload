@@ -1,17 +1,13 @@
 import type { Block } from 'payload'
+import { linkFields } from '../fields/linkFields'
 
 const side = (name: string, label: string) => ({
   name,
   label,
   type: 'group' as const,
   fields: [
-    {
-      type: 'row' as const,
-      fields: [
-        { name: 'label', type: 'text' as const, required: true, admin: { width: '50%' } },
-        { name: 'link', type: 'text' as const, admin: { width: '50%', description: 'e.g. /de/verwaltungen/data/infra3d-generate' } },
-      ],
-    },
+    // Existing products keep their keys (label, link) and open as URL links; without a link the product is a plain box
+    ...linkFields({ nameField: 'label', urlField: 'link', optional: true }),
     { name: 'icon', type: 'upload' as const, relationTo: 'media' as const },
   ],
 })

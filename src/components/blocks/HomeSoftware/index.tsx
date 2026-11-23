@@ -7,14 +7,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import textLine from '@/assets/text-line.svg';
-import Button from '@/components/Button';
+import LinkButtons from '@/components/LinkButtons';
+import { linkHref } from '@/helpers/linkHref';
 import { richTextToHtml } from '@/helpers/richText';
 
 const HomeSoftware = ({ data }: { data: any }) => {
-	const router = useRouter();
+	const { locale } = useParams<{ locale: string }>();
 
 	const swiperOptions = {
 		// Fractional counts let the next card peek in, so visitors see there is more to swipe.
@@ -62,14 +64,7 @@ const HomeSoftware = ({ data }: { data: any }) => {
 							{...payloadEditable(`content.${data.blockIndex}.content`)}
 							dangerouslySetInnerHTML={{ __html: richTextToHtml(data.content) }}
 						/>
-						{data.contentButton && (
-							<Button
-								className="w-fit"
-								color={data.button1Color ?? 'primary'}
-								onClick={() => router.push(data.contentButtonLink)}>
-								{data.contentButton}
-							</Button>
-						)}
+						<LinkButtons buttons={data.buttons} path={`content.${data.blockIndex}.buttons`} />
 					</div>
 					<div className="flex justify-center items-center">
 						{ (data.contentImg?.url || (typeof data.contentImg === 'string' && (data.contentImg.startsWith('/') || data.contentImg.startsWith('http')) ? data.contentImg : null)) ? <Image src={(data.contentImg?.url || (typeof data.contentImg === 'string' && (data.contentImg.startsWith('/') || data.contentImg.startsWith('http')) ? data.contentImg : null))} className="max-w-[400px] w-full" alt="software"  width={800} height={600} /> : null }
@@ -80,14 +75,15 @@ const HomeSoftware = ({ data }: { data: any }) => {
 						<Swiper {...swiperOptions} className="mySwiper">
 							{(data.items || []).map((i: any, _i: number) => (
 								<SwiperSlide key={_i}>
-									<div
-										onClick={() => router.push(i.link)}
-										className="min-h-[250px] cursor-pointer ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)]">
+									{/* Items store their URL under `link`; linkHref reads `url` */}
+									<Link
+										href={linkHref({ ...i, url: i.link }, locale)}
+										className="block min-h-[250px] cursor-pointer ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)]">
 										<div className="flex flex-col relative rounded-md p-2 lg:p-8 w-full bg-teal text-center justify-between">
 											{ (i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null)) ? <Image src={(i.icon?.url || (typeof i.icon === 'string' && (i.icon.startsWith('/') || i.icon.startsWith('http')) ? i.icon : null))} alt="icon" className="max-h-[80px] my-16 lg:my-32"  width={800} height={600} /> : null }
-											<p className="md:text-sub text-b1 font-black text-white" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title}</p>
+											<p className="md:text-sub text-b1 font-black text-white" {...payloadEditable(`content.${data.blockIndex}.items.${_i}.title`)}>{i.title || i.page?.title}</p>
 										</div>
-									</div>
+									</Link>
 								</SwiperSlide>
 							))}
 						</Swiper>

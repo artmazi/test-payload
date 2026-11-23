@@ -2,18 +2,23 @@
 
 import { payloadEditable } from '@payload-inline-visual-editor/react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { linkHref } from '@/helpers/linkHref';
 import React from 'react';
 
 const Product = ({ side, path }: { side: any; path: string }) => {
+	const { locale } = useParams<{ locale: string }>();
+	// Products store their URL under `link`; linkHref reads `url` and returns '#' when there is no link
+	const href = linkHref({ ...side, url: side?.link }, locale);
 	const body = (
 		<span className="flex items-center gap-4 text-h3 font-bold">
 			{/* Plain img: icons have mixed aspect ratios (the GEOINFO logo is wide) */}
 			{side?.icon?.url ? <img src={side.icon.url} alt="" className="h-[44px] w-auto max-w-[75px] object-contain" /> : null}
-			<span {...payloadEditable(`${path}.label`)}>{side?.label}</span>
+			<span {...payloadEditable(`${path}.label`)}>{side?.label || side?.page?.title}</span>
 		</span>
 	);
 	const cls = 'flex flex-1 items-center justify-center p-4 border-2 border-blue-200 rounded-xl transition-colors hover:border-sky';
-	return side?.link ? <Link href={side.link} className={cls}>{body}</Link> : <div className={cls}>{body}</div>;
+	return href !== '#' ? <Link href={href} className={cls}>{body}</Link> : <div className={cls}>{body}</div>;
 };
 
 // Port of infra3dcom's HomePageSections/ProductVS

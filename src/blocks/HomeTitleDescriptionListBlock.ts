@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const HomeTitleDescriptionListBlock: Block = {
   slug: 'homeTitleDescriptionList',
+  labels: { singular: 'Title Description List', plural: 'Title Description List' },
   fields: [
     {
       name: 'hideBlock',

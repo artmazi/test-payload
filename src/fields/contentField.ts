@@ -1,4 +1,5 @@
-import type { Field } from 'payload'
+import type { Block, Field } from 'payload'
+import { toWords } from 'payload/shared'
 
 import { HomeHeroBlock } from '../blocks/HomeHeroBlock'
 import { HomeContentVersionsBlock } from '../blocks/HomeContentVersionsBlock'
@@ -31,12 +32,29 @@ import { ContactButtonsBlock } from '../blocks/ContactButtonsBlock'
 import { LogoLinkBlock } from '../blocks/LogoLinkBlock'
 import { LinkTilesBlock } from '../blocks/LinkTilesBlock'
 
+// Every block's hideBlock checkbox moves from the block body into its row header (BlockHeader)
+const withHeaderToggle = (block: Block): Block => ({
+  ...block,
+  fields: block.fields.map((f) => ('name' in f && f.name === 'hideBlock' ? ({ ...f, admin: { ...f.admin, hidden: true } } as Field) : f)),
+  admin: {
+    ...block.admin,
+    components: {
+      ...block.admin?.components,
+      Label: {
+        path: '/src/components/admin/BlockHeader',
+        // Blocks without labels get Payload's own fallback, the slug in words
+        clientProps: { blockLabel: typeof block.labels?.singular === 'string' ? block.labels.singular : toWords(block.slug) },
+      },
+    },
+  },
+})
+
 // Shared by pages and templates so a template's blocks always fit a page
 export const contentField: Field = {
   name: 'content',
   type: 'blocks',
   localized: true,
-  blocks: [
+  blocks: ([
     HomeHeroBlock,
     HomeContentVersionsBlock,
     HomeApplicationsBlock,
@@ -145,5 +163,5 @@ export const contentField: Field = {
         { name: 'url', type: 'text', required: true }
       ]
     }
-  ]
+  ] as Block[]).map(withHeaderToggle),
 }

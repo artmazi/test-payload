@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { linkFields } from '../fields/linkFields'
 
 export const HomeDataBlock: Block = {
   slug: 'homeData',
@@ -6,8 +7,8 @@ export const HomeDataBlock: Block = {
   imageURL: '/blocks/home-data.webp',
   imageAltText: 'Image with text and three data cards',
   labels: {
-    singular: 'Home Data',
-    plural: 'Home Data',
+    singular: 'Data',
+    plural: 'Data',
   },
   fields: [
     {
@@ -20,17 +21,17 @@ export const HomeDataBlock: Block = {
       },
     },
     { name: 'title', type: 'text' },
-    { name: 'img', type: 'upload', relationTo: 'media' },
-    { name: 'text', type: 'textarea' },
+    { name: 'img', type: 'upload', relationTo: 'media', label: 'Image' },
+    { name: 'text', type: 'textarea', label: 'Content' },
     {
       name: 'items',
       type: 'array',
-      admin: { components: { RowLabel: '/src/components/admin/ArrayRowLabel' } },
+      admin: { components: { RowLabel: '/src/components/admin/MenuRowLabel' } },
       fields: [
-        { name: 'title', type: 'text' },
-        { name: 'text', type: 'textarea' },
+        // Existing items keep their keys (title, link) and open as URL links
+        ...linkFields({ nameField: 'title', urlField: 'link' }),
+        { name: 'text', type: 'textarea', label: 'Description' },
         { name: 'icon', type: 'upload', relationTo: 'media' },
-        { name: 'link', type: 'text', admin: { description: 'Site path (/de/…) or full URL.' } },
       ],
     },
   ],

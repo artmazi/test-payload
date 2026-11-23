@@ -257,6 +257,22 @@ export interface Page {
             title?: string | null;
             description?: string | null;
             content?: string | null;
+            buttons?:
+              | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
+                  style: 'primary' | 'secondary';
+                  id?: string | null;
+                }[]
+              | null;
             button?: string | null;
             buttonLink?: string | null;
             button2?: string | null;
@@ -273,13 +289,18 @@ export interface Page {
             title?: string | null;
             items?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   content?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -296,6 +317,15 @@ export interface Page {
             text?: string | null;
             items?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   text?: string | null;
                   /**
@@ -307,15 +337,20 @@ export interface Page {
                    */
                   rightText?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
             items2?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   text?: string | null;
                   /**
@@ -327,10 +362,6 @@ export interface Page {
                    */
                   rightText?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -389,12 +420,20 @@ export interface Page {
                     };
                     [k: string]: unknown;
                   };
+                  /**
+                   * Optional. External links open in a new tab.
+                   */
                   button?: {
-                    label?: string | null;
+                    type?: ('page' | 'custom') | null;
+                    page?: (string | null) | Page;
                     /**
-                     * External links open in a new tab.
+                     * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                      */
                     link?: string | null;
+                    /**
+                     * Leave empty to use the page title.
+                     */
+                    label?: string | null;
                   };
                   picture?: (string | null) | Media;
                   id?: string | null;
@@ -429,7 +468,6 @@ export interface Page {
             hideBlock?: boolean | null;
             title?: string | null;
             iframe?: string | null;
-            className?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeFrame';
@@ -458,9 +496,10 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
+            logos?: (string | Media)[] | null;
             sliderItems?:
               | {
-                  logo: string | Media;
+                  logo?: (string | null) | Media;
                   id?: string | null;
                 }[]
               | null;
@@ -557,17 +596,35 @@ export interface Page {
               [k: string]: unknown;
             } | null;
             contentImg?: (string | null) | Media;
-            contentButton?: string | null;
-            contentButtonLink?: string | null;
-            button1Color?: ('primary' | 'secondary' | 'orange') | null;
+            buttons?:
+              | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
+                  style: 'primary' | 'secondary';
+                  id?: string | null;
+                }[]
+              | null;
             items?:
               | {
-                  title?: string | null;
-                  icon?: (string | null) | Media;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
                   /**
-                   * Site path (/de/…) or full URL.
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                    */
                   link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
+                  icon?: (string | null) | Media;
                   id?: string | null;
                 }[]
               | null;
@@ -583,24 +640,34 @@ export interface Page {
             title?: string | null;
             items?:
               | {
-                  left: {
-                    label: string;
+                  left?: {
+                    type?: ('page' | 'custom') | null;
+                    page?: (string | null) | Page;
                     /**
-                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                      */
                     link?: string | null;
+                    /**
+                     * Leave empty to use the page title.
+                     */
+                    label?: string | null;
                     icon?: (string | null) | Media;
                   };
                   /**
                    * e.g. oder / und
                    */
                   vs?: string | null;
-                  right: {
-                    label: string;
+                  right?: {
+                    type?: ('page' | 'custom') | null;
+                    page?: (string | null) | Page;
                     /**
-                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                      */
                     link?: string | null;
+                    /**
+                     * Leave empty to use the page title.
+                     */
+                    label?: string | null;
                     icon?: (string | null) | Media;
                   };
                   id?: string | null;
@@ -682,23 +749,18 @@ export interface Page {
             bgImage?: (string | null) | Media;
             title?: string | null;
             oneColumn?: boolean | null;
+            checklist?: string[] | null;
             items?:
               | {
-                  text?: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
+                  text?:
+                    | {
                         [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  } | null;
+                      }
+                    | unknown[]
+                    | string
+                    | number
+                    | boolean
+                    | null;
                   id?: string | null;
                 }[]
               | null;
@@ -715,99 +777,139 @@ export interface Page {
             subTitle?: string | null;
             factsLeft?:
               | {
-                  value?: string | null;
                   title?: string | null;
+                  value?: string | null;
                   id?: string | null;
                 }[]
               | null;
             factsRight?:
               | {
-                  value?: string | null;
                   title?: string | null;
+                  value?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            /**
-             * Tiles next to the blue box. Bold text makes the number large (e.g. 322 in bold, then t/Jahr).
-             */
             factsMosaic?: {
               fm1?: {
-                title?: string | null;
-                text?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: any;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
                     version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-              };
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm2?: {
-                text1?: string | null;
-                text2?: string | null;
-                text3?: string | null;
-              };
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm3?: {
-                text1?: string | null;
-                text2?: string | null;
-              };
-              fm4?: {
-                text1?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: any;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
                     version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-              };
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm5?: {
-                text1?: string | null;
-                text2?: string | null;
-              };
-              fm6?: {
-                text1?: string | null;
-                text2?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: any;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
                     version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                text3?: string | null;
-              };
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              fm4?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              fm6?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm7?: {
-                text1?: string | null;
-                text2?: string | null;
-                text3?: string | null;
-              };
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm8?: {
-                text1?: string | null;
-                text2?: string | null;
-                text3?: string | null;
-              };
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
             };
             id?: string | null;
             blockName?: string | null;
@@ -844,13 +946,14 @@ export interface Page {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            image?: (string | null) | Media;
-            /**
-             * Optional. Plays muted on a loop over the image.
-             */
-            video?: string | null;
             title?: string | null;
             subTitle?: string | null;
+            background?: ('image' | 'video') | null;
+            image?: (string | null) | Media;
+            /**
+             * Plays muted on a loop.
+             */
+            video?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productHero';
@@ -862,13 +965,19 @@ export interface Page {
             hideBlock?: boolean | null;
             menu?:
               | {
-                  name: string;
-                  link: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  name?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            sections?: string | null;
-            button?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productProductHeader';
@@ -922,13 +1031,18 @@ export interface Page {
             text?: string | null;
             items?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   text?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -950,15 +1064,31 @@ export interface Page {
             chooseCategory?: string | null;
             categories?:
               | {
-                  title: string;
-                  url: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
                   id?: string | null;
                 }[]
               | null;
             links?:
               | {
-                  title: string;
-                  url: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1018,11 +1148,16 @@ export interface Page {
             title?: string | null;
             items?:
               | {
-                  label: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
                   /**
-                   * Optional. Without a link the tile is a plain label.
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                    */
                   link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  label?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1113,6 +1248,22 @@ export interface Template {
             title?: string | null;
             description?: string | null;
             content?: string | null;
+            buttons?:
+              | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
+                  style: 'primary' | 'secondary';
+                  id?: string | null;
+                }[]
+              | null;
             button?: string | null;
             buttonLink?: string | null;
             button2?: string | null;
@@ -1129,13 +1280,18 @@ export interface Template {
             title?: string | null;
             items?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   content?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1152,6 +1308,15 @@ export interface Template {
             text?: string | null;
             items?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   text?: string | null;
                   /**
@@ -1163,15 +1328,20 @@ export interface Template {
                    */
                   rightText?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
             items2?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   text?: string | null;
                   /**
@@ -1183,10 +1353,6 @@ export interface Template {
                    */
                   rightText?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1245,12 +1411,20 @@ export interface Template {
                     };
                     [k: string]: unknown;
                   };
+                  /**
+                   * Optional. External links open in a new tab.
+                   */
                   button?: {
-                    label?: string | null;
+                    type?: ('page' | 'custom') | null;
+                    page?: (string | null) | Page;
                     /**
-                     * External links open in a new tab.
+                     * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                      */
                     link?: string | null;
+                    /**
+                     * Leave empty to use the page title.
+                     */
+                    label?: string | null;
                   };
                   picture?: (string | null) | Media;
                   id?: string | null;
@@ -1285,7 +1459,6 @@ export interface Template {
             hideBlock?: boolean | null;
             title?: string | null;
             iframe?: string | null;
-            className?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'homeFrame';
@@ -1314,9 +1487,10 @@ export interface Template {
               };
               [k: string]: unknown;
             } | null;
+            logos?: (string | Media)[] | null;
             sliderItems?:
               | {
-                  logo: string | Media;
+                  logo?: (string | null) | Media;
                   id?: string | null;
                 }[]
               | null;
@@ -1413,17 +1587,35 @@ export interface Template {
               [k: string]: unknown;
             } | null;
             contentImg?: (string | null) | Media;
-            contentButton?: string | null;
-            contentButtonLink?: string | null;
-            button1Color?: ('primary' | 'secondary' | 'orange') | null;
+            buttons?:
+              | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
+                  style: 'primary' | 'secondary';
+                  id?: string | null;
+                }[]
+              | null;
             items?:
               | {
-                  title?: string | null;
-                  icon?: (string | null) | Media;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
                   /**
-                   * Site path (/de/…) or full URL.
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                    */
                   link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
+                  icon?: (string | null) | Media;
                   id?: string | null;
                 }[]
               | null;
@@ -1439,24 +1631,34 @@ export interface Template {
             title?: string | null;
             items?:
               | {
-                  left: {
-                    label: string;
+                  left?: {
+                    type?: ('page' | 'custom') | null;
+                    page?: (string | null) | Page;
                     /**
-                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                      */
                     link?: string | null;
+                    /**
+                     * Leave empty to use the page title.
+                     */
+                    label?: string | null;
                     icon?: (string | null) | Media;
                   };
                   /**
                    * e.g. oder / und
                    */
                   vs?: string | null;
-                  right: {
-                    label: string;
+                  right?: {
+                    type?: ('page' | 'custom') | null;
+                    page?: (string | null) | Page;
                     /**
-                     * e.g. /de/verwaltungen/data/infra3d-generate
+                     * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                      */
                     link?: string | null;
+                    /**
+                     * Leave empty to use the page title.
+                     */
+                    label?: string | null;
                     icon?: (string | null) | Media;
                   };
                   id?: string | null;
@@ -1538,23 +1740,18 @@ export interface Template {
             bgImage?: (string | null) | Media;
             title?: string | null;
             oneColumn?: boolean | null;
+            checklist?: string[] | null;
             items?:
               | {
-                  text?: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
+                  text?:
+                    | {
                         [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  } | null;
+                      }
+                    | unknown[]
+                    | string
+                    | number
+                    | boolean
+                    | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1571,99 +1768,139 @@ export interface Template {
             subTitle?: string | null;
             factsLeft?:
               | {
-                  value?: string | null;
                   title?: string | null;
+                  value?: string | null;
                   id?: string | null;
                 }[]
               | null;
             factsRight?:
               | {
-                  value?: string | null;
                   title?: string | null;
+                  value?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            /**
-             * Tiles next to the blue box. Bold text makes the number large (e.g. 322 in bold, then t/Jahr).
-             */
             factsMosaic?: {
               fm1?: {
-                title?: string | null;
-                text?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: any;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
                     version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-              };
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm2?: {
-                text1?: string | null;
-                text2?: string | null;
-                text3?: string | null;
-              };
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm3?: {
-                text1?: string | null;
-                text2?: string | null;
-              };
-              fm4?: {
-                text1?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: any;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
                     version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-              };
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm5?: {
-                text1?: string | null;
-                text2?: string | null;
-              };
-              fm6?: {
-                text1?: string | null;
-                text2?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: any;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
                     version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                text3?: string | null;
-              };
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              fm4?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              fm6?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm7?: {
-                text1?: string | null;
-                text2?: string | null;
-                text3?: string | null;
-              };
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
               fm8?: {
-                text1?: string | null;
-                text2?: string | null;
-                text3?: string | null;
-              };
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
             };
             id?: string | null;
             blockName?: string | null;
@@ -1700,13 +1937,14 @@ export interface Template {
              * If checked, this block will not be rendered on the frontend.
              */
             hideBlock?: boolean | null;
-            image?: (string | null) | Media;
-            /**
-             * Optional. Plays muted on a loop over the image.
-             */
-            video?: string | null;
             title?: string | null;
             subTitle?: string | null;
+            background?: ('image' | 'video') | null;
+            image?: (string | null) | Media;
+            /**
+             * Plays muted on a loop.
+             */
+            video?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productHero';
@@ -1718,13 +1956,19 @@ export interface Template {
             hideBlock?: boolean | null;
             menu?:
               | {
-                  name: string;
-                  link: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  name?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            sections?: string | null;
-            button?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'productProductHeader';
@@ -1778,13 +2022,18 @@ export interface Template {
             text?: string | null;
             items?:
               | {
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
                   title?: string | null;
                   text?: string | null;
                   icon?: (string | null) | Media;
-                  /**
-                   * Site path (/de/…) or full URL.
-                   */
-                  link?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1806,15 +2055,31 @@ export interface Template {
             chooseCategory?: string | null;
             categories?:
               | {
-                  title: string;
-                  url: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
                   id?: string | null;
                 }[]
               | null;
             links?:
               | {
-                  title: string;
-                  url: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
+                  /**
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
+                   */
+                  url?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  title?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1874,11 +2139,16 @@ export interface Template {
             title?: string | null;
             items?:
               | {
-                  label: string;
+                  type?: ('page' | 'custom') | null;
+                  page?: (string | null) | Page;
                   /**
-                   * Optional. Without a link the tile is a plain label.
+                   * Site path without locale (e.g. /verwaltungen/platform) or a full URL.
                    */
                   link?: string | null;
+                  /**
+                   * Leave empty to use the page title.
+                   */
+                  label?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -2126,6 +2396,16 @@ export interface TemplatesSelect<T extends boolean = true> {
               title?: T;
               description?: T;
               content?: T;
+              buttons?:
+                | T
+                | {
+                    type?: T;
+                    page?: T;
+                    url?: T;
+                    title?: T;
+                    style?: T;
+                    id?: T;
+                  };
               button?: T;
               buttonLink?: T;
               button2?: T;
@@ -2141,10 +2421,12 @@ export interface TemplatesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     content?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -2159,23 +2441,27 @@ export interface TemplatesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
                     rightText?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               items2?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
                     rightText?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               contentTitle?: T;
@@ -2213,8 +2499,10 @@ export interface TemplatesSelect<T extends boolean = true> {
                     button?:
                       | T
                       | {
-                          label?: T;
+                          type?: T;
+                          page?: T;
                           link?: T;
+                          label?: T;
                         };
                     picture?: T;
                     id?: T;
@@ -2229,7 +2517,6 @@ export interface TemplatesSelect<T extends boolean = true> {
               hideBlock?: T;
               title?: T;
               iframe?: T;
-              className?: T;
               id?: T;
               blockName?: T;
             };
@@ -2239,6 +2526,7 @@ export interface TemplatesSelect<T extends boolean = true> {
               hideBlock?: T;
               title?: T;
               description?: T;
+              logos?: T;
               sliderItems?:
                 | T
                 | {
@@ -2296,15 +2584,24 @@ export interface TemplatesSelect<T extends boolean = true> {
               contentTitle?: T;
               content?: T;
               contentImg?: T;
-              contentButton?: T;
-              contentButtonLink?: T;
-              button1Color?: T;
+              buttons?:
+                | T
+                | {
+                    type?: T;
+                    page?: T;
+                    url?: T;
+                    title?: T;
+                    style?: T;
+                    id?: T;
+                  };
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -2321,16 +2618,20 @@ export interface TemplatesSelect<T extends boolean = true> {
                     left?:
                       | T
                       | {
-                          label?: T;
+                          type?: T;
+                          page?: T;
                           link?: T;
+                          label?: T;
                           icon?: T;
                         };
                     vs?: T;
                     right?:
                       | T
                       | {
-                          label?: T;
+                          type?: T;
+                          page?: T;
                           link?: T;
+                          label?: T;
                           icon?: T;
                         };
                     id?: T;
@@ -2399,6 +2700,7 @@ export interface TemplatesSelect<T extends boolean = true> {
               bgImage?: T;
               title?: T;
               oneColumn?: T;
+              checklist?: T;
               items?:
                 | T
                 | {
@@ -2417,71 +2719,28 @@ export interface TemplatesSelect<T extends boolean = true> {
               factsLeft?:
                 | T
                 | {
-                    value?: T;
                     title?: T;
+                    value?: T;
                     id?: T;
                   };
               factsRight?:
                 | T
                 | {
-                    value?: T;
                     title?: T;
+                    value?: T;
                     id?: T;
                   };
               factsMosaic?:
                 | T
                 | {
-                    fm1?:
-                      | T
-                      | {
-                          title?: T;
-                          text?: T;
-                        };
-                    fm2?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
-                    fm3?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                        };
-                    fm4?:
-                      | T
-                      | {
-                          text1?: T;
-                        };
-                    fm5?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                        };
-                    fm6?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
-                    fm7?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
-                    fm8?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
+                    fm1?: T;
+                    fm2?: T;
+                    fm3?: T;
+                    fm5?: T;
+                    fm4?: T;
+                    fm6?: T;
+                    fm7?: T;
+                    fm8?: T;
                   };
               id?: T;
               blockName?: T;
@@ -2508,10 +2767,11 @@ export interface TemplatesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              image?: T;
-              video?: T;
               title?: T;
               subTitle?: T;
+              background?: T;
+              image?: T;
+              video?: T;
               id?: T;
               blockName?: T;
             };
@@ -2522,12 +2782,12 @@ export interface TemplatesSelect<T extends boolean = true> {
               menu?:
                 | T
                 | {
-                    name?: T;
+                    type?: T;
+                    page?: T;
                     link?: T;
+                    name?: T;
                     id?: T;
                   };
-              sections?: T;
-              button?: T;
               id?: T;
               blockName?: T;
             };
@@ -2574,10 +2834,12 @@ export interface TemplatesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     text?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -2594,15 +2856,19 @@ export interface TemplatesSelect<T extends boolean = true> {
               categories?:
                 | T
                 | {
-                    title?: T;
+                    type?: T;
+                    page?: T;
                     url?: T;
+                    title?: T;
                     id?: T;
                   };
               links?:
                 | T
                 | {
-                    title?: T;
+                    type?: T;
+                    page?: T;
                     url?: T;
+                    title?: T;
                     id?: T;
                   };
               id?: T;
@@ -2643,8 +2909,10 @@ export interface TemplatesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
-                    label?: T;
+                    type?: T;
+                    page?: T;
                     link?: T;
+                    label?: T;
                     id?: T;
                   };
               id?: T;
@@ -2718,6 +2986,16 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               description?: T;
               content?: T;
+              buttons?:
+                | T
+                | {
+                    type?: T;
+                    page?: T;
+                    url?: T;
+                    title?: T;
+                    style?: T;
+                    id?: T;
+                  };
               button?: T;
               buttonLink?: T;
               button2?: T;
@@ -2733,10 +3011,12 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     content?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -2751,23 +3031,27 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
                     rightText?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               items2?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     text?: T;
                     leftText?: T;
                     rightText?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               contentTitle?: T;
@@ -2805,8 +3089,10 @@ export interface PagesSelect<T extends boolean = true> {
                     button?:
                       | T
                       | {
-                          label?: T;
+                          type?: T;
+                          page?: T;
                           link?: T;
+                          label?: T;
                         };
                     picture?: T;
                     id?: T;
@@ -2821,7 +3107,6 @@ export interface PagesSelect<T extends boolean = true> {
               hideBlock?: T;
               title?: T;
               iframe?: T;
-              className?: T;
               id?: T;
               blockName?: T;
             };
@@ -2831,6 +3116,7 @@ export interface PagesSelect<T extends boolean = true> {
               hideBlock?: T;
               title?: T;
               description?: T;
+              logos?: T;
               sliderItems?:
                 | T
                 | {
@@ -2888,15 +3174,24 @@ export interface PagesSelect<T extends boolean = true> {
               contentTitle?: T;
               content?: T;
               contentImg?: T;
-              contentButton?: T;
-              contentButtonLink?: T;
-              button1Color?: T;
+              buttons?:
+                | T
+                | {
+                    type?: T;
+                    page?: T;
+                    url?: T;
+                    title?: T;
+                    style?: T;
+                    id?: T;
+                  };
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -2913,16 +3208,20 @@ export interface PagesSelect<T extends boolean = true> {
                     left?:
                       | T
                       | {
-                          label?: T;
+                          type?: T;
+                          page?: T;
                           link?: T;
+                          label?: T;
                           icon?: T;
                         };
                     vs?: T;
                     right?:
                       | T
                       | {
-                          label?: T;
+                          type?: T;
+                          page?: T;
                           link?: T;
+                          label?: T;
                           icon?: T;
                         };
                     id?: T;
@@ -2991,6 +3290,7 @@ export interface PagesSelect<T extends boolean = true> {
               bgImage?: T;
               title?: T;
               oneColumn?: T;
+              checklist?: T;
               items?:
                 | T
                 | {
@@ -3009,71 +3309,28 @@ export interface PagesSelect<T extends boolean = true> {
               factsLeft?:
                 | T
                 | {
-                    value?: T;
                     title?: T;
+                    value?: T;
                     id?: T;
                   };
               factsRight?:
                 | T
                 | {
-                    value?: T;
                     title?: T;
+                    value?: T;
                     id?: T;
                   };
               factsMosaic?:
                 | T
                 | {
-                    fm1?:
-                      | T
-                      | {
-                          title?: T;
-                          text?: T;
-                        };
-                    fm2?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
-                    fm3?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                        };
-                    fm4?:
-                      | T
-                      | {
-                          text1?: T;
-                        };
-                    fm5?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                        };
-                    fm6?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
-                    fm7?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
-                    fm8?:
-                      | T
-                      | {
-                          text1?: T;
-                          text2?: T;
-                          text3?: T;
-                        };
+                    fm1?: T;
+                    fm2?: T;
+                    fm3?: T;
+                    fm5?: T;
+                    fm4?: T;
+                    fm6?: T;
+                    fm7?: T;
+                    fm8?: T;
                   };
               id?: T;
               blockName?: T;
@@ -3100,10 +3357,11 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideBlock?: T;
-              image?: T;
-              video?: T;
               title?: T;
               subTitle?: T;
+              background?: T;
+              image?: T;
+              video?: T;
               id?: T;
               blockName?: T;
             };
@@ -3114,12 +3372,12 @@ export interface PagesSelect<T extends boolean = true> {
               menu?:
                 | T
                 | {
-                    name?: T;
+                    type?: T;
+                    page?: T;
                     link?: T;
+                    name?: T;
                     id?: T;
                   };
-              sections?: T;
-              button?: T;
               id?: T;
               blockName?: T;
             };
@@ -3166,10 +3424,12 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    type?: T;
+                    page?: T;
+                    link?: T;
                     title?: T;
                     text?: T;
                     icon?: T;
-                    link?: T;
                     id?: T;
                   };
               id?: T;
@@ -3186,15 +3446,19 @@ export interface PagesSelect<T extends boolean = true> {
               categories?:
                 | T
                 | {
-                    title?: T;
+                    type?: T;
+                    page?: T;
                     url?: T;
+                    title?: T;
                     id?: T;
                   };
               links?:
                 | T
                 | {
-                    title?: T;
+                    type?: T;
+                    page?: T;
                     url?: T;
+                    title?: T;
                     id?: T;
                   };
               id?: T;
@@ -3235,8 +3499,10 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
-                    label?: T;
+                    type?: T;
+                    page?: T;
                     link?: T;
+                    label?: T;
                     id?: T;
                   };
               id?: T;

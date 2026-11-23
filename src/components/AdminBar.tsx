@@ -6,6 +6,17 @@ export const ADMIN_KEY = 'i3d-admin-email';
 // Runs before the first paint (inlined in the layout): a remembered login opens the bar via CSS, so it never jumps in
 export const adminBarBootScript = `try{if(window.self===window.top&&localStorage.getItem('${ADMIN_KEY}')!==null)document.documentElement.classList.add('i3d-admin')}catch(e){}`;
 
+// Runs the boot script from the server HTML, before paint. Only the first render needs it: a raw <script> created on the
+// client (the [locale] layout remounts when switching locale) never runs and makes React warn, and by then the class is set.
+let booted = false;
+export function AdminBarBoot() {
+	const [render] = useState(() => !booted);
+	useEffect(() => {
+		booted = true;
+	}, []);
+	return render ? <script dangerouslySetInnerHTML={{ __html: adminBarBootScript }} /> : null;
+}
+
 const setOpen = (open: boolean) => document.documentElement.classList.toggle('i3d-admin', open);
 
 // Shown only to logged-in users. Pages are static, so the login is confirmed in the browser via /api/users/me;

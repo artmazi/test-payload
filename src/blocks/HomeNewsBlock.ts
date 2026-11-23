@@ -6,8 +6,8 @@ export const HomeNewsBlock: Block = {
   imageURL: '/blocks/home-news.webp',
   imageAltText: 'Grid of news cards from the inovitas feed',
   labels: {
-    singular: 'Home News',
-    plural: 'Home News',
+    singular: 'News',
+    plural: 'News',
   },
   fields: [
     {

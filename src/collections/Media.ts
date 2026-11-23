@@ -12,8 +12,9 @@ export const Media: CollectionConfig = {
     components: { beforeListTable: ['/src/components/admin/MediaGallery'] },
   },
   upload: {
-    // PNG / JPG uploads are stored as WebP (SVG, video and PDF are left as they are)
-    formatOptions: { format: 'webp', options: { quality: 82 } },
+    // PNG / JPG uploads are stored as WebP (SVG, video and PDF are left as they are).
+    // Near-lossless: this is the master the Next optimizer re-encodes for delivery, so losses here would compound.
+    formatOptions: { format: 'webp', options: { quality: 95 } },
   },
   hooks: {
     afterChange: [

@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
     ]
   },
   images: {
+    // Every image snaps to the closest allowed quality, so this one value replaces the default 75 everywhere
+    qualities: [90],
     remotePatterns: [
       {
         protocol: 'https',

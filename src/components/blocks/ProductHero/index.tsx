@@ -6,15 +6,17 @@ import { bgImage } from '@/helpers/bgImage';
 
 // Port of infra3dcom's ProductPageSections/Hero
 const ProductHero = ({ data }: { data: any }) => {
-	const image = data.image?.url;
+	// Only the chosen background shows; the other field keeps its value but is hidden in the admin
+	const video = data.background === 'video' ? data.video : null;
+	const image = data.background === 'video' ? null : data.image?.url;
 	const hasOverlay = data.title || data.subTitle;
 	return (
 		<section
 			id="prod-hero"
 			style={image ? { backgroundImage: bgImage(image) } : undefined}
 			className="flex w-full h-[230px] lg:h-[550px] bg-teal bg-cover bg-center bg-no-repeat relative overflow-hidden">
-			{data.video && (
-				<video loop muted autoPlay playsInline src={data.video} className="absolute inset-0 w-full h-full object-cover" />
+			{video && (
+				<video loop muted autoPlay playsInline src={video} className="absolute inset-0 w-full h-full object-cover" />
 			)}
 			{hasOverlay && (
 				<div className="absolute inset-0 flex flex-col gap-4 justify-center items-center bg-[rgba(0,0,0,0.4)] text-white px-4 text-center">

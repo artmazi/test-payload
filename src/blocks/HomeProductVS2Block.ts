@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const HomeProductVS2Block: Block = {
   slug: 'homeProductVS2',
+  labels: { singular: 'Product VS2', plural: 'Product VS2' },
   fields: [
     {
       name: 'hideBlock',

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "../globals.css";
 
 import { getPayload } from 'payload'
@@ -7,15 +7,12 @@ import config from '@/payload.config'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import I18nProvider from '@/components/I18nProvider'
-import { adminBarBootScript } from '@/components/AdminBar'
+import { AdminBarBoot } from '@/components/AdminBar'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Same font and weights as the original infra3dcom site
+const roboto = Roboto({
+  variable: "--font-roboto",
+  weight: ["100", "300", "400", "500", "700", "900"],
   subsets: ["latin"],
 });
 
@@ -60,10 +57,10 @@ export default async function RootLayout({ children, params }: { children: React
       data-scroll-behavior="smooth"
       // The admin bar boot script may add a class before React hydrates
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${roboto.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <script dangerouslySetInnerHTML={{ __html: adminBarBootScript }} />
+        <AdminBarBoot />
         <I18nProvider locale={locale}>
           <Header categoryMenus={categoryMenus} />
           {children}

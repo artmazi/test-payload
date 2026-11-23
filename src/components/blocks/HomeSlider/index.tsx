@@ -65,11 +65,11 @@ const HomeSlider = ({ data }: { data: any }) => {
 			</div>
 			<div className="flex">
 				<Swiper {...logosSwiperOptions} className="mySwiper">
-					{(data.sliderItems || []).map((i: any, _i: number) => (
+					{(data.logos || []).map((logo: any, _i: number) => (
 						<SwiperSlide key={_i} className="!flex text-center items-center justify-center py-8">
-							{i?.logo?.url ? <Image
-								src={i.logo.url}
-								alt="logo"
+							{logo?.url ? <Image
+								src={logo.url}
+								alt={logo.alt || 'logo'}
 								className="max-h-[120px] border border-[#00000005] ease-in duration-150 hover:shadow-[0px_0px_30px_0px_rgba(13,146,210,0.25)]"
 							 width={800} height={600} /> : null }
 						</SwiperSlide>
